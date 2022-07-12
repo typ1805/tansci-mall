@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tansci.mapper.SysMenuMapper">
+
+    <select id="list" parameterType="com.tansci.domain.dto.SysMenuDto" resultType="com.tansci.domain.SysMenu">
+        SELECT `id`, `name`, `parent_id`, `chinese_name`, `english_name`, `status`, `type`, `url`, `icon`, `sort`, `update_time`, `create_time`, `user_id`
+        FROM (
+        <choose>
+            <when test="dto.userType == 1">
+                <if test="dto.userId != null and dto.userId != ''">
+                    SELECT `id`, `name`, `parent_id`, `chinese_name`, `english_name`, `status`, `type`, `url`, `icon`, `sort`, `update_time`, `create_time`, um.user_id
+                    FROM sys_menu m
+                    LEFT JOIN sys_user_menu um on um.menu_id = m.id
+                    WHERE um.user_id = #{dto.userId}
+                    <if test="dto.status != null and dto.status != ''">
+                        and m.status = #{dto.status}
+                    </if>
+                    <if test="dto.types != null and dto.types.size > 0">
+                        and m.type in
+                        <foreach collection="dto.types" item="type" open="(" close=")" separator=",">
+                            #{type}
+                        </foreach>
+                    </if>
+                    <if test="dto.name != null and dto.name != ''">
+                        and m.name = #{dto.name}
+                    </if>
+                    UNION ALL
+                </if>
+                SELECT `id`, `name`, `parent_id`, `chinese_name`, `english_name`, `status`, `type`, `url`, `icon`, `sort`, `update_time`, `create_time`, null `user_id`
+                FROM sys_menu m
+                <where>
+                    <if test="dto.status != null and dto.status != ''">
+                        and m.status = #{dto.status}
+                    </if>
+                    <if test="dto.types != null and dto.types.size > 0">
+                        and m.type in
+                        <foreach collection="dto.types" item="type" open="(" close=")" separator=",">
+                            #{type}
+                        </foreach>
+                    </if>
+                    <if test="dto.name != null and dto.name != ''">
+                        and m.name = #{dto.name}
+                    </if>
+                </where>
+            </when>
+            <otherwise>
+                SELECT `id`, `name`, `parent_id`, `chinese_name`, `english_name`, `status`, `type`, `url`, `icon`, `sort`, `update_time`, `create_time`, um.user_id
+                FROM sys_menu m
+                LEFT JOIN sys_user_menu um on um.menu_id = m.id
+                WHERE um.user_id = #{dto.userId}
+                <if test="dto.status != null and dto.status != ''">
+                    and m.status = #{dto.status}
+                </if>
+                <if test="dto.types != null and dto.types.size > 0">
+                    and m.type in
+                    <foreach collection="dto.types" item="type" open="(" close=")" separator=",">
+                        #{type}
+                    </foreach>
+                </if>
+                <if test="dto.name != null and dto.name != ''">
+                    and m.name = #{dto.name}
+                </if>
+            </otherwise>
+        </choose>
+        ) t GROUP BY id
+    </select>
+
+    <select id="getMenuChildrens" parameterType="integer" resultType="com.tansci.domain.SysMenu">
+        SELECT * FROM (
+            SELECT t1.*,IF(FIND_IN_SET(parent_id, @pids) > 0, @pids := CONCAT(@pids, ',', id), '0') AS ischild
+            FROM (SELECT * FROM sys_menu ORDER BY id ASC) t1,(SELECT @pids := #{id}) t2
+        ) t3 WHERE ischild != '0'
+    </select>
+
+</mapper>

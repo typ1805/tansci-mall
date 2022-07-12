@@ -1,37 +1,41 @@
-# tansci-mall
+## 简介
 
-#### 介绍
-springboot+vue3.2 微商城
+基于 SpringBoot + Vue3.2 + Element Plus 微商城 SaaS 系统
 
-#### 软件架构
-软件架构说明
+## 架构
 
+### 技术栈
 
-#### 安装教程
+#### 1、环境要求
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+- JDK.version：1.8+  强制要求
+- MySql.version：5.7+  数据库
+- Node.version：14.16+  前端环境要求
+- Nginx.version：1.16+  请求转发、反向代理
+- Maven.version：3.8+  项目构建，管理
+- Git.version：2.14+  项目版本管理
 
-#### 使用说明
+#### 2、后端
+- java.version：1.8
+- spring-boot.version：2.7.1
+- mybatis-plus.version：3.5.1
+- jjwt.version：0.9.0
+- knife4j-spring-boot.version：3.0.3
+- mysql.version：5.1.46
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### 3、前端技术
 
-#### 参与贡献
+- vite.version：2.9.9
+- vue.version：3.2.25
+- vue-router.version：4.0.15
+- element-plus.version：2.2.2
+- sass.version：1.51.0
+- axios.version：0.27.2
+- pinia.version：2.0.13
+- echarts.version：5.3.3
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+---
 
+## 部署
 
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+执行SQL初始化数据，测试用户：`admin / admin123`
