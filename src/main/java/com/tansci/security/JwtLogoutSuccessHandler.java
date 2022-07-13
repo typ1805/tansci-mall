@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @ClassName： JWTLogoutSuccessHandler.java
- * @ClassPath： com.tansci.security.JWTLogoutSuccessHandler.java
+ * @ClassName： JwtLogoutSuccessHandler.java
+ * @ClassPath： com.tansci.security.JwtLogoutSuccessHandler.java
  * @Description： 登出处理
  * @Author： tanyp
  * @Date： 2022/03/29 16:14
  **/
 @Slf4j
-public class JWTLogoutSuccessHandler implements LogoutSuccessHandler {
+public class JwtLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {

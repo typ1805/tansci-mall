@@ -10,12 +10,20 @@ import com.tansci.domain.dto.SysUserDto;
 import com.tansci.exception.BusinessException;
 import com.tansci.mapper.SysUserMapper;
 import com.tansci.service.SysUserService;
+import com.tansci.utils.JwtTokenUtils;
+import com.tansci.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -29,6 +37,9 @@ import java.util.Objects;
 @Slf4j
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public IPage<SysUser> page(Page page, SysUserDto dto) {
@@ -47,14 +58,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return sysUserPage;
     }
 
-    /**
-     * @MonthName： modifyPass
-     * @Description： 修改密码
-     * @Author： tanyp
-     * @Date： 2022/03/29 22:18
-     * @Param： [dto]
-     * @return： java.lang.Integer
-     **/
     @Override
     public Integer modifyPass(SysUserDto dto) {
         SysUser user = this.baseMapper.selectOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, dto.getUsername()));
@@ -69,4 +72,41 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return this.baseMapper.updateById(user);
     }
 
+    @Override
+    public Map<String, Object> login(SysUserDto dto) {
+        Map<String, Object> map = new HashMap<>();
+
+        SysUser user = this.baseMapper.selectOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, dto.getUsername()));
+        if (Objects.isNull(user)) {
+            throw new BusinessException("用户名或密码有误！");
+        }
+
+        UserDetails userDetails = new SecurityUtils(user);
+        if (!passwordEncoder.matches(dto.getPassword(), userDetails.getPassword())) {
+            throw new BusinessException("用户名或密码有误！");
+        }
+
+        try {
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // 创建token
+            String token = JwtTokenUtils.createToken(SysUser.builder()
+                    .id(user.getId())
+                    .username(user.getUsername())
+                    .password(user.getPassword())
+                    .type(user.getType())
+                    .build(), false);
+            map.put("token", token);
+            map.put("username", user.getUsername());
+            map.put("nickname", user.getNickname());
+            map.put("loginTime", LocalDateTime.now());
+
+            // 记录登录日志
+        } catch (Exception e) {
+            log.error("=====登录异常:{}", e.getMessage());
+            throw new BusinessException("用户名或密码有误！");
+        }
+        return map;
+    }
 }

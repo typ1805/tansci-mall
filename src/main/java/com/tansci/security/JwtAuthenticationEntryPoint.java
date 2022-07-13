@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @ClassName： JWTAuthenticationEntryPoint.java
- * @ClassPath： com.tansci.security.JWTAuthenticationEntryPoint.java
+ * @ClassName： JwtAuthenticationEntryPoint.java
+ * @ClassPath： com.tansci.security.JwtAuthenticationEntryPoint.java
  * @Description： 没有携带token或者token无效
  * @Author： tanyp
  * @Date： 2022/03/29 16:14
  **/
-public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {

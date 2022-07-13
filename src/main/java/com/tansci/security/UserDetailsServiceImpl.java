@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         SysUser user = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, username));
         if (Objects.isNull(user)) {
-            throw new BusinessException("用户名获取密码有误！");
+            throw new BusinessException("用户名或密码有误！");
         }
         return new SecurityUtils(user);
     }

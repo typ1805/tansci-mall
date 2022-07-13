@@ -9,6 +9,7 @@ import com.tansci.domain.SysUser;
 import com.tansci.domain.dto.SysUserDto;
 import com.tansci.service.SysUserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,34 +35,19 @@ public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
 
-    /**
-     * @methodName：page
-     * @description：用户列表分页
-     * @author：tanyp
-     * @dateTime：2022/03/29 22:18
-     * @Params： [page, dto]
-     * @Return： com.tansci.common.Wrapper<com.baomidou.mybatisplus.core.metadata.IPage < com.tansci.domain.SysUser>>
-     * @editNote：
-     */
+    @ApiOperation(value = "用户分页")
     @GetMapping("/page")
     public Wrapper<IPage<SysUser>> page(Page page, SysUserDto dto) {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysUserService.page(page, dto));
     }
 
+    @ApiOperation(value = "根据用户名称获取用户信息")
     @GetMapping("/qryByUserName")
     public Wrapper<SysUser> qryByUserName(SysUserDto dto) {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, dto.getUsername())));
     }
 
-    /**
-     * @methodName：save
-     * @description：添加用户
-     * @author：tanyp
-     * @dateTime：2022/03/29 22:18
-     * @Params： [user]
-     * @Return： com.tansci.common.Wrapper<java.lang.Boolean>
-     * @editNote：
-     */
+    @ApiOperation(value = "添加")
     @PostMapping("/save")
     public Wrapper<Boolean> save(@RequestBody SysUser user) {
         user.setCreateTime(LocalDateTime.now());
@@ -72,47 +58,29 @@ public class SysUserController {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysUserService.save(user));
     }
 
-    /**
-     * @methodName：update
-     * @description：修改用户
-     * @author：tanyp
-     * @dateTime：2022/03/29 22:18
-     * @Params： [user]
-     * @Return： com.tansci.common.Wrapper<java.lang.Boolean>
-     * @editNote：
-     */
+    @ApiOperation(value = "更新")
     @PostMapping("/update")
     public Wrapper<Boolean> update(@RequestBody SysUser user) {
         user.setUpdateTime(LocalDateTime.now());
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysUserService.updateById(user));
     }
 
-    /**
-     * @methodName：save
-     * @description：删除
-     * @author：tanyp
-     * @dateTime：2022/03/29 22:18
-     * @Params： [user]
-     * @Return： com.tansci.common.Wrapper<java.lang.Boolean>
-     * @editNote：
-     */
+    @ApiOperation(value = "删除")
     @GetMapping("/del")
     public Wrapper<Boolean> del(SysUserDto dto) {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysUserService.removeById(dto.getId()));
     }
 
-    /**
-     * @methodName：modifyPass
-     * @description：修改密码
-     * @author：tanyp
-     * @dateTime：2022/03/29 22:18
-     * @Params： [user]
-     * @Return： com.tansci.common.Wrapper<java.lang.Boolean>
-     * @editNote：
-     */
+    @ApiOperation(value = "修改密码")
     @PostMapping("/modifyPass")
     public Wrapper<Integer> modifyPass(@RequestBody SysUserDto dto) {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysUserService.modifyPass(dto));
+    }
+
+    @ApiOperation(value = "登录")
+    @PostMapping("/login")
+    public Wrapper<Object> login(@RequestBody SysUserDto dto) {
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysUserService.login(dto));
     }
 
 }

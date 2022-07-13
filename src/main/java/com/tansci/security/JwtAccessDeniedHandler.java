@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @ClassName： JWTAccessDeniedHandler.java
- * @ClassPath： com.tansci.security.JWTAccessDeniedHandler.java
+ * @ClassName： JwtAccessDeniedHandler.java
+ * @ClassPath： com.tansci.security.JwtAccessDeniedHandler.java
  * @Description： 没有访问权限
  * @Author： tanyp
  * @Date： 2022/03/29 16:14
  **/
-public class JWTAccessDeniedHandler implements AccessDeniedHandler {
+public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
