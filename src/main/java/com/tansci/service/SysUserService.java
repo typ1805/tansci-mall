@@ -5,8 +5,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tansci.domain.SysUser;
 import com.tansci.domain.dto.SysUserDto;
+import com.tansci.domain.vo.SysUserVo;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @path：com.tansci.service.SysUserService.java
@@ -22,6 +23,6 @@ public interface SysUserService extends IService<SysUser> {
 
     Integer modifyPass(SysUserDto dto);
 
-    Map<String, Object> login(SysUserDto dto);
+    SysUserVo login(SysUserDto dto, HttpServletRequest request);
 
 }

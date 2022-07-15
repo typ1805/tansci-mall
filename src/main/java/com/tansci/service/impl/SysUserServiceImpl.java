@@ -5,13 +5,17 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tansci.common.Enums;
+import com.tansci.domain.LoginLog;
 import com.tansci.domain.SysUser;
 import com.tansci.domain.dto.SysUserDto;
+import com.tansci.domain.vo.SysUserVo;
 import com.tansci.exception.BusinessException;
 import com.tansci.mapper.SysUserMapper;
+import com.tansci.service.LoginLogService;
 import com.tansci.service.SysUserService;
 import com.tansci.utils.JwtTokenUtils;
 import com.tansci.utils.SecurityUtils;
+import com.tansci.utils.SystemUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,9 +25,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -40,6 +43,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private LoginLogService loginLogService;
 
     @Override
     public IPage<SysUser> page(Page page, SysUserDto dto) {
@@ -73,8 +79,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public Map<String, Object> login(SysUserDto dto) {
-        Map<String, Object> map = new HashMap<>();
+    public SysUserVo login(SysUserDto dto, HttpServletRequest request) {
+        SysUserVo userVo = SysUserVo.builder().loginTime(LocalDateTime.now()).build();
 
         SysUser user = this.baseMapper.selectOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, dto.getUsername()));
         if (Objects.isNull(user)) {
@@ -91,22 +97,36 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // 创建token
-            String token = JwtTokenUtils.createToken(SysUser.builder()
-                    .id(user.getId())
-                    .username(user.getUsername())
-                    .password(user.getPassword())
-                    .type(user.getType())
-                    .build(), false);
-            map.put("token", token);
-            map.put("username", user.getUsername());
-            map.put("nickname", user.getNickname());
-            map.put("loginTime", LocalDateTime.now());
+            String token = JwtTokenUtils.createToken(
+                    SysUser.builder()
+                            .id(user.getId())
+                            .username(user.getUsername())
+                            .password(user.getPassword())
+                            .type(user.getType())
+                            .build(), false);
+            // 返回信息
+            userVo.setNickname(user.getNickname());
+            userVo.setUsername(user.getUsername());
+            userVo.setType(user.getType());
+            userVo.setToken(token);
 
             // 记录登录日志
+            loginLogService.save(
+                    LoginLog.builder()
+                            .userId(user.getId())
+                            .userName(user.getUsername())
+                            .loginTime(userVo.getLoginTime())
+                            .browser(SystemUtils.getBrowser(request))
+                            .ip(SystemUtils.getIpAddress(request))
+                            .os(SystemUtils.getOS(request))
+                            .createTime(LocalDateTime.now())
+                            .build()
+            );
         } catch (Exception e) {
             log.error("=====登录异常:{}", e.getMessage());
             throw new BusinessException("用户名或密码有误！");
         }
-        return map;
+        return userVo;
     }
+
 }

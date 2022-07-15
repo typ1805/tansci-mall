@@ -22,16 +22,25 @@ import lombok.experimental.SuperBuilder;
 @ApiModel(value = "用户DTO")
 public class SysUserDto {
 
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(value = "主键")
     private String id;
 
-    @ApiModelProperty(value = "用户名称")
+    @ApiModelProperty(value = "名称")
     private String username;
 
-    @ApiModelProperty(value = "用户昵称")
+    @ApiModelProperty(value = "昵称")
     private String nickname;
 
-    @ApiModelProperty(value = "新密码")
+    @ApiModelProperty(value = "邮箱")
+    private String email;
+
+    @ApiModelProperty(value = "电话")
+    private String phone;
+
+    @ApiModelProperty(value = "状态")
+    private Integer status;
+
+    @ApiModelProperty(value = "密码")
     private String password;
 
     @ApiModelProperty(value = "旧密码")

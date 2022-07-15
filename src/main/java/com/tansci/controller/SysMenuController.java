@@ -36,29 +36,31 @@ public class SysMenuController {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysMenuService.list(dto));
     }
 
+    @ApiOperation(value = "根据id查询", notes = "根据id查询")
+    @GetMapping("getById/{id}")
+    public Wrapper<SysMenu> getById(@PathVariable("id") String id) {
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysMenuService.getById(id));
+    }
+
     @ApiOperation(value = "添加菜单", notes = "添加菜单")
     @PostMapping("/save")
-    public Wrapper<Boolean> save(@RequestBody SysMenu sysMenu) {
+    public Wrapper<Object> save(@RequestBody SysMenu sysMenu) {
+        sysMenu.setUpdateTime(LocalDateTime.now());
+        sysMenu.setCreateTime(LocalDateTime.now());
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysMenuService.save(sysMenu));
     }
 
     @ApiOperation(value = "修改菜单", notes = "修改菜单")
     @PostMapping("/update")
-    public Wrapper<Boolean> update(@RequestBody SysMenu sysMenu) {
+    public Wrapper<Object> update(@RequestBody SysMenu sysMenu) {
         sysMenu.setUpdateTime(LocalDateTime.now());
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysMenuService.updateById(sysMenu));
     }
 
     @ApiOperation(value = "删除菜单", notes = "删除菜单")
     @GetMapping("/del")
-    public Wrapper<Boolean> del(Integer id) {
-        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysMenuService.del(id));
-    }
-
-    @ApiOperation(value = "用户菜单权限", notes = "用户菜单权限")
-    @PostMapping("/userMenuSave")
-    public Wrapper<Boolean> userMenuSave(@RequestBody SysMenuDto dto) {
-        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysMenuService.userMenuSave(dto));
+    public Wrapper<Object> delete(SysMenuDto dto) {
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysMenuService.delete(dto));
     }
 
 }

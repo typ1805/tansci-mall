@@ -15,57 +15,56 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 /**
- * @ClassName： SysMenu.java
- * @ClassPath： com.tansci.domain.SysMenu.java
- * @Description： 菜单
+ * @ClassName： SysDic.java
+ * @ClassPath： com.tansci.SysDic.java
+ * @Description： 数据字典
  * @Author： tanyp
- * @Date： 2021/7/20 16:25
+ * @Date： 2022/04/22 11:33
  **/
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@TableName(value = "sys_menu")
-@ApiModel(value = "菜单")
-public class SysMenu {
+@TableName(value = "sys_dic")
+@ApiModel(value = "数据字典")
+public class SysDic {
 
     @TableId(type = IdType.ASSIGN_UUID)
     @ApiModelProperty(value = "主键id", hidden = true)
     private String id;
 
-    @ApiModelProperty(value = "菜单名称")
-    private String name;
-
-    @ApiModelProperty(value = "中文名称")
-    private String chineseName;
-
-    @ApiModelProperty(value = "英文名称")
-    private String englishName;
-
-    @ApiModelProperty(value = "父菜单ID")
+    @ApiModelProperty(value = "父ID")
     private String parentId;
 
-    @ApiModelProperty(value = "状态：0：删除，1：正常，2：禁用")
-    private Integer status;
+    @ApiModelProperty(value = "分组名称")
+    private String groupName;
 
-    @ApiModelProperty(value = "菜单UR")
-    private String url;
+    @ApiModelProperty(value = "类型：0、系统，1、业务")
+    private Integer type;
 
-    @ApiModelProperty(value = "图标")
-    private String icon;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "类型名称")
+    private String typeName;
 
-    @ApiModelProperty(value = "级别")
-    private Integer level;
+    @ApiModelProperty(value = "值")
+    private Integer dicValue;
+
+    @ApiModelProperty(value = "名称")
+    private String dicLabel;
 
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
-    @ApiModelProperty(value = "类型：0、菜单，1、按钮，2、链接，3、嵌套页面")
-    private Integer type;
+    @ApiModelProperty(value = "预留字段1")
+    private String text1;
 
-    @ApiModelProperty(value = "描述")
-    private String remarks;
+    @ApiModelProperty(value = "预留字段3")
+    private String text2;
+
+    @ApiModelProperty(value = "预留字段2")
+    private String text3;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @ApiModelProperty(value = "更新时间")
@@ -75,12 +74,10 @@ public class SysMenu {
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
-    @TableField(exist = false)
-    @ApiModelProperty(value = "角色id")
-    private String roleId;
+    @ApiModelProperty(value = "描述")
+    private String remarks;
 
     @TableField(exist = false)
-    @ApiModelProperty(value = "子级菜单")
-    private List<SysMenu> children;
+    private List<SysDic> children;
 
 }

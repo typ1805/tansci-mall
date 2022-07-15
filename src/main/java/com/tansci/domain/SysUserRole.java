@@ -9,24 +9,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @ClassName： SysUserMenu.java
- * @ClassPath： com.tansci.domain.SysUserMenu.java
- * @Description： 用户菜单
+ * @ClassName： SysUserRole.java
+ * @ClassPath： com.tansci.domain.SysUserRole.java
+ * @Description： 用户角色
  * @Author： tanyp
- * @Date： 2021/7/20 16:25
+ * @Date： 2022/4/25 16:09
  **/
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@TableName(value = "sys_user_menu")
-@ApiModel(value = "用户菜单")
-public class SysUserMenu {
+@TableName(value = "sys_user_role")
+@ApiModel(value = "用户角色")
+public class SysUserRole {
+
+    @ApiModelProperty(value = "角色id")
+    private String roleId;
 
     @ApiModelProperty(value = "用户id")
     private String userId;
-
-    @ApiModelProperty(value = "菜单id")
-    private Integer menuId;
 
 }

@@ -17,10 +17,6 @@ public interface SysMenuService extends IService<SysMenu> {
 
     List<SysMenu> list(SysMenuDto dto);
 
-    boolean save(SysMenu sysMenu);
-
-    boolean del(Integer id);
-
-    Boolean userMenuSave(SysMenuDto dto);
+    Integer delete(SysMenuDto dto);
 
 }

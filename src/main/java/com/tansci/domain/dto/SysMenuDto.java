@@ -24,7 +24,7 @@ import java.util.List;
 public class SysMenuDto {
 
     @ApiModelProperty(value = "主键id")
-    private Integer id;
+    private String id;
 
     @ApiModelProperty(value = "菜单名称")
     private String name;
@@ -38,13 +38,10 @@ public class SysMenuDto {
     @ApiModelProperty(value = "父id")
     private Integer parentId;
 
-    @ApiModelProperty(value = "用户id")
-    private String userId;
-
     @ApiModelProperty(value = "用户类型")
     private Integer userType;
 
-    @ApiModelProperty(value = "菜单集合")
-    private List<Integer> menuIds;
+    @ApiModelProperty(value = "权限id")
+    private String roleId;
 
 }

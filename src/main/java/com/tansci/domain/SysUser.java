@@ -44,7 +44,7 @@ public class SysUser {
     @ApiModelProperty(value = "用户昵称")
     private String nickname;
 
-    @ApiModelProperty(value = "用户类型：0、超级管理员，1、管理员，2、普通用户")
+    @ApiModelProperty(value = "用户类型：1、管理员，2、普通用户")
     private Integer type;
     @TableField(exist = false)
     private String typeName;
@@ -79,5 +79,9 @@ public class SysUser {
 
     @ApiModelProperty(value = "备注")
     private String remarks;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "角色id")
+    private String roleId;
 
 }
