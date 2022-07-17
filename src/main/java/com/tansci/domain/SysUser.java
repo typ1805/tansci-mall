@@ -66,6 +66,9 @@ public class SysUser {
     @ApiModelProperty(value = "微信唯一标识")
     private String openId;
 
+    @ApiModelProperty(value = "身份证号码")
+    private String idCard;
+
     @ApiModelProperty(value = "邮箱")
     private String email;
 

@@ -12,10 +12,10 @@
 </template>
 <script setup>
     import {onMounted, reactive, toRefs} from 'vue'
+    import {ElMessage, ElMessageBox} from "element-plus"
     import Table from '@/components/common/Table.vue'
-    import {orderPage, delOrder} from "@/api/systemApi";
-    import {ElMessage, ElMessageBox} from "element-plus";
     import {isMobile} from '@/utils/utils'
+    import {orderPage, delOrder} from "@/api/admin/order"
 
     const state = reactive({
         mobile: false,

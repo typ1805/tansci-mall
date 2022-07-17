@@ -7,7 +7,9 @@ axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 axios.interceptors.request.use(function (config) {
-    config.headers.Authorization = 'Bearer '+ sessionStorage.getItem('token') || ''
+    if(sessionStorage.getItem('token') && sessionStorage.getItem('token').length > 0){
+        config.headers.Authorization = 'Bearer '+ sessionStorage.getItem('token')
+    }
     return config
 })
 

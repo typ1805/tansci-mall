@@ -36,10 +36,10 @@
 <script setup>
 	import {onBeforeMount,onMounted,reactive,ref,toRefs,unref} from "vue"
 	import {useRouter} from 'vue-router'
-	import {login} from '@/api/systemApi'
 	import SlidingVerify from '@/components/common/SlidingVerify.vue'
 	import {isMobile} from '@/utils/utils.js'
 	import {useUserStore, useTokenStore} from '@/store/settings'
+	import {login} from '@/api/admin/user'
 
 	const userStore = useUserStore()
 	const tokenStore = useTokenStore()

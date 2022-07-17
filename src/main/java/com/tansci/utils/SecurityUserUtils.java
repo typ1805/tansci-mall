@@ -1,6 +1,5 @@
 package com.tansci.utils;
 
-import com.tansci.domain.SysUser;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -20,9 +19,9 @@ public class SecurityUserUtils {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public static SysUser getUser() {
+    public static SecurityUtils getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (SysUser) authentication.getDetails();
+        return (SecurityUtils) authentication.getDetails();
     }
 
     public static void logout() {

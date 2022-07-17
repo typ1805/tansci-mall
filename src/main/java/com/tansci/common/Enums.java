@@ -35,15 +35,21 @@ public enum Enums {
     /**
      * 用户类型
      */
-    USER_TYPE_0(0, "user_type", "超级管理员"),
     USER_TYPE_1(1, "user_type", "管理员"),
-    USER_TYPE_2(2, "user_type", "普通用户"),
+    USER_TYPE_2(2, "user_type", "商户"),
 
     /**
      * 付款码类型
      */
     PAY_CODE_WX(1, "pay_code_type", "微信"),
     PAY_CODE_ALL(2, "pay_code_type", "支付宝"),
+
+    /**
+     * 权限状态
+     */
+    ROLE_STATUS_0(0, "role_status", "未启用"),
+    ROLE_STATUS_1(1, "role_status", "启用"),
+    ROLE_STATUS_2(2, "role_status", "禁用"),
 
     /**
      * 商品状态

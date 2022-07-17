@@ -7,11 +7,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tansci.common.Enums;
 import com.tansci.domain.LoginLog;
 import com.tansci.domain.SysUser;
+import com.tansci.domain.SysUserRole;
 import com.tansci.domain.dto.SysUserDto;
 import com.tansci.domain.vo.SysUserVo;
 import com.tansci.exception.BusinessException;
 import com.tansci.mapper.SysUserMapper;
 import com.tansci.service.LoginLogService;
+import com.tansci.service.SysUserRoleService;
 import com.tansci.service.SysUserService;
 import com.tansci.utils.JwtTokenUtils;
 import com.tansci.utils.SecurityUtils;
@@ -27,7 +29,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @path：com.tanersci.service.impl.SysUserServiceImpl.java
@@ -47,6 +51,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private LoginLogService loginLogService;
 
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
+
     @Override
     public IPage<SysUser> page(Page page, SysUserDto dto) {
         Page<SysUser> sysUserPage = this.page(page,
@@ -56,9 +63,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                         .orderByDesc(SysUser::getCreateTime)
         );
         if (Objects.nonNull(sysUserPage) && sysUserPage.getRecords().size() > 0) {
+            List<SysUserRole> roles = sysUserRoleService.list();
             sysUserPage.getRecords().forEach(item -> {
-                item.setGenderName(Enums.getVlaueByGroup(item.getGender(), "user_gender"));
-                item.setTypeName(Enums.getVlaueByGroup(item.getType(), "user_type"));
+                Optional<SysUserRole> rOptional = roles.stream().filter(u -> Objects.equals(u.getUserId(), item.getId())).findFirst();
+                if (rOptional.isPresent()) {
+                    item.setRoleId(rOptional.get().getRoleId());
+                }
+
+                if (Objects.nonNull(item.getGender())) {
+                    item.setGenderName(Enums.getVlaueByGroup(item.getGender(), "user_gender"));
+                }
+
+                if (Objects.nonNull(item.getType())) {
+                    item.setTypeName(Enums.getVlaueByGroup(item.getType(), "user_type"));
+                }
             });
         }
         return sysUserPage;

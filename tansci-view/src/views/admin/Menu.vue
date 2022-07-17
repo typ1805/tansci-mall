@@ -42,6 +42,19 @@
                 <el-form-item label="菜单顺序" prop="sort" :rules="[{required: true, message: '菜单顺序不能为空', trigger: 'blur'}]">
                     <el-input-number v-model="addMenuForm.sort" :min="0" :max="999" style="width:50%"></el-input-number>
                 </el-form-item>
+                <el-form-item label="菜单级别" prop="level" :rules="[{required: true, message: '请选择级别', trigger: 'change'}]">
+                    <el-input-number v-model="addMenuForm.level" :min="1" :max="999" style="width:50%"></el-input-number>
+                </el-form-item>
+                <el-form-item label="菜单状态" prop="status" :rules="[{required: true, message: '请选择状态', trigger: 'change'}]">
+                    <el-radio-group v-model="addMenuForm.status">
+                        <el-radio :label="1">正常</el-radio>
+                        <el-radio :label="2">禁用</el-radio>
+                        <el-radio :label="0">已删除</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="备注" prop="remarks">
+                    <el-input v-model="addMenuForm.remarks" type="textarea" :rows="2" placeholder="请输入备注" style="width:50%"></el-input>
+                </el-form-item>
                 <el-form-item v-show="operate != 0 && operate != 3">
                     <el-button type="primary" @click="onAddMenu">提交</el-button>
                 </el-form-item>
@@ -52,7 +65,7 @@
 <script setup>
 	import {onMounted, reactive, ref, unref, toRefs} from 'vue'
     import {ElMessage, ElMessageBox} from 'element-plus'
-    import {menuList,delMenu,saveMenu,updateMenu} from '@/api/systemApi'
+    import {menuList,delMenu,saveMenu,updateMenu} from '@/api/admin/menu'
     import Icon from '@/components/common/Icon.vue'
 
     const addMenuRuleForm = ref(null)
@@ -63,14 +76,17 @@
         iconVisible: false,
         addMenuForm:{
             id: '',
-            parentId:'',
+            parentId:'0',
             name:'',
             type:'',
             url:'',
             chineseName:'',
             englishName:'',
             icon:'',
+            level: 1,
             sort: 0,
+            status: 1,
+            remarks: '',
         },
     })
     const {treeData,operate,menuId,iconVisible,addMenuForm} = toRefs(state)
@@ -99,7 +115,10 @@
             chineseName: data.chineseName,
             englishName: data.englishName,
             icon: data.icon,
+            level: data.level,
             sort: data.sort,
+            status: data.status,
+            remarks: data.remarks,
         }
     }
 
@@ -108,14 +127,17 @@
             state.operate = 1;
             state.addMenuForm = {
                 id: '',
-                parentId: state.menuId,
+                parentId: state.menuId?state.menuId:'0',
                 name:'',
                 type:'',
                 url:'',
                 chineseName:'',
                 englishName:'',
                 icon:'',
+                level: 1,
                 sort: 0,
+                status: 1,
+                remarks: '',
             }
         } else if(val == 2) {
             state.operate = 2;
@@ -165,14 +187,17 @@
                     state.operate = 0;
                     state.addMenuForm = {
                         id: '',
-                        parentId:'',
+                        parentId:'0',
                         name:'',
                         type:'',
                         url:'',
                         chineseName:'',
                         englishName:'',
                         icon:'',
+                        level: 1,
                         sort: 0,
+                        status: 1,
+                        remarks: '',
                     };
                     onMenuList();
                 }
@@ -188,14 +213,17 @@
                     state.operate = 0;
                     state.addMenuForm = {
                         id: '',
-                        parentId:'',
+                        parentId:'0',
                         name:'',
                         type:'',
                         url:'',
                         chineseName:'',
                         englishName:'',
                         icon:'',
+                        level: 1,
                         sort: 0,
+                        status: 1,
+                        remarks: '',
                     };
                     onMenuList();
                 }

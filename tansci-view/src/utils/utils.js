@@ -172,7 +172,7 @@ export function getTreeIds(data = [], arr = []) {
  */
 export function getCheckTreeIds(data = [], arr = []) {
     for (let item of data) {
-        if (item.userId) {
+        if (item.roleId) {
             arr.push(item.id);
         }
         if (item.children && item.children.length) {

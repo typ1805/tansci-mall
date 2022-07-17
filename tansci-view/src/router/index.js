@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory} from 'vue-router'
 import Layout from '@/layout/Layout.vue'
-import {menuList} from '@/api/systemApi'
+import {menuList} from '@/api/admin/menu'
 import {useMenuStore} from '@/store/settings'
 
 import common from './common'

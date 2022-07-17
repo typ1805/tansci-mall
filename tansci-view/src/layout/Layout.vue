@@ -101,7 +101,7 @@
     import TabsMenu from "@/components/common/TabsMenu.vue"
     import {useUserStore, useTokenStore, useMenuStore} from '@/store/settings'
     import {timeFormate, isMobile} from '@/utils/utils.js'
-    import {modifyPass,logout, qryByUserName} from '@/api/systemApi'
+    import {modifyPass,logout, qryByUserName} from '@/api/admin/user'
 
     const router = useRouter()
     const userStore = useUserStore();

@@ -61,7 +61,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 }
 
                 if (Objects.nonNull(item.getStatus())) {
-                    item.setStatusName(Enums.getVlaueByGroup(item.getStatus(), "status"));
+                    item.setStatusName(Enums.getVlaueByGroup(item.getStatus(), "role_status"));
                 }
             });
         }

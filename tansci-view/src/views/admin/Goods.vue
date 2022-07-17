@@ -66,11 +66,12 @@
 </template>
 <script setup>
     import {onMounted, reactive, ref, toRefs, unref} from 'vue'
-    import Table from '@/components/common/Table.vue'
-    import {goodsPage, addGoods, updateGoods, delGoods, delFile} from "@/api/systemApi";
-    import {ElMessage, ElMessageBox} from "element-plus";
+    import {ElMessage, ElMessageBox} from "element-plus"
     import {useTokenStore} from '@/store/settings'
     import {isMobile} from '@/utils/utils'
+     import Table from '@/components/common/Table.vue'
+    import {goodsPage, addGoods, updateGoods, delGoods} from "@/api/admin/goods"
+    import {delFile} from "@/api/admin/upload"
 
     const tokenStore = useTokenStore();
     const addRuleForm = ref(null)
@@ -118,7 +119,7 @@
             remarks:'',
         },
         token: tokenStore.getToken,
-        uploadAaction: '/vending/upload/uploadImage',
+        uploadAaction: '/tansci/upload/uploadImage',
     })
 
     const {

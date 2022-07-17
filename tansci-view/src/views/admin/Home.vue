@@ -52,7 +52,7 @@
     import {useUserStore} from '@/store/settings'
     import * as echarts from 'echarts'
     import {timeAddress,numberDormat} from '@/utils/utils'
-    import {statistics,orderOverview,channelAnalysis} from '@/api/systemApi'
+    import {statistics,orderOverview,channelAnalysis} from '@/api/admin/home'
 
     const userStore = useUserStore();
     let orderOverviewChart = null;
