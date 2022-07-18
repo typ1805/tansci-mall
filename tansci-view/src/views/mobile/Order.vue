@@ -22,7 +22,7 @@
                     <el-card :shadow="shadow">
                         <div v-for="(order,index) in orderInfo.orderList" :key="index" class="shop-content">
                             <div class="shop-info">
-                                <el-icon><Shop /></el-icon>
+                                <el-icon style="padding-right: 0.4rem;"><Shop /></el-icon>
                                 <span>{{order.shopName}}</span>
                             </div>
                             <div v-for="goods in order.goodsList" :key="goods" class="goods-list">
@@ -107,13 +107,14 @@
     const route = useRoute()
 
     const state = reactive({
+        shadow: 'always',
         defaultHeight: null,
         orderInfo: {},
         addressInfo: {},
     })
 
     const {
-        defaultHeight,orderInfo,addressInfo
+        shadow,defaultHeight,orderInfo,addressInfo
     } = toRefs(state)
 
     onBeforeMount(() => {

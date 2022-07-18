@@ -15,6 +15,7 @@
                     <el-card :shadow="shadow">
                         <template #header>
                             <span>我的订单</span>
+                            <el-button @click="toOrderList" icon="ArrowRightBold" type="primary" text style="float: right;padding-bottom: 1.3rem;"></el-button>
                         </template>
                         <div class="card-order">
                             <div v-for="order in orderList" :key="order" class="card-order-item">
@@ -51,7 +52,10 @@
 </template>
 <script setup>
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
+    import {useRouter} from 'vue-router'
     import FooterMenu from '@/components/miniapp/FooterMenu.vue'
+
+    const router = useRouter();
 
     const state = reactive({
         shadow: 'always',
@@ -80,22 +84,26 @@
     const onOrderList = () =>{
         state.orderList = [
             { icon: 'CreditCard', color:'#303133', name: '待付款'},
-            { icon: 'Box', color:'#303133', name: '待发货'},
+            { icon: 'Postcard', color:'#303133', name: '待发货'},
             { icon: 'Van', color:'#303133', name: '已发货'},
-            { icon: 'ChatDotSquare', color:'#303133', name: '待评价'},
-            { icon: 'Wallet', color:'#303133', name: '已完成'},
+            { icon: 'ChatLineSquare', color:'#303133', name: '待评价'},
+            { icon: 'Suitcase', color:'#303133', name: '已完成'},
         ]
     }
 
     const onServiceList = () =>{
         state.serviceList = [
-            { icon: 'Service', color:'#303133', name: '客户服务'},
+            { icon: 'Setting', color:'#303133', name: '账号管理'},
             { icon: 'Ticket', color:'#303133', name: '优惠券'},
             { icon: 'Coin', color:'#303133', name: '我的积分'},
             { icon: 'Medal', color:'#303133', name: '我的会员'},
             { icon: 'OfficeBuilding', color:'#303133', name: '地址管理'},
-            { icon: 'Setting', color:'#303133', name: '账号管理'},
+            { icon: 'Service', color:'#303133', name: '客户服务'},
         ]
+    }
+
+    const toOrderList = () =>{
+        router.push({path: '/miniapp/orderList'})
     }
 
 </script>

@@ -48,6 +48,14 @@ const mobile = [
         component: () => import('@/views/mobile/Order.vue')
     },
     {
+        path: '/miniapp/orderList',
+        name: 'orderList',
+        chineseName: '订单列表',
+        type: 2,
+        meta: {title: "订单列表"},
+        component: () => import('@/views/mobile/OrderList.vue')
+    },
+    {
         path: '/miniapp/shop',
         name: 'shop',
         chineseName: '店铺',
