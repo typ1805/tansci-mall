@@ -49,10 +49,11 @@
 </template>
 <script setup>
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
-    import {useRouter} from 'vue-router'
+    import {useRouter,useRoute} from 'vue-router'
     import OrderList from '@/components/miniapp/OrderList.vue'
 
     const router = useRouter()
+    const route = useRoute()
 
     const state = reactive({
         defaultHeight: null,
@@ -69,6 +70,9 @@
     })
 
     onMounted(()=>{
+        if(route.query){
+            state.activeTab = route.query.type?route.query.type:'all'
+        }
         onOrderList();
     })
 

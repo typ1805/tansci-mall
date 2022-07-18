@@ -28,7 +28,7 @@
                 <span style="font-size: 12px;font-weight: 700;">￥</span>
                 <span style="font-weight: 700;font-size: 16px;">{{onDecimal(order.amount)}}</span>
             </div>
-            <el-divider style=""/>
+            <el-divider/>
             <div class="order-but">
                 <el-button @click="onEvaluate(order.orderId)" round>评价晒单</el-button>
                 <el-button @click="onBuyAgain(order.orderId)" type="danger" round>再次购买</el-button>

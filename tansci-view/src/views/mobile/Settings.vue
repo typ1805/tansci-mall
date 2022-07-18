@@ -15,10 +15,10 @@
                     <el-card :shadow="shadow">
                         <template #header>
                             <span>我的订单</span>
-                            <el-button @click="toOrderList" icon="ArrowRightBold" type="primary" text style="float: right;padding-bottom: 1.3rem;"></el-button>
+                            <el-button @click="onOrder(null)" icon="ArrowRightBold" type="primary" text style="float: right;padding-bottom: 1.3rem;"></el-button>
                         </template>
                         <div class="card-order">
-                            <div v-for="order in orderList" :key="order" class="card-order-item">
+                            <div v-for="order in orderList" :key="order" @click="onOrder(order.path)" class="card-order-item">
                                 <el-icon :color="order.color" :size="30">
                                     <component :is="order.icon"></component>
                                 </el-icon>
@@ -30,7 +30,7 @@
                 <div class="main-service">
                     <el-card :shadow="shadow">
                         <div v-for="(item,index) in serviceList" :key="index" class="card-service">
-                            <div class="card-service-title">
+                            <div @click="onService(item.path)" class="card-service-title">
                                 <el-icon :color="item.color" :size="24">
                                     <component :is="item.icon"></component>
                                 </el-icon>
@@ -83,27 +83,31 @@
 
     const onOrderList = () =>{
         state.orderList = [
-            { icon: 'CreditCard', color:'#303133', name: '待付款'},
-            { icon: 'Postcard', color:'#303133', name: '待发货'},
-            { icon: 'Van', color:'#303133', name: '已发货'},
-            { icon: 'ChatLineSquare', color:'#303133', name: '待评价'},
-            { icon: 'Suitcase', color:'#303133', name: '已完成'},
+            {path:'pay', icon: 'CreditCard', color:'#303133', name: '待付款'},
+            {path:'delivery', icon: 'Postcard', color:'#303133', name: '待发货'},
+            {path:'delivery', icon: 'Van', color:'#303133', name: '已发货'},
+            {path:'appraise', icon: 'ChatLineSquare', color:'#303133', name: '待评价'},
+            {path:'all', icon: 'Suitcase', color:'#303133', name: '已完成'},
         ]
+    }
+
+    const onOrder = (val) =>{
+        router.push({path: '/miniapp/orderList', query:{type: val}})
     }
 
     const onServiceList = () =>{
         state.serviceList = [
-            { icon: 'Setting', color:'#303133', name: '账号管理'},
-            { icon: 'Ticket', color:'#303133', name: '优惠券'},
-            { icon: 'Coin', color:'#303133', name: '我的积分'},
-            { icon: 'Medal', color:'#303133', name: '我的会员'},
-            { icon: 'OfficeBuilding', color:'#303133', name: '地址管理'},
-            { icon: 'Service', color:'#303133', name: '客户服务'},
+            {path:'/miniapp/accountSetting', icon: 'Setting', color:'#303133', name: '账号管理'},
+            {path:'/miniapp/coupon', icon: 'Ticket', color:'#303133', name: '优惠券'},
+            {path:'/miniapp/integral', icon: 'Coin', color:'#303133', name: '我的积分'},
+            {path:'/miniapp/member', icon: 'Medal', color:'#303133', name: '我的会员'},
+            {path:'/miniapp/addressEdit', icon: 'OfficeBuilding', color:'#303133', name: '地址管理'},
+            {path:'/miniapp/customerService', icon: 'Service', color:'#303133', name: '客户服务'},
         ]
     }
 
-    const toOrderList = () =>{
-        router.push({path: '/miniapp/orderList'})
+    const onService = (val) =>{
+        router.push({path: val})
     }
 
 </script>
