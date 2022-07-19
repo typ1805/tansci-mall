@@ -9,7 +9,7 @@
         </div>
         <div class="member-main">
             <el-scrollbar :height="defaultHeight">
-
+                <el-result icon="warning" title="暂无会员" sub-title="会员功能正在上线中，请耐心等待！"></el-result>
             </el-scrollbar>
         </div>
     </div>
@@ -30,7 +30,7 @@
     } = toRefs(state)
 
     onBeforeMount(() => {
-        state.defaultHeight = (document.body.clientHeight || document.documentElement.clientHeight) - 80 + "px";
+        state.defaultHeight = (document.body.clientHeight || document.documentElement.clientHeight) - 45 + "px";
     })
 
     onMounted(()=>{

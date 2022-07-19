@@ -3,13 +3,17 @@
         <div class="customer-service-header">
             <el-page-header @back="toBack" icon="ArrowLeft" title="返回">
                 <template #content>
-                    <span class="content">我的会员</span>
+                    <span class="content">客户服务</span>
                 </template>
             </el-page-header>
         </div>
         <div class="customer-service-main">
             <el-scrollbar :height="defaultHeight">
-
+                <el-result icon="info" title="客户服务" sub-title="您遇到的所有问题都可以联系我们哦！">
+                    <template #extra>
+                        联系电话：xxxxxxxxxxx
+                    </template>
+                </el-result>
             </el-scrollbar>
         </div>
     </div>

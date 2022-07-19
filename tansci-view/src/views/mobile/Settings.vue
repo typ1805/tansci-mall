@@ -30,13 +30,13 @@
                 <div class="main-service">
                     <el-card :shadow="shadow">
                         <div v-for="(item,index) in serviceList" :key="index" class="card-service">
-                            <div @click="onService(item.path)" class="card-service-title">
+                            <div class="card-service-title">
                                 <el-icon :color="item.color" :size="24">
                                     <component :is="item.icon"></component>
                                 </el-icon>
                                 <span>{{item.name}}</span>
                             </div>
-                            <div>
+                            <div @click="onService(item.path)">
                                 <el-icon><ArrowRightBold /></el-icon>
                             </div>
                             <el-divider v-show="index+1 < serviceList.length" />
