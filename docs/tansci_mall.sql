@@ -11,79 +11,248 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 17/07/2022 22:45:48
+ Date: 20/07/2022 22:31:13
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
+-- Table structure for cart
+-- ----------------------------
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE `cart`  (
+  `cart_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '购物车id',
+  `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品id',
+  `goods_num` int(10) NOT NULL COMMENT '数量',
+  `status` int(1) DEFAULT NULL COMMENT '状态：0、正常，1、失效',
+  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品id',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`cart_id`, `goods_id`, `user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '购物车表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for coupon
+-- ----------------------------
+DROP TABLE IF EXISTS `coupon`;
+CREATE TABLE `coupon`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '优惠券id',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
+  `price` decimal(10, 2) NOT NULL COMMENT '优惠金额',
+  `norm` decimal(10, 2) NOT NULL COMMENT '限额',
+  `status` int(1) DEFAULT NULL COMMENT '状态：0、正常，1、已领取，2、已使用，3、已失效',
+  `type` int(1) DEFAULT NULL COMMENT '类型：0、平台券，1、店铺券',
+  `start_time` datetime(0) DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime(0) DEFAULT NULL COMMENT '结束时间',
+  `shop_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '店铺id',
+  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '领取人',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '优惠券表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for goods
 -- ----------------------------
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods`  (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键ID',
+  `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品ID',
+  `shop_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '店铺id',
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
-  `code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商品编码',
-  `model` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商品型号',
+  `intro` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商品简介',
   `status` int(1) DEFAULT 0 COMMENT '状态：0、未上架，1、已上架，2、已下架',
+  `classify` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '分类',
   `price` decimal(10, 2) DEFAULT NULL COMMENT '价格',
-  `image_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '图片',
-  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '商品详情',
+  `cover_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商品主图',
   `stock` int(10) DEFAULT NULL COMMENT '库存',
-  `evaluate` int(10) DEFAULT NULL COMMENT '好评数量',
+  `sales` int(11) DEFAULT NULL COMMENT '销量',
+  `labels` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '标签：多个以逗号分隔',
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '商品详情',
   `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商户id',
   `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`goods_id`, `shop_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('1000001', '商品交付给华府丹郡号', '1', '1', 1, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', NULL, 12, 51, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:13', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000002', '商品交付给华府丹郡号', '2', '1', 1, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', NULL, 12, 51, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:21', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000003', '商品交付给华府丹郡号', '3', '1', 1, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', NULL, 12, 51, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:27', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000004', '商品交付给华府丹郡号', '4', '1', 1, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', NULL, 12, 51, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:32', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000005', '商品交付给华府丹郡号', '5', '1', 1, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', NULL, 12, 51, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:38', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000006', '商品交付给华府丹郡号', '6', '1', 1, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', NULL, 12, 51, '22f60277c18a0f185cfa794af0d58f2a', '2022-04-08 13:57:43', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000007', '商品交付给华府丹郡号', '7', '1', 1, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', NULL, 12, 51, '496347ab137029d80ed8929283d9a48b', '2022-04-08 13:57:43', '2022-03-29 21:21:20', NULL);
+INSERT INTO `goods` VALUES ('1000001', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:13', '2022-03-29 21:21:20', NULL);
+INSERT INTO `goods` VALUES ('1000002', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:21', '2022-03-29 21:21:20', NULL);
+INSERT INTO `goods` VALUES ('1000003', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:27', '2022-03-29 21:21:20', NULL);
+INSERT INTO `goods` VALUES ('1000004', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:32', '2022-03-29 21:21:20', NULL);
+INSERT INTO `goods` VALUES ('1000005', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:38', '2022-03-29 21:21:20', NULL);
+INSERT INTO `goods` VALUES ('1000006', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, '22f60277c18a0f185cfa794af0d58f2a', '2022-04-08 13:57:43', '2022-03-29 21:21:20', NULL);
+INSERT INTO `goods` VALUES ('1000007', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, '496347ab137029d80ed8929283d9a48b', '2022-04-08 13:57:43', '2022-03-29 21:21:20', NULL);
+
+-- ----------------------------
+-- Table structure for goods_classify
+-- ----------------------------
+DROP TABLE IF EXISTS `goods_classify`;
+CREATE TABLE `goods_classify`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'id',
+  `parent_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '父id',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '分类名称',
+  `sort` int(20) NOT NULL COMMENT '排序',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品分类' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for goods_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `goods_comment`;
+CREATE TABLE `goods_comment`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评论id',
+  `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品id',
+  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商户id',
+  `date` date DEFAULT NULL COMMENT '评价时间',
+  `rating` double(10, 2) DEFAULT NULL COMMENT '评分',
+  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '评语',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`, `goods_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品评价表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for goods_image
+-- ----------------------------
+DROP TABLE IF EXISTS `goods_image`;
+CREATE TABLE `goods_image`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
+  `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品id',
+  `image_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '图片地址',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`, `goods_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品图片表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for goods_order
 -- ----------------------------
 DROP TABLE IF EXISTS `goods_order`;
 CREATE TABLE `goods_order`  (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
+  `goods_order_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品订单id',
+  `order_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '订单id',
   `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商品id',
+  `goods_num` int(11) DEFAULT NULL COMMENT '商品数量',
   `status` int(1) DEFAULT NULL COMMENT '状态：0、未支付，1、已支付，2、失败，3、退款',
-  `pay_desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '支付说明',
   `pay_time` datetime(0) DEFAULT NULL COMMENT '支付时间',
-  `pay_type` int(1) DEFAULT NULL COMMENT '支付类型：1、微信，2、支付宝',
-  `amount` decimal(20, 2) DEFAULT NULL COMMENT '金额',
+  `price` decimal(20, 2) DEFAULT NULL COMMENT '支付金额',
   `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商户id',
   `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`goods_order_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品订单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for login_log
+-- Table structure for index_carousel
 -- ----------------------------
-DROP TABLE IF EXISTS `login_log`;
-CREATE TABLE `login_log`  (
+DROP TABLE IF EXISTS `index_carousel`;
+CREATE TABLE `index_carousel`  (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `image_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '图片地址',
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '连接地址',
+  `sort` int(10) NOT NULL COMMENT '排序',
+  `status` int(2) NOT NULL COMMENT '状态：0：正常，1：下线',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '首页轮播' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for index_config
+-- ----------------------------
+DROP TABLE IF EXISTS `index_config`;
+CREATE TABLE `index_config`  (
   `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
-  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户id',
-  `user_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户名称',
-  `os` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '操作系统',
-  `browser` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '浏览器',
-  `ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'IP地址',
-  `login_time` datetime(0) DEFAULT NULL COMMENT '登录时间',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '标签名称',
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '连接地址',
+  `icon` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '图标',
+  `color` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '色值',
+  `sort` int(10) DEFAULT NULL COMMENT '排序',
+  `status` int(1) DEFAULT NULL COMMENT '状态：0、正常，1、下线',
+  `goods_classify` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商品分类',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '首页标签配置' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for order
+-- ----------------------------
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order`  (
+  `order_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
+  `order_no` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单号',
+  `price` decimal(10, 2) DEFAULT NULL COMMENT '订单总价',
+  `discount` decimal(10, 2) DEFAULT NULL COMMENT '优惠金额',
+  `pay_status` int(1) DEFAULT NULL COMMENT '支付状态：0、未支付，1、支付成功，2、支付失败',
+  `order_status` int(1) DEFAULT NULL COMMENT '订单状态：0、待支付，1、已支付，2、配货完成，3、出库成功，4、交易成功，5、商家关闭，6、超时关闭',
+  `pay_type` int(1) DEFAULT NULL COMMENT '支付类型： 1、支付宝，2、微信，3、银联',
+  `pay_time` datetime(0) DEFAULT NULL COMMENT '支付时间',
+  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商户id',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`order_id`, `order_no`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for refund
+-- ----------------------------
+DROP TABLE IF EXISTS `refund`;
+CREATE TABLE `refund`  (
+  `refund_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '退款id',
+  `refund_no` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '退款订单号',
+  `order_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
+  `goods_order_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品订单id',
+  `refund_status` int(1) NOT NULL COMMENT '退款状态：0、退款中，1、退款成功，2、退款失败，3、退款关闭',
+  `refund_price` decimal(10, 2) NOT NULL COMMENT '退款金额',
+  `refund_time` datetime(0) DEFAULT NULL COMMENT '退款时间',
+  `reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '退款原因',
+  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商户id',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`refund_id`, `refund_no`, `order_id`, `goods_order_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '退款表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for seckill_goods
+-- ----------------------------
+DROP TABLE IF EXISTS `seckill_goods`;
+CREATE TABLE `seckill_goods`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
+  `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商品id',
+  `sort` int(10) DEFAULT NULL COMMENT '排序',
+  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商户id',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '秒杀商品表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for shop
+-- ----------------------------
+DROP TABLE IF EXISTS `shop`;
+CREATE TABLE `shop`  (
+  `shop_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '店铺id',
+  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '店铺名称',
+  `intro` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '店铺介绍',
+  `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '头像',
+  `level` double(10, 2) DEFAULT NULL COMMENT '店铺星级',
+  `status` int(1) DEFAULT NULL COMMENT '状态：0、正常，1、下线',
+  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商户id',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`shop_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '店铺表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_dic
@@ -113,6 +282,22 @@ INSERT INTO `sys_dic` VALUES ('523702a73f1d432092d10140c8b789a6', '523702a73f1d4
 INSERT INTO `sys_dic` VALUES ('523702a73f1d432092d10140c8b789a7', '723702a73f1d432092d10140c8b789a5', 'sys_dic_type', 0, -1, '系统数据字典类型', 0, NULL, NULL, NULL, '2021-07-06 17:08:04', '2021-07-06 12:44:36', '系统数据字典类型');
 INSERT INTO `sys_dic` VALUES ('523702a73f1d432092d10140c8b789a8', '523702a73f1d432092d10140c8b789a7', 'sys_dic_type', 0, 1, '业务', 2, NULL, NULL, NULL, NULL, '2021-07-06 16:18:19', '');
 INSERT INTO `sys_dic` VALUES ('723702a73f1d432092d10140c8b789a5', '0', 'sys_dic', 0, 0, '数据字典', 0, NULL, NULL, NULL, '2021-07-06 14:40:33', '2021-07-06 11:38:58', NULL);
+
+-- ----------------------------
+-- Table structure for sys_login_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_login_log`;
+CREATE TABLE `sys_login_log`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
+  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户id',
+  `user_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户名称',
+  `os` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '操作系统',
+  `browser` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '浏览器',
+  `ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'IP地址',
+  `login_time` datetime(0) DEFAULT NULL COMMENT '登录时间',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -212,6 +397,8 @@ CREATE TABLE `sys_user`  (
   `open_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '微信唯一标识',
   `id_card` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '身份证号码',
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '邮件',
+  `integral` int(10) DEFAULT NULL COMMENT '积分',
+  `member` int(10) DEFAULT NULL COMMENT '会员等级',
   `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
@@ -221,9 +408,28 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('22f60277c18a0f185cfa794af0d58f2a', 'user2', '$2a$10$P.RRnq7Ys.6.19XW/ju61O9dtO41AMS06d4ua5M9wjkwno4pzG9bm', '用户2', 2, 1, '2022-06-26', '', '18812563214', NULL, NULL, '', '2022-06-30 14:33:47', '2022-06-30 14:33:47', NULL);
-INSERT INTO `sys_user` VALUES ('496347ab137029d80ed8929283d9a48b', 'user1', '$2a$10$NyePi0WfVaT0wzL8dWi7iego7vwENNVCHTUXNtaUzVf7bnh0v6f7y', '用户1', 2, 0, '2022-06-21', '', '18893845632', NULL, NULL, '', '2022-06-30 14:33:15', '2022-06-30 14:33:15', NULL);
-INSERT INTO `sys_user` VALUES ('bc3ac26e69731b617eb80274453f6dba', 'admin', '$2a$10$tlWWfjTObqLsC6ONrhNL/.GIpAoFu205TXPK6xUPHHr1kA/paK4lq', '管理员', 1, 0, '2021-07-09', '甘肃兰州', '18893817562', NULL, NULL, '', '2022-03-29 14:01:05', '2022-03-29 14:01:07', '');
+INSERT INTO `sys_user` VALUES ('22f60277c18a0f185cfa794af0d58f2a', 'user2', '$2a$10$P.RRnq7Ys.6.19XW/ju61O9dtO41AMS06d4ua5M9wjkwno4pzG9bm', '用户2', 2, 1, '2022-06-26', '', '18812563214', NULL, NULL, '', NULL, NULL, '2022-06-30 14:33:47', '2022-06-30 14:33:47', NULL);
+INSERT INTO `sys_user` VALUES ('496347ab137029d80ed8929283d9a48b', 'user1', '$2a$10$NyePi0WfVaT0wzL8dWi7iego7vwENNVCHTUXNtaUzVf7bnh0v6f7y', '用户1', 2, 0, '2022-06-21', '', '18893845632', NULL, NULL, '', NULL, NULL, '2022-06-30 14:33:15', '2022-06-30 14:33:15', NULL);
+INSERT INTO `sys_user` VALUES ('bc3ac26e69731b617eb80274453f6dba', 'admin', '$2a$10$tlWWfjTObqLsC6ONrhNL/.GIpAoFu205TXPK6xUPHHr1kA/paK4lq', '管理员', 1, 0, '2021-07-09', '甘肃兰州', '18893817562', NULL, NULL, '', NULL, NULL, '2022-03-29 14:01:05', '2022-03-29 14:01:07', '');
+
+-- ----------------------------
+-- Table structure for sys_user_address
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_address`;
+CREATE TABLE `sys_user_address`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '地址id',
+  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户主键id',
+  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收货人姓名',
+  `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收货人手机号',
+  `flag` int(1) UNSIGNED ZEROFILL NOT NULL COMMENT '是否为默认 0-非默认 1-是默认',
+  `province` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '省份',
+  `city` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '城市',
+  `region` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '区域',
+  `details` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收件详细地址(街道/楼宇/单元)',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`, `user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商户地址表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_user_role
