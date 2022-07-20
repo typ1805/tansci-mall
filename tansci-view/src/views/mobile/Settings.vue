@@ -73,7 +73,7 @@
     } = toRefs(state)
 
     onBeforeMount(() => {
-        state.defaultHeight = (document.body.clientHeight || document.documentElement.clientHeight) - 40 + "px";
+        state.defaultHeight = (document.body.clientHeight || document.documentElement.clientHeight) - 53 + "px";
     })
 
     onMounted(()=>{

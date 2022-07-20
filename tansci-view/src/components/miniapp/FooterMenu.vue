@@ -1,18 +1,21 @@
 <template>
     <div class="menu-container">
-        <el-menu router :default-active="$route.path" mode="horizontal" :ellipsis="false" active-text-color="#ff0844" background-color="#ffffff">
-            <el-menu-item v-for="menu in menuList" :key="menu" :index="menu.path">
-                <el-icon color="#303133" :size="20">
+        <div class="menu-item" v-for="menu in menuList" :key="menu" @click="onMenu(menu.path)"
+            :class="{'is-active': $route.path == menu.path}">
+            <div>
+                <el-icon :color="$route.path == menu.path?'#ff0844':'#303133'" :size="20">
                     <component :is="menu.icon"></component>
                 </el-icon>
-                <div>{{menu.name}}</div>
-            </el-menu-item>
-        </el-menu>
+            </div>
+            <div>{{menu.name}}</div>
+        </div>
     </div>
 </template>
 <script setup>
     import {onMounted, reactive, toRefs} from 'vue'
+    import {useRouter} from 'vue-router'
 
+    const router = useRouter()
     const state = reactive({
         menuList: [],
     })
@@ -34,31 +37,28 @@
         ]
     }
 
+    const onMenu = (val) =>{
+        router.push({path: val})
+    }
+
 </script>
 <style lang="scss">
     .menu-container{
+        width: 100%;
         position: fixed;
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
         left: 0;
         bottom: 0;
-        border-top: 1px solid #e4e7ed;
-        .el-menu{
-            border: none;
-            .el-menu-item, .el-sub-menu__title{
-                height: 40px;
-                line-height: 40px;
-            }
-            .el-menu-item{
-                padding: 0 17px;
-            }
-            .el-menu-item.is-active{
-                border: none !important;
-            }
-            .el-sub-menu__title:hover{
-                background: #fff !important;
-            }
-            .el-menu-item:hover{
-                background: #fff !important;
-            }
+        background: #ffffff;
+        border-top: 1px solid #e4e7ed;      
+        .menu-item{
+            text-align: center;
+            padding: 0.4rem 1.2rem;
+        }
+        .is-active{
+            color: #ff0844;
         }
     }
 </style>

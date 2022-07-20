@@ -26,11 +26,11 @@
                             {{item.shopName}}<el-icon><ArrowRight /></el-icon>
                         </el-button>
                     </template>
-                    <div v-for="(goods,index) in item.goodsList" :key="index" @click="toGoodsDetail(goods.goodsId)" class="cart-list" :style="{borderBottom: index+1 == item.goodsList.length?'':'1px solid #F0F2F5'}">
+                    <div v-for="(goods,index) in item.goodsList" :key="index" class="cart-list" :style="{borderBottom: index+1 == item.goodsList.length?'':'1px solid #F0F2F5'}">
                         <div class="goods-checkbox">
                             <el-checkbox v-model="goods.isSelect" @change="onBoxChange(item.shopId,goods.goodsId)" :true-label="1" :false-label="0"></el-checkbox>
                         </div>
-                        <div class="goods-image">
+                        <div class="goods-image" @click="toGoodsDetail(goods.goodsId)">
                             <el-image :src="goods.image" style="width: 120px; height: 120px;" fit="fit"/>
                         </div>
                         <div class="goods-content">
@@ -39,7 +39,7 @@
                                 <span style="font-size: 12px;">￥</span><span>{{onDecimal(goods.price)}}</span>
                             </div>
                             <div class="content-number">
-                                <el-input-number v-model="goods.number" :min="1" :max="10" size="small" style="width:86px;"/>
+                                <el-input-number @change="onNumChange" v-model="goods.number" :min="1" :max="10" size="small" style="width:86px;"/>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
     } = toRefs(state)
 
     onBeforeMount(() => {
-        state.defaultHeight = (document.body.clientHeight || document.documentElement.clientHeight) - 130 + "px";
+        state.defaultHeight = (document.body.clientHeight || document.documentElement.clientHeight) - 142 + "px";
     })
 
     onMounted(()=>{
@@ -158,7 +158,7 @@
         onCalculatedAmount();
     }
 
-    // 提价
+    // 提交
     const onSubmit = () =>{
         let newCartList = [];
         state.cartList.forEach(shop=>{
@@ -244,11 +244,16 @@
         _cartList.forEach(item=>{
             item.goodsList.forEach(goods=>{
                 if(goods.isSelect){
-                    _totalAmount = _totalAmount + goods.price;
+                    _totalAmount = _totalAmount + goods.price * goods.number;
                 }
             })
         })
         state.totalAmount = _totalAmount
+    }
+
+    // 增加数量
+    const onNumChange = () =>{
+        onCalculatedAmount();
     }
 
     // 金额格式化

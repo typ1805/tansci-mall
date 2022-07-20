@@ -32,7 +32,7 @@
     } = toRefs(state)
 
     onBeforeMount(() => {
-        state.defaultHeight = (document.body.clientHeight || document.documentElement.clientHeight) - 60 + "px";
+        state.defaultHeight = (document.body.clientHeight || document.documentElement.clientHeight) - 68 + "px";
     })
 
     const onSearch = (val) =>{
