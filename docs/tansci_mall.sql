@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 20/07/2022 22:31:13
+ Date: 21/07/2022 14:32:18
 */
 
 SET NAMES utf8mb4;
@@ -75,17 +75,6 @@ CREATE TABLE `goods`  (
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`goods_id`, `shop_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of goods
--- ----------------------------
-INSERT INTO `goods` VALUES ('1000001', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:13', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000002', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:21', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000003', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:27', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000004', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:32', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000005', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-04-08 13:57:38', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000006', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, '22f60277c18a0f185cfa794af0d58f2a', '2022-04-08 13:57:43', '2022-03-29 21:21:20', NULL);
-INSERT INTO `goods` VALUES ('1000007', '', '商品交付给华府丹郡号', NULL, 1, NULL, 200.00, 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png', 12, NULL, NULL, NULL, '496347ab137029d80ed8929283d9a48b', '2022-04-08 13:57:43', '2022-03-29 21:21:20', NULL);
 
 -- ----------------------------
 -- Table structure for goods_classify

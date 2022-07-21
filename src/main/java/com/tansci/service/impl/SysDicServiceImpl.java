@@ -10,9 +10,7 @@ import com.tansci.service.SysDicService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -29,36 +27,23 @@ public class SysDicServiceImpl extends ServiceImpl<SysDicMapper, SysDic> impleme
 
     @Override
     public List<SysDic> dicList(SysDicDto dto) {
-        List<SysDic> dicList = this.baseMapper.selectList(
+        List<SysDic> list = this.baseMapper.selectList(
                 Wrappers.<SysDic>lambdaQuery()
                         .eq(Objects.nonNull(dto.getParentId()), SysDic::getParentId, dto.getParentId())
                         .eq(Objects.nonNull(dto.getGroupName()), SysDic::getGroupName, dto.getGroupName())
                         .eq(Objects.nonNull(dto.getType()), SysDic::getType, dto.getType())
         );
 
-        List<SysDic> newDicList = dicList.stream().filter(item -> "0".equals(item.getParentId())).map(item -> {
-            item.setChildren(this.getChildrens(item, dicList));
-            item.setTypeName(item.getType() == null ? "" : Enums.getVlaueByGroup(item.getType(), "dic_type"));
-            return item;
-        }).collect(Collectors.toList());
-        return newDicList.size() > 0 ? newDicList : dicList;
-    }
+        list.forEach(item -> {
+            item.setTypeName(Objects.isNull(item.getType()) ? "" : Enums.getVlaueByGroup(item.getType(), "dic_type"));
+        });
 
+        list = list.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(SysDic::getId))), ArrayList::new));
+        Map<String, List<SysDic>> map = list.stream().collect(Collectors.groupingBy(SysDic::getParentId, Collectors.toList()));
+        list.stream().forEach(item -> item.setChildren(map.get(item.getId())));
 
-    /**
-     * @author: tanyp
-     * @Date: 2022/5/20
-     * @Description:封装树形数据
-     */
-    public List<SysDic> getChildrens(SysDic dic, List<SysDic> list) {
-        List<SysDic> treeDic = list.stream().filter(item -> Objects.equals(item.getParentId(), dic.getId())).map(item -> {
-            // 递归添加子数据
-            List<SysDic> childrens = getChildrens(item, list);
-            item.setChildren(childrens);
-            item.setTypeName(item.getType() == null ? "" : Enums.getVlaueByGroup(item.getType(), "dic_type"));
-            return item;
-        }).collect(Collectors.toList());
-        return treeDic;
+        List<SysDic> newList = map.get("0").stream().sorted(Comparator.comparing(SysDic::getSort)).collect(Collectors.toList());
+        return newList;
     }
 
     @Override

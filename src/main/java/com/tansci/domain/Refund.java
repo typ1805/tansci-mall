@@ -15,9 +15,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * @ClassName： GoodsOrder.java
- * @ClassPath： com.tansci.domain.GoodsOrder.java
- * @Description： 商品订单
+ * @ClassName： Refund.java
+ * @ClassPath： com.tansci.domain.Refund.java
+ * @Description： 退款
  * @Author： tanyp
  * @Date： 2022/3/29 11:57
  **/
@@ -26,31 +26,34 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "goods_order")
-@ApiModel(value = "商品订单")
-public class GoodsOrder {
+@ApiModel(value = "退款")
+public class Refund {
 
-    @ApiModelProperty(value = "商品订单id")
+    @ApiModelProperty(value = "退款id")
     @TableId(type = IdType.ASSIGN_UUID)
-    private String goodsOrderId;
+    private String refundId;
+
+    @ApiModelProperty(value = "退款订单号")
+    private String refundNo;
 
     @ApiModelProperty(value = "订单id")
     private String orderId;
 
-    @ApiModelProperty(value = "商品id")
-    private String goodsId;
+    @ApiModelProperty(value = "商品订单id")
+    private String goodsOrderId;
 
-    @ApiModelProperty(value = "商品数量")
-    private Integer goodsNum;
+    @ApiModelProperty(value = "退款状态：0、退款中，1、退款成功，2、退款失败，3、退款关闭")
+    private Integer refundStatus;
 
-    @ApiModelProperty(value = "状态：0、未支付，1、已支付，2、失败，3、退款")
-    private Integer status;
+    @ApiModelProperty(value = "退款金额")
+    private BigDecimal refundPrice;
 
-    @ApiModelProperty(value = "支付时间")
+    @ApiModelProperty(value = "退款时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
-    private LocalDateTime payTime;
+    private LocalDateTime refundTime;
 
-    @ApiModelProperty(value = "金额")
-    private BigDecimal price;
+    @ApiModelProperty(value = "退款原因")
+    private String reason;
 
     @ApiModelProperty(value = "商户ID")
     private String userId;

@@ -11,48 +11,35 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * @ClassName： GoodsOrder.java
- * @ClassPath： com.tansci.domain.GoodsOrder.java
- * @Description： 商品订单
- * @Author： tanyp
- * @Date： 2022/3/29 11:57
- **/
+ * @path：com.tansci.domain.SeckillGoods.java
+ * @className：SeckillGoods.java
+ * @description：秒杀商品
+ * @author：tanyp
+ * @dateTime：2022/03/29 10:38
+ * @editNote：
+ */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "goods_order")
-@ApiModel(value = "商品订单")
-public class GoodsOrder {
+@TableName(value = "seckill_goods")
+@ApiModel(value = "秒杀商品")
+public class SeckillGoods {
 
-    @ApiModelProperty(value = "商品订单id")
+    @ApiModelProperty(value = "主键ID")
     @TableId(type = IdType.ASSIGN_UUID)
-    private String goodsOrderId;
-
-    @ApiModelProperty(value = "订单id")
-    private String orderId;
+    private String id;
 
     @ApiModelProperty(value = "商品id")
     private String goodsId;
 
-    @ApiModelProperty(value = "商品数量")
-    private Integer goodsNum;
+    @ApiModelProperty(value = "排序")
+    private Integer sort;
 
-    @ApiModelProperty(value = "状态：0、未支付，1、已支付，2、失败，3、退款")
-    private Integer status;
-
-    @ApiModelProperty(value = "支付时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
-    private LocalDateTime payTime;
-
-    @ApiModelProperty(value = "金额")
-    private BigDecimal price;
-
-    @ApiModelProperty(value = "商户ID")
+    @ApiModelProperty(value = "商户id")
     private String userId;
 
     @ApiModelProperty(value = "更新时间")
@@ -62,8 +49,5 @@ public class GoodsOrder {
     @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "备注")
-    private String remarks;
 
 }

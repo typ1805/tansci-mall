@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * @ClassName： LoginLog.java
- * @ClassPath： com.tansci.domain.LoginLog.java
+ * @ClassName： SysLoginLog.java
+ * @ClassPath： com.tansci.domain.SysLoginLog.java
  * @Description： 登录日志
  * @Author： tanyp
  * @Date： 2022/6/1 15:04
@@ -25,8 +25,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "登录日志")
-@TableName(value = "login_log")
-public class LoginLog {
+@TableName(value = "sys_login_log")
+public class SysLoginLog {
 
     @TableId(type = IdType.ASSIGN_UUID)
     @ApiModelProperty(value = "主键id")

@@ -72,6 +72,12 @@ public class SysUser {
     @ApiModelProperty(value = "邮箱")
     private String email;
 
+    @ApiModelProperty(value = "积分")
+    private Integer integral;
+
+    @ApiModelProperty(value = "会员等级")
+    private Integer member;
+
     @ApiModelProperty(value = "更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private LocalDateTime updateTime;

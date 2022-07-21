@@ -5,14 +5,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tansci.common.Enums;
-import com.tansci.domain.LoginLog;
+import com.tansci.domain.SysLoginLog;
 import com.tansci.domain.SysUser;
 import com.tansci.domain.SysUserRole;
 import com.tansci.domain.dto.SysUserDto;
 import com.tansci.domain.vo.SysUserVo;
 import com.tansci.exception.BusinessException;
 import com.tansci.mapper.SysUserMapper;
-import com.tansci.service.LoginLogService;
+import com.tansci.service.SysLoginLogService;
 import com.tansci.service.SysUserRoleService;
 import com.tansci.service.SysUserService;
 import com.tansci.utils.JwtTokenUtils;
@@ -49,7 +49,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private LoginLogService loginLogService;
+    private SysLoginLogService sysLoginLogService;
 
     @Autowired
     private SysUserRoleService sysUserRoleService;
@@ -129,8 +129,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             userVo.setToken(token);
 
             // 记录登录日志
-            loginLogService.save(
-                    LoginLog.builder()
+            sysLoginLogService.save(
+                    SysLoginLog.builder()
                             .userId(user.getId())
                             .userName(user.getUsername())
                             .loginTime(userVo.getLoginTime())

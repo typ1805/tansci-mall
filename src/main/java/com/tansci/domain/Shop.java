@@ -11,13 +11,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * @path：com.tansci.domain.Goods.java
- * @className：Goods.java
- * @description：商品
+ * @path：com.tansci.domain.Shop.java
+ * @className：Shop.java
+ * @description：店铺
  * @author：tanyp
  * @dateTime：2022/03/29 10:38
  * @editNote：
@@ -26,49 +25,31 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "goods")
-@ApiModel(value = "商品")
-public class Goods {
+@TableName(value = "shop")
+@ApiModel(value = "店铺")
+public class Shop {
 
-    @ApiModelProperty(value = "主键ID")
+    @ApiModelProperty(value = "店铺id")
     @TableId(type = IdType.ASSIGN_UUID)
-    private String goodsId;
+    private String shopId;
 
-    @ApiModelProperty(value = "商品名称")
+    @ApiModelProperty(value = "店铺名称")
     private String name;
 
-    @ApiModelProperty(value = "商品简介")
+    @ApiModelProperty(value = "店铺介绍")
     private String intro;
 
-    @ApiModelProperty(value = "状态：0、未上架，1、已上架，2、已下架")
+    @ApiModelProperty(value = "头像")
+    private String avatar;
+
+    @ApiModelProperty(value = "店铺星级")
+    private Integer level;
+
+    @ApiModelProperty(value = "状态：0、正常，1、下线")
     private Integer status;
 
-    @ApiModelProperty(value = "分类")
-    private String classify;
-
-    @ApiModelProperty(value = "价格")
-    private BigDecimal price;
-
-    @ApiModelProperty(value = "商品主图")
-    private String coverImg;
-
-    @ApiModelProperty(value = "库存")
-    private Integer stock;
-
-    @ApiModelProperty(value = "销量")
-    private Integer sales;
-
-    @ApiModelProperty(value = "标签：多个以逗号分隔")
-    private String labels;
-
-    @ApiModelProperty(value = "商品详情")
-    private String details;
-
-    @ApiModelProperty(value = "商户ID")
+    @ApiModelProperty(value = "商户id")
     private String userId;
-
-    @ApiModelProperty(value = "店铺ID")
-    private String shopId;
 
     @ApiModelProperty(value = "更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
