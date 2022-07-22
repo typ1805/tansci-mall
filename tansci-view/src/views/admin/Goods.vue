@@ -1,7 +1,7 @@
 <template>
     <div class="goods">
         <el-card>
-            <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: mobile?80:160,}" :page="page" :loading="loading"
+            <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: 160,}" :page="page" :loading="loading"
                 @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
                 <template #search>
                     <div><el-button type="primary" @click="onAdd">添加商品</el-button></div>
@@ -10,73 +10,146 @@
                     <div><el-button @click="onSearch" type="primary" icon="Search">查询</el-button></div>
                 </template>
                 <template #column="scope">
+                    <el-button @click="onEdit(scope)" type="text" style="color:var(--edit)">详情</el-button>
                     <el-button @click="onEdit(scope)" type="text" style="color:var(--edit)">编辑</el-button>
                     <el-button @click="onDelete(scope)" type="text" style="color:var(--delete)">删除</el-button>
                 </template>
             </Table>
-            <el-dialog :title="title" v-model="addVisible" :show-close="false" :width="mobile? '100%':'50%'">
+            <el-drawer :title="title" v-model="addVisible" :show-close="false" size="80%">
                 <el-form :model="addForm" :rules="rules" ref="addRuleForm" status-icon label-width="100px">
-                    <el-form-item prop="name" label="名称" :rules="[{required: true, message: '请输入名称', trigger: 'blur'}]">
-                        <el-input v-model="addForm.name" placeholder="请输入名称"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="code" label="编号" :rules="[{required: true, message: '请输入编号', trigger: 'blur'}]">
-                        <el-input v-model="addForm.code" placeholder="请输入编号"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="model" label="型号">
-                        <el-input v-model="addForm.model" placeholder="请输入型号"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="status" label="状态" :rules="[{required: true, message: '请选择状态', trigger: 'change'}]">
-                        <el-radio-group v-model="addForm.status">
-                            <el-radio :label="0">未上架</el-radio>
-                            <el-radio :label="1">已上架</el-radio>
-                            <el-radio :label="2">已下架</el-radio>
-                        </el-radio-group>
-                    </el-form-item>
-                    <el-form-item prop="price" label="价格" :rules="[{required: true, message: '请输入价格', trigger: 'blur'}]">
-                        <el-input-number v-model="addForm.price" placeholder="请输入价格" :min="1" style="width: 100%;"></el-input-number>
-                    </el-form-item>
-                    <el-form-item prop="evaluate" label="好评量" :rules="[{required: true, message: '请输入价格', trigger: 'blur'}]">
-                        <el-input-number v-model="addForm.evaluate" placeholder="请输入好评数量" :min="1" style="width: 100%;"></el-input-number>
-                    </el-form-item>
-                    <el-form-item prop="stock" label="库存" :rules="[{required: true, message: '请输入库存', trigger: 'blur'}]">
-                        <el-input-number v-model="addForm.stock" placeholder="请输入库存" :min="1" style="width: 100%;"></el-input-number>
-                    </el-form-item>
-                    <el-form-item prop="imagePath" label="图片" :rules="[{required: true, message: '请上传图片', trigger: 'change'}]">
-                        <el-upload drag multiple :action="uploadAaction" :headers="{Authorization: 'Bearer ' + token}" :file-list="addForm.imagePath!=''?[{url:addForm.imagePath}]:[]" :on-success="onImageSuccess" :on-remove="onImageDel" :before-upload="onBeforeImageUpload" style="width: 100%;">
-                            <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-                            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                            <template #tip>
-                                <div class="el-upload__tip">只能上传jpg、png格式的图片，且不超过200KB。</div>
-                            </template>
-                        </el-upload>
-                    </el-form-item>
-                    <el-form-item prop="details" label="详情">
-                        <el-input v-model="addForm.details" type="textarea" :rows="2" placeholder="请输入详情"></el-input>
-                    </el-form-item>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item prop="name" label="商品名称" :rules="[{required: true, message: '请输入名称', trigger: 'blur'}]">
+                                <el-input v-model="addForm.name" placeholder="请输入名称" maxlength="10" show-word-limit></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item prop="price" label="商品价格" :rules="[{required: true, message: '请输入价格', trigger: 'blur'}]">
+                                <el-input-number v-model="addForm.price" placeholder="请输入价格" :min="1" controls-position="right" style="width: 100%;"></el-input-number>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item prop="intro" label="商品简介" :rules="[{required: true, message: '请输入简介', trigger: 'blur'}]">
+                                <el-input v-model="addForm.intro" placeholder="请输入介绍" maxlength="50" show-word-limit></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item prop="stock" label="商品库存" :rules="[{required: true, message: '请输入库存', trigger: 'blur'}]">
+                                <el-input-number v-model="addForm.stock" placeholder="请输入库存" :min="10" controls-position="right" style="width: 100%;"></el-input-number>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item prop="classify" label="商品分类" :rules="[{required: true, message: '请输入销量', trigger: 'change'}]">
+                                <el-cascader v-model="addForm.classify" :options="classifyList" :props="{value:'id',label:'name',children:'children',emitPath:false,}" :show-all-levels="false" placeholder="请选择分类" style="width: 100%;"/>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item prop="sales" label="商品销量" :rules="[{required: true, message: '请输入销量', trigger: 'blur'}]">
+                                <el-input-number v-model="addForm.sales" placeholder="请输入销量" :min="0" controls-position="right" style="width: 100%;"></el-input-number>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item prop="status" label="商品状态" :rules="[{required: true, message: '请选择状态', trigger: 'change'}]">
+                                <el-radio-group v-model="addForm.status">
+                                    <el-radio v-for="item in statusList" :key="item" :label="item.value">{{item.label}}</el-radio>
+                                </el-radio-group>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item prop="labels" label="商品标签" :rules="[{required: true, message: '请选择标签', trigger: 'change'}]">
+                                <el-select v-model="addForm.labels" multiple placeholder="请选择标签" style="width: 100%;">
+                                    <el-option v-for="item in labelList" :key="item.id" :label="item.name" :value="item.id"/>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col>
+                            <el-form-item prop="coverImg" label="商品主图" :rules="[{required: true, message: '请上传图片', trigger: 'change'}]">
+                                <el-upload drag multiple :action="uploadAaction" 
+                                    :headers="{Authorization: 'Bearer ' + token}"
+                                    :file-list="addForm.coverImg!=''?[{name:addForm.coverImg,url:addForm.coverImg}]:[]" 
+                                    :on-success="onImageSuccess" :on-remove="onImageDel" :before-upload="onBeforeImageUpload" 
+                                    :limit="1" style="width: 100%;">
+                                    <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                                    <template #tip>
+                                        <div class="el-upload__tip">只能上传jpg、png格式的图片，且不超过200KB。</div>
+                                    </template>
+                                </el-upload>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col>
+                            <el-form-item prop="images" label="轮播图片" :rules="[{required: true, message: '请上传图片', trigger: 'change'}]">
+                                <el-upload drag multiple :action="uploadAaction" 
+                                    :headers="{Authorization: 'Bearer ' + token}" 
+                                    :file-list="addForm._images" 
+                                    :on-success="onImageListSuccess" :on-remove="onImageListDel" :before-upload="onBeforeImageUpload"
+                                    list-type="picture-card" :limit="5" style="width: 100%;">
+                                </el-upload>
+                                <div style="color: #909399;">只能上传jpg、png格式的图片，最多支持5张，最少1张，张且不超过200KB。</div>
+                            </el-form-item>
+                        </el-col>
+                    </el-row> 
+                    <el-row>
+                        <el-col>
+                            <el-form-item prop="details" label="详情" :rules="[{required: true, message: '请输入详情', trigger: 'blur'}]">
+                                <Toolbar style="width: 100%; border: 1px solid #dcdfe6;" :editor="editorRef" :defaultConfig="weConfig.toolbarConfig" :mode="weConfig.mode" />
+                                <Editor style="height: 500px; width: 100%; border: 1px solid #dcdfe6"
+                                    v-model="addForm.details" :defaultConfig="weConfig.editorConfig" :mode="weConfig.mode"
+                                    @onChange="onHandleChange" @onCreated="onHandleCreated" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col>
+                            <el-form-item>
+                                <el-button type="primary" @click="onSubmit" style="width: 100px;">提交</el-button>
+                            </el-form-item>
+                        </el-col>
+                    </el-row> 
                 </el-form>
-                <template #footer>
-                    <span class="dialog-footer">
-                    <el-button @click="addVisible = false">取消</el-button>
-                    <el-button type="primary" @click="onSubmit">提交</el-button>
-                    </span>
-                </template>
-            </el-dialog>
+            </el-drawer>
         </el-card>
     </div>
 </template>
 <script setup>
-    import {onMounted, reactive, ref, toRefs, unref} from 'vue'
+    import {onMounted, onBeforeUnmount, reactive, shallowRef, ref, toRefs, unref} from 'vue'
     import {ElMessage, ElMessageBox} from "element-plus"
     import {useTokenStore} from '@/store/settings'
-    import {isMobile} from '@/utils/utils'
-     import Table from '@/components/common/Table.vue'
+    import Table from '@/components/common/Table.vue'
     import {goodsPage, addGoods, updateGoods, delGoods} from "@/api/admin/goods"
-    import {delFile} from "@/api/admin/upload"
+    import {goodsLabelList} from '@/api/admin/goodsLabel'
+    import {goodsClassifyList} from '@/api/admin/goodsClassify'
+    import {uploadImage, delFile} from "@/api/admin/upload"
+
+    import '@wangeditor/editor/dist/css/style.css'
+    import {Editor,Toolbar} from "@wangeditor/editor-for-vue"
+    const editorRef = shallowRef() // 编辑器实例，必须用 shallowRef
+    const weConfig = {
+        mode: 'default',
+        toolbarConfig:{},
+        editorConfig:{
+            placeholder: '请输入内容...',
+            MENU_CONF: {},
+        },
+
+        // 记录上传的图片
+        imageList:[],
+    }
 
     const tokenStore = useTokenStore();
     const addRuleForm = ref(null)
+    
     const state = reactive({
-        mobile: false,
         searchForm:{
             name: null,
         },
@@ -89,33 +162,45 @@
         tableTitle: [
             {prop:'',label:'',fixed:'left'},
             {prop:'name',label:'名称'},
-            {prop:'code',label:'编号'},
-            {prop:'model',label:'型号'},
-            {prop:'price',label:'价格'},
-            {prop:'evaluate',label:'好评数量'},
-            {prop:'details',label:'详情'},
+            {prop:'coverImg',label:'主图'},
+            {prop:'intro',label:'简介'},
             {prop:'status',alias:'statusName',label:'状态',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
+            {prop:'classify',alias:'classifyName',label:'分类'},
+            {prop:'price',label:'价格'},
             {prop:'stock',label:'库存'},
-            {prop:'userName',label:'商户'},
+            {prop:'sales',label:'销量'},
+            {prop:'labels',alias:'labelList',label:'标签'},
+            {prop:'userId',alias:'userName',label:'商户ID'},
+            {prop:'shopId',alias:'shopName',label:'店铺ID'},
             {prop:'updateTime',label:'更新时间'},
             {prop:'createTime',label:'创建时间'},
-            {prop:'remarks',label:'备注'}
+            // {prop:'remarks',label:'备注'}
         ],
         tableData:[],
+        statusList:[
+            {label:'未上架',value:0},
+            {label:'已上架',value:1},
+            {label:'已下架',value:2},
+        ],
+        labelList: [], // 商品标签
+        classifyList:[], // 商品分类
         title: '添加商品',
         operate: 0,
         addVisible: false,
         addForm:{
-            id:'',
+            goodsId:'',
             name:'',
-            code: '',
-            model:'',
+            intro: '',
             status:'',
+            classify:'',
             price:'',
-            imagePath:'',
-            evaluate:'',
-            details:'',
+            coverImg:'',
             stock:'',
+            sales:'',
+            labels:'',
+            details:'',
+            images:[],
+            _images:[],
             remarks:'',
         },
         token: tokenStore.getToken,
@@ -123,13 +208,18 @@
     })
 
     const {
-        mobile,searchForm,loading,page,tableTitle,tableData,title,operate,addForm,addVisible,token,uploadAaction
+        searchForm,loading,page,tableTitle,tableData,title,operate,addForm,addVisible,token,uploadAaction,
+        statusList,labelList,classifyList,
     } = toRefs(state)
 
+    // 组件销毁时，也及时销毁编辑器
+    onBeforeUnmount(() => {
+        const editor = editorRef.value;
+        if (editor == null) return;
+        editor.destroy();
+    })
+
     onMounted(() => {
-        if(isMobile()){
-            state.mobile = true;
-        }
         onGoodsPage();
     })
 
@@ -161,23 +251,42 @@
         onGoodsPage();
     }
 
+    // 商品标签
+    const onGoodsLabelList = () =>{
+        goodsLabelList({}).then(res=>{
+            state.labelList = res.result
+        })
+    }
+
+    // 商品分类
+    const onGoodsClassifyList = () =>{
+        goodsClassifyList({}).then(res=>{
+            state.classifyList = res.result
+        })
+    }
+
     // 编辑
     const onEdit = (val) =>{
         state.title = "修改商品";
         state.operate = 1;
         state.addForm = {
-            id: val.column.row.id,
+            goodsId: val.column.row.goodsId,
             name: val.column.row.name,
-            code: val.column.row.code,
-            model: val.column.row.model,
+            intro: val.column.row.intro,
             status: val.column.row.status,
+            classify: val.column.row.classify,
             price: val.column.row.price,
-            imagePath: val.column.row.imagePath,
-            evaluate: val.column.row.evaluate,
-            details: val.column.row.details,
+            coverImg: val.column.row.coverImg,
             stock: val.column.row.stock,
+            sales: val.column.row.sales,
+            labels: val.column.row.labels,
+            details: val.column.row.details,
+            images: val.column.row.images,
+            _images: val.column.row.images,
             remarks: val.column.row.remarks,
         }
+        onGoodsClassifyList();
+        onGoodsLabelList();
         state.addVisible = true;
     }
 
@@ -204,24 +313,33 @@
         state.title = "添加商品";
         state.operate = 0;
         state.addForm = {
-            id:'',
+            goodsId:'',
             name:'',
-            code: '',
-            model:'',
+            intro: '',
             status:'',
+            classify:'',
             price:'',
-            imagePath:'',
-            evaluate:'',
-            details:'',
+            coverImg:'',
             stock:'',
+            sales:'',
+            labels:'',
+            details:'',
+            images:[],
+            _images:[],
             remarks:'',
         }
+        onGoodsClassifyList();
+        onGoodsLabelList();
         state.addVisible = true;
     }
     const onSubmit = async () =>{
+        console.log(state.addForm)
         const form = unref(addRuleForm);
         if (!form) return;
         await form.validate();
+
+        // 删除详情中多余的图片
+        onGetImage();
 
         if(state.operate == 0){
             addGoods(state.addForm).then(res=>{
@@ -248,9 +366,64 @@
         }
     }
 
-    const onImageSuccess = (res) =>{
-        state.addForm.imagePath = res.result.path;
+    // =========富文本编辑器============
+    // 上传图片的配置
+    weConfig.editorConfig.MENU_CONF["uploadImage"] = {
+        /**
+         * file: 即选中的文件
+         * insertFn: 最后插入图片函数
+         */
+        async customUpload(file, insertFn) {
+            console.log(file)
+            let form  = new FormData(); 
+            form.append('file', file)
+            uploadImage(form).then(res=>{
+                if(res){
+                    // 最后插入图片
+                    insertFn(res.result.path, null, null);
+                    // 记录上传的图片
+                    weConfig.imageList.push(res.result.path);
+                }
+            })
+        },
     }
+
+    // 上传时对比数据删除多余的图片
+    const onGetImage = () => {
+        // 获取编辑器中的图片
+        const images = editorRef.value.getElemsByType("image");
+        var srcList = images.map((item)=>{
+            return item.src;
+        });
+
+        // 上传成功的图片
+        let _imageList = weConfig.imageList;
+
+        let imgList = _imageList.filter(item => !srcList.includes(item));
+        imgList.forEach(item => {
+            let fileName = item.substr(item.lastIndexOf('/')+1);
+            delFile({fileName: fileName}).then(res=>{
+                console.log(res);
+            });
+        });
+
+        // 重新赋值
+        weConfig.imageList = srcList;
+    }
+
+    const onHandleChange = (editor) => {
+        const contentStr = JSON.stringify(editor.children);
+        const html = editor.getHtml();
+        console.log(html)
+    }
+    
+    // 记录 editor 实例
+    const onHandleCreated = (editor) => {
+        editorRef.value = editor;
+    }
+
+
+    // =========上传文件===========
     const onBeforeImageUpload = (file) =>{
         let testmsg = file.name.substring(file.name.lastIndexOf('.') + 1)
         let jpg = testmsg === 'jpg';
@@ -267,8 +440,12 @@
             return false;
         }
     }
+    // 单个文件
+    const onImageSuccess = (res) =>{
+        state.addForm.coverImg = res.result.path;
+    }
     const onImageDel = () =>{
-        let path = state.addForm.imagePath;
+        let path = state.addForm.coverImg;
         let fileName = path.substr(path.lastIndexOf('/')+1);
         delFile({fileName: fileName}).then(res=>{
             if(res){
@@ -276,6 +453,30 @@
             }
         });
     }
+    // 多文件
+    const onImageListSuccess = (res,file,files) =>{
+        state.addForm.images.push({
+            name: res.result.newName,
+            url: res.result.path
+        });
+    }
+    const onImageListDel = (file,files) =>{
+        state.addForm._images = files;
+        let name = file.response.result.newName;
+        delFile({fileName: name}).then(res=>{
+            if(res){
+                let imgList = state.addForm.images;
+                imgList.forEach((value,index)=>{
+                    if(value.name == name){
+                        imgList.splice(index,1)
+                    }
+                })
+                state.addForm.images = imgList;
+                ElMessage.success("图片删除成功！");
+            }
+        });
+    }
+
 </script>
 <style lang="scss" scoped>
     .goods{

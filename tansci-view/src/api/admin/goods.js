@@ -33,5 +33,5 @@ export function updateGoods(params) {
  * @returns
  */
 export function delGoods(params) {
-    return axios.get('/tansci/goods/del', {params: params});
+    return axios.get('/tansci/goods/delete', {params: params});
 }

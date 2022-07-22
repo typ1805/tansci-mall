@@ -44,5 +44,5 @@ ftp:
   post: 22
   username: tansci
   password: tansci@
-  base-path: /app/upload/vending/images
-  image-base-url: http://vending.tansci.top/images
+  base-path: /app/upload/mall/images
+  image-base-url: http://tansci.top:18003/images

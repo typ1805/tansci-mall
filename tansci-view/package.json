@@ -7,11 +7,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@wangeditor/editor": "^5.1.12",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "echarts": "^5.3.2",
     "element-plus": "^2.2.2",
+    "pinia": "^2.0.13",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.15",
-    "pinia": "^2.0.13"
+    "vue-router": "^4.0.15"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",
