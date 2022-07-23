@@ -48,11 +48,11 @@
         },
         tableTitle: [
             {prop:'name',label:'名称'},
-            {prop:'coverImg',label:'主图'},
+            // {prop:'coverImg',label:'主图'},
             {prop:'intro',label:'简介'},
             {prop:'status',alias:'statusName',label:'状态',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
             {prop:'classify',alias:'classifyName',label:'分类'},
-            {prop:'price',label:'价格'},
+            {prop:'price',label:'价格',type:'price'},
             {prop:'stock',label:'库存'},
             {prop:'sales',label:'销量'},
             {prop:'userId',alias:'userName',label:'商户ID'},

@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 23/07/2022 15:34:18
+ Date: 23/07/2022 21:56:41
 */
 
 SET NAMES utf8mb4;
@@ -211,10 +211,10 @@ CREATE TABLE `index_config`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '首页标签配置' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for order
+-- Table structure for order_info
 -- ----------------------------
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order`  (
+DROP TABLE IF EXISTS `order_info`;
+CREATE TABLE `order_info`  (
   `order_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
   `order_no` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单号',
   `price` decimal(10, 2) DEFAULT NULL COMMENT '订单总价',
@@ -229,6 +229,12 @@ CREATE TABLE `order`  (
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`order_id`, `order_no`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order_info
+-- ----------------------------
+INSERT INTO `order_info` VALUES ('o100001', 'o10000214', 56.99, 4.00, 1, 2, 2, '2022-07-23 21:49:38', '22f60277c18a0f185cfa794af0d58f2a', '2022-07-23 21:49:42', '2022-07-23 21:49:46', '支付成功');
+INSERT INTO `order_info` VALUES ('o100002', 'o10000216', 120.00, 4.00, 1, 4, 1, '2022-07-23 21:49:38', '496347ab137029d80ed8929283d9a48b', '2022-07-23 21:49:42', '2022-07-23 21:49:46', '交易完成');
 
 -- ----------------------------
 -- Table structure for refund
@@ -326,14 +332,6 @@ CREATE TABLE `sys_login_log`  (
   `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_login_log
--- ----------------------------
-INSERT INTO `sys_login_log` VALUES ('243eb83fd1852a90b1134bb8c6fe004f', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 8.1', 'Chrome', '127.0.0.1', '2022-07-22 21:35:48', '2022-07-22 21:35:49');
-INSERT INTO `sys_login_log` VALUES ('8d47df316d78394954c56b8ee038d524', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 8.1', 'Chrome', '127.0.0.1', '2022-07-22 09:59:56', '2022-07-22 09:59:58');
-INSERT INTO `sys_login_log` VALUES ('9e35a9e64f26c18e42d3ed708c3b1301', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 8.1', 'Chrome', '127.0.0.1', '2022-07-23 12:50:56', '2022-07-23 12:50:59');
-INSERT INTO `sys_login_log` VALUES ('f6332a22cdd811b5ff8f318ab8875c98', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 8.1', 'Chrome', '127.0.0.1', '2022-07-22 16:55:50', '2022-07-22 16:55:50');
 
 -- ----------------------------
 -- Table structure for sys_menu

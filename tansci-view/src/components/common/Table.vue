@@ -9,6 +9,20 @@
                 @selection-change="onSelectionChange" style="width: 100%;">
                 <template v-for="item in column" :key="item">
                     <el-table-column v-if="!item.prop && !item.label" :fixed="item.fixed" type="selection" width="45"></el-table-column>
+                    <!-- 金额格式化 -->
+                    <el-table-column v-else-if="item.type == 'price'" 
+                        :label="item.label" :align="item.align != null ? item.align : 'center'" :width="item.width">
+                        <template #default="scope">
+                            <span>{{onDecimal(scope.row[item.prop])}}</span>
+                        </template>
+                    </el-table-column>
+                    <!-- el-image -->
+                    <el-table-column v-else-if="item.type == 'image'" 
+                        :label="item.label" :align="item.align != null ? item.align : 'center'" :width="item.width">
+                        <template #default="scope">
+                            <el-image @click="onImageView(scope.row[item.prop])" :src="scope.row[item.prop]" fit="fit" style="width: 50px; height: 50px"/>
+                        </template>
+                    </el-table-column>
                     <!-- el-tag -->
                     <el-table-column v-else-if="item.type == 'tag'" show-overflow-tooltip
                         :label="item.label" :align="item.align != null ? item.align : 'center'" :width="item.width">
@@ -75,10 +89,14 @@
             :page-size="page.size"
             :total="page.total"/>
         </div>
+        <el-dialog v-model="imageVisible" title="图片预览" :show-close="false">
+            <el-image style="width: 100%; height: 100%;" :src="imageUrl" fit="fit" />
+        </el-dialog>
     </div>
 </template>
 <script setup>
     import {defineProps, reactive, toRefs} from 'vue'
+    import {toDecimal} from '@/utils/utils'
     
     const prop = defineProps({
         loading: {
@@ -131,15 +149,30 @@
             });
             obj.padding = '2px';
             return obj;
-        }
+        },
+        imageVisible: false,
+        imageUrl: '',
     })
-    const {maxHeight,tableHeight,headerCellStyle,cellStyle} = toRefs(state)
+    const {
+        maxHeight,tableHeight,headerCellStyle,cellStyle,imageVisible,imageUrl
+    } = toRefs(state)
 
     const onSizeChange = (e) =>{
         emit('onSizeChange', e)
     }
     const onCurrentChange = (e) =>{
         emit('onCurrentChange', e)
+    }
+
+    const onImageView = (url) =>{
+        if(!url) return;
+        state.imageUrl = url;
+        state.imageVisible = true;
+    }
+
+    // 金额格式化
+    function onDecimal(val){
+        return toDecimal(val);
     }
 </script>
 <style scoped lang="scss">

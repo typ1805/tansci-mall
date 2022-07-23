@@ -25,7 +25,7 @@
 							<el-checkbox v-model="loginForm.keepPassword" label="记住密码"></el-checkbox>
 						</el-form-item>
 						<el-form-item>
-							<el-button type="primary" round @click="submit" style="width:100%">登录</el-button>
+							<el-button type="primary" round @click="submit" :loading="loading" style="width:100%">登录</el-button>
 						</el-form-item>
 					</el-form>
 				</div>
@@ -51,6 +51,7 @@
 		loginStyle: {
 			height: '',
 		},
+		loading: false,
 		loginForm: {
 			username: '',
 			password: '',
@@ -58,7 +59,7 @@
 			keepPassword: null,
 		}
 	})
-	const {loginStyle,loginForm} = toRefs(state)
+	const {loginStyle,loading,loginForm} = toRefs(state)
 
 	onMounted(()=>{
 	})
@@ -84,16 +85,20 @@
 			username: state.loginForm.username,
 			password: state.loginForm.password
 		}
+
+		state.loading = true;
 		login(param).then(res=>{
 			if(res){
 				// 存储用户信息和token
 				userStore.setUser(res.result);
 				tokenStore.setToken(res.result.token);
+				state.loading = false;
 				router.push({path: 'main'});
 			}
 		}).catch(()=>{
 			state.loginForm.verifyStatus = null;
 			slidingVerify.value.onRefresh()
+			state.loading = false;
 		})
 	}
 </script>

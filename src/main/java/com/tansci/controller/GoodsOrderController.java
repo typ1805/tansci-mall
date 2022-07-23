@@ -24,30 +24,30 @@ import java.time.LocalDateTime;
  **/
 @Slf4j
 @RestController
-@RequestMapping("/goodsOorder")
-@Api(value = "goodsOorder", tags = "商品订单")
+@RequestMapping("/goodsOrder")
+@Api(value = "goodsOrder", tags = "商品订单")
 public class GoodsOrderController {
 
     @Autowired
-    private GoodsOrderService orderService;
+    private GoodsOrderService goodsOrderService;
 
     @ApiOperation(value = "分页", notes = "分页")
     @GetMapping("/page")
     public Wrapper<IPage<GoodsOrder>> page(Page page, GoodsOrderDto dto) {
-        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, orderService.page(page, dto));
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, goodsOrderService.page(page, dto));
     }
 
     @ApiOperation(value = "添加", notes = "添加")
     @PostMapping("/update")
     public Wrapper<Boolean> update(@RequestBody GoodsOrder order) {
         order.setUpdateTime(LocalDateTime.now());
-        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, orderService.updateById(order));
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, goodsOrderService.updateById(order));
     }
 
     @ApiOperation(value = "删除", notes = "删除")
     @GetMapping("/del")
     public Wrapper<Boolean> del(String id) {
-        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, orderService.removeById(id));
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, goodsOrderService.removeById(id));
     }
 
 }

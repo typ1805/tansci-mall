@@ -25,5 +25,5 @@ export function updateOrder(params) {
  * @returns
  */
 export function delOrder(params) {
-    return axios.get('/tansci/order/del', {params: params});
+    return axios.get('/tansci/order/delete', {params: params});
 }

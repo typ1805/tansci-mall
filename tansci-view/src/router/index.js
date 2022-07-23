@@ -21,6 +21,12 @@ const router = createRouter({
 
 let flag = true // 刷新标识
 router.beforeEach(async (to, from, next) => {
+
+    // 是否登陆
+    // if (!sessionStorage.getItem('token') && to.path !== "/login") {
+    //     return next({ path: "/login" });
+    // };
+
     // 设置头部
     if (to.meta.title) {
         document.title = to.meta.title
@@ -40,7 +46,10 @@ router.beforeEach(async (to, from, next) => {
             menuStore.setMenu([...result])
             flag = false
             next({ ...to, replace: true })
-        })
+        }).catch((error)=>{
+            console.log(error)
+            next()
+		})
     } else{
         next()
     }

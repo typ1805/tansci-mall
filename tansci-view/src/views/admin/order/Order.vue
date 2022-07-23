@@ -3,7 +3,13 @@
     <el-card>
       <Table :data="tableData" :column="tableTitle" :operation="{show:true, width:160,}" :page="page" :loading="loading"
         @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
+        <template #search>
+            <div><el-input v-model="searchForm.orderId" placeholder="请输入订单ID"></el-input></div>
+            <div><el-button @click="onRefresh" icon="RefreshRight" circle></el-button></div>
+            <div><el-button @click="onSearch" type="primary" icon="Search">查询</el-button></div>
+        </template>
         <template #column="scope">
+          <el-button @click="onEdit(scope)" type="text" style="color:var(--edit)">更新订单状态</el-button>
           <el-button @click="onDelete(scope)" type="text" style="color:var(--delete)">删除</el-button>
         </template>
       </Table>
@@ -14,9 +20,12 @@
     import {onMounted, reactive, toRefs} from 'vue'
     import {ElMessage, ElMessageBox} from "element-plus"
     import Table from '@/components/common/Table.vue'
-    import {orderPage, delOrder} from "@/api/admin/order"
+    import {orderPage, updateOrder, delOrder} from "@/api/admin/order"
 
     const state = reactive({
+        searchForm:{
+            orderId: null,
+        },
         loading: false,
         page: {
           current: 1,
@@ -24,13 +33,15 @@
           total: 1,
         },
         tableTitle: [
-          {prop:'',label:'',fixed:'left'},
-          {prop:'goodsName',label:'商品名称'},
-          {prop:'status',alias:'statusName',label:'状态',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
-          {prop:'payDesc',label:'支付说明'},
-          {prop:'payTime',label:'支付时间'},
+          {prop:'orderNo',label:'订单ID'},
+          {prop:'orderNo',label:'订单号'},
+          {prop:'price',label:'订单金额',type:'price'},
+          {prop:'discount',label:'优惠金额',type:'price'},
+          {prop:'payStatus',alias:'payStatusName',label:'支付状态',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
+          {prop:'orderStatus',alias:'orderStatusName',label:'订单状态',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
           {prop:'payType',alias:'payTypeName',label:'支付类型',type:'tag',option:{type:'warning',size:'small',effect:'plain'}},
-          {prop:'userName',label:'商户'},
+          {prop:'payTime',label:'支付时间'},
+          {prop:'userName',label:'商户名称'},
           {prop:'updateTime',label:'更新时间'},
           {prop:'createTime',label:'创建时间'},
           {prop:'remarks',label:'备注'}
@@ -39,7 +50,7 @@
     })
 
     const {
-        loading,page,tableTitle,tableData
+        searchForm,loading,page,tableTitle,tableData
     } = toRefs(state)
 
     onMounted(() => {
@@ -48,7 +59,7 @@
 
     const onOrderPage = () =>{
         state.loading = true;
-        orderPage({}).then(res=>{
+        orderPage(Object.assign(state.page,state.searchForm)).then(res=>{
             state.loading = false;
             state.tableData = res.result.records;
             state.page.current = res.result.current;
@@ -63,6 +74,20 @@
     const onCurrentChange = (e) =>{
         state.page.current = e;
         onOrderPage();
+    }
+    const onRefresh = () =>{
+        state.searchForm = {
+            orderId: null,
+        }
+        onOrderPage();
+    }
+    const onSearch = () =>{
+        onOrderPage();
+    }
+
+    // 编辑状态
+    const onEdit = (val) =>{
+
     }
 
     // 删除
