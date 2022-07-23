@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 23/07/2022 13:17:44
+ Date: 23/07/2022 15:34:18
 */
 
 SET NAMES utf8mb4;
@@ -58,7 +58,7 @@ CREATE TABLE `coupon`  (
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods`  (
   `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品ID',
-  `shop_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '店铺id',
+  `shop_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '店铺id',
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
   `intro` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商品简介',
   `status` int(1) DEFAULT 0 COMMENT '状态：0、未上架，1、已上架，2、已下架',
@@ -73,13 +73,13 @@ CREATE TABLE `goods`  (
   `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`goods_id`, `shop_id`) USING BTREE
+  PRIMARY KEY (`goods_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('g100001', 's10001', '测试商品', '测试商品', 0, 'c10002', 99.00, 'http://tansci.top:18003/images/20220722065bb13e7a.png', 10, 100, 'gl10001', NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-07-22 20:18:31', '2022-07-22 20:18:34', NULL);
+INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da3d', NULL, '测试商品', '测试商品测试商品测试商品', 0, 'c10003', 19.00, 'http://tansci.top:18003/images/20220723aedc51fc89.png', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
 
 -- ----------------------------
 -- Table structure for goods_classify
@@ -132,6 +132,11 @@ CREATE TABLE `goods_image`  (
   `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`, `goods_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品图片表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of goods_image
+-- ----------------------------
+INSERT INTO `goods_image` VALUES ('31d50689db45c78163b1269095ab3ab5', 'f9468bdbff35242d3ff761dcc9b1da3d', '202207237a14f7870f.png', 'http://tansci.top:18003/images/202207237a14f7870f.png', '2022-07-23 14:24:51', '2022-07-23 14:24:51');
 
 -- ----------------------------
 -- Table structure for goods_label
