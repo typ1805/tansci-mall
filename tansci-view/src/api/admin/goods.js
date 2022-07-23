@@ -35,3 +35,12 @@ export function updateGoods(params) {
 export function delGoods(params) {
     return axios.get('/tansci/goods/delete', {params: params});
 }
+
+/**
+ * 商品图片列表
+ * @param {*} params
+ * @returns
+ */
+ export function goodsImageList(params) {
+    return axios.get('/tansci/goods/goodsImageList', {params: params});
+}

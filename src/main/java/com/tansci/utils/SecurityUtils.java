@@ -31,6 +31,8 @@ public class SecurityUtils implements UserDetails {
 
     private String roleId;
 
+    private String shopId;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     public SecurityUtils() {
@@ -43,6 +45,7 @@ public class SecurityUtils implements UserDetails {
         this.password = user.getPassword();
         this.type = user.getType();
         this.roleId = user.getRoleId();
+        this.shopId = user.getShopId();
         this.authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 

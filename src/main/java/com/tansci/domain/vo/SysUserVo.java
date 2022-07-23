@@ -1,5 +1,6 @@
 package com.tansci.domain.vo;
 
+import com.tansci.domain.Shop;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -37,5 +38,8 @@ public class SysUserVo {
 
     @ApiModelProperty(value = "登录时间")
     private LocalDateTime loginTime;
+
+    @ApiModelProperty(value = "店铺信息")
+    private Shop shop;
 
 }

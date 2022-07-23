@@ -10,7 +10,6 @@
                     <div><el-button @click="onSearch" type="primary" icon="Search">查询</el-button></div>
                 </template>
                 <template #column="scope">
-                    <el-button @click="onEdit(scope)" type="text" style="color:var(--edit)">详情</el-button>
                     <el-button @click="onEdit(scope)" type="text" style="color:var(--edit)">编辑</el-button>
                     <el-button @click="onDelete(scope)" type="text" style="color:var(--delete)">删除</el-button>
                 </template>
@@ -75,24 +74,20 @@
                                 <el-upload drag multiple :action="uploadAaction" 
                                     :headers="{Authorization: 'Bearer ' + token}"
                                     :file-list="addForm.coverImg!=''?[{name:addForm.coverImg,url:addForm.coverImg}]:[]" 
-                                    :on-success="onImageSuccess" :on-remove="onImageDel" :before-upload="onBeforeImageUpload" 
-                                    :limit="1" style="width: 100%;">
-                                    <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-                                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                                    <template #tip>
-                                        <div class="el-upload__tip">只能上传jpg、png格式的图片，且不超过200KB。</div>
-                                    </template>
+                                    :on-success="onImageSuccess" :on-remove="onImageDel" :before-upload="onBeforeImageUpload" :on-preview="onPreview"
+                                    :limit="1" list-type="picture-card" style="width: 100%;">
                                 </el-upload>
+                                <div style="color: #909399;">只能上传jpg、png格式的图片，最多支持1张，且不超过200KB。</div>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col>
-                            <el-form-item prop="images" label="轮播图片" :rules="[{required: true, message: '请上传图片', trigger: 'change'}]">
+                            <el-form-item prop="imageList" label="轮播图片" :rules="[{required: true, message: '请上传图片', trigger: 'change'}]">
                                 <el-upload drag multiple :action="uploadAaction" 
                                     :headers="{Authorization: 'Bearer ' + token}" 
-                                    :file-list="addForm._images" 
-                                    :on-success="onImageListSuccess" :on-remove="onImageListDel" :before-upload="onBeforeImageUpload"
+                                    :file-list="addForm._imageList" 
+                                    :on-success="onImageListSuccess" :on-remove="onImageListDel" :before-upload="onBeforeImageUpload" :on-preview="onPreview"
                                     list-type="picture-card" :limit="5" style="width: 100%;">
                                 </el-upload>
                                 <div style="color: #909399;">只能上传jpg、png格式的图片，最多支持5张，最少1张，张且不超过200KB。</div>
@@ -118,6 +113,9 @@
                     </el-row> 
                 </el-form>
             </el-drawer>
+            <el-dialog v-model="imageVisible" title="商品图预览">
+                <el-image style="width: 100%; height: 100%;" :src="imageUrl" fit="fit" />
+            </el-dialog>
         </el-card>
     </div>
 </template>
@@ -126,7 +124,7 @@
     import {ElMessage, ElMessageBox} from "element-plus"
     import {useTokenStore} from '@/store/settings'
     import Table from '@/components/common/Table.vue'
-    import {goodsPage, addGoods, updateGoods, delGoods} from "@/api/admin/goods"
+    import {goodsPage, addGoods, updateGoods, delGoods,goodsImageList} from "@/api/admin/goods"
     import {goodsLabelList} from '@/api/admin/goodsLabel'
     import {goodsClassifyList} from '@/api/admin/goodsClassify'
     import {uploadImage, delFile} from "@/api/admin/upload"
@@ -169,7 +167,7 @@
             {prop:'price',label:'价格'},
             {prop:'stock',label:'库存'},
             {prop:'sales',label:'销量'},
-            {prop:'labels',alias:'labelList',label:'标签'},
+            // {prop:'labels',alias:'labelList',label:'标签'},
             {prop:'userId',alias:'userName',label:'商户ID'},
             {prop:'shopId',alias:'shopName',label:'店铺ID'},
             {prop:'updateTime',label:'更新时间'},
@@ -199,17 +197,19 @@
             sales:'',
             labels:'',
             details:'',
-            images:[],
-            _images:[],
+            imageList:[],
+            _imageList:[],
             remarks:'',
         },
         token: tokenStore.getToken,
         uploadAaction: '/tansci/upload/uploadImage',
+        imageUrl: '',
+        imageVisible: false,
     })
 
     const {
         searchForm,loading,page,tableTitle,tableData,title,operate,addForm,addVisible,token,uploadAaction,
-        statusList,labelList,classifyList,
+        statusList,labelList,classifyList,imageUrl,imageVisible,
     } = toRefs(state)
 
     // 组件销毁时，也及时销毁编辑器
@@ -279,15 +279,18 @@
             coverImg: val.column.row.coverImg,
             stock: val.column.row.stock,
             sales: val.column.row.sales,
-            labels: val.column.row.labels,
+            labels: val.column.row.labels?val.column.row.labels.split(','):'',
             details: val.column.row.details,
-            images: val.column.row.images,
-            _images: val.column.row.images,
             remarks: val.column.row.remarks,
         }
         onGoodsClassifyList();
         onGoodsLabelList();
-        state.addVisible = true;
+        // 获取商品图片
+        goodsImageList({goodsId: val.column.row.goodsId}).then(res=>{
+            state.addForm.imageList = res.result;
+            state.addForm._imageList = res.result;
+            state.addVisible = true;
+        });
     }
 
     // 删除
@@ -297,7 +300,7 @@
             cancelButtonText: '取消',
             type: 'warning'
         }).then(() => {
-            delGoods({id: val.column.row.id}).then(res=>{
+            delGoods({goodsId: val.column.row.goodsId}).then(res=>{
                 if(res){
                     ElMessage.success('删除成功!');
                     onGoodsPage();
@@ -324,8 +327,8 @@
             sales:'',
             labels:'',
             details:'',
-            images:[],
-            _images:[],
+            imageList:[],
+            _imageList:[],
             remarks:'',
         }
         onGoodsClassifyList();
@@ -333,13 +336,20 @@
         state.addVisible = true;
     }
     const onSubmit = async () =>{
-        console.log(state.addForm)
         const form = unref(addRuleForm);
         if (!form) return;
         await form.validate();
 
         // 删除详情中多余的图片
         onGetImage();
+
+        // 标签格式化
+        let labelList = [];
+        state.addForm.labels.forEach(item=>{
+            labelList.push({id: item})
+        })
+        state.addForm.labelList = labelList;
+        state.addForm.labels = null;
 
         if(state.operate == 0){
             addGoods(state.addForm).then(res=>{
@@ -455,26 +465,31 @@
     }
     // 多文件
     const onImageListSuccess = (res,file,files) =>{
-        state.addForm.images.push({
+        state.addForm.imageList.push({
             name: res.result.newName,
             url: res.result.path
         });
     }
     const onImageListDel = (file,files) =>{
-        state.addForm._images = files;
+        state.addForm._imageList = files;
         let name = file.response.result.newName;
         delFile({fileName: name}).then(res=>{
             if(res){
-                let imgList = state.addForm.images;
+                let imgList = state.addForm.imageList;
                 imgList.forEach((value,index)=>{
                     if(value.name == name){
                         imgList.splice(index,1)
                     }
                 })
-                state.addForm.images = imgList;
+                state.addForm.imageList = imgList;
                 ElMessage.success("图片删除成功！");
             }
         });
+    }
+    // 预览图片
+    const onPreview = (file) =>{
+        state.imageUrl = file.url;
+        state.imageVisible = true;
     }
 
 </script>

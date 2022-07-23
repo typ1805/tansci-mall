@@ -93,4 +93,8 @@ public class SysUser {
     @ApiModelProperty(value = "角色id")
     private String roleId;
 
+    @TableField(exist = false)
+    @ApiModelProperty(value = "店铺id")
+    private String shopId;
+
 }

@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 21/07/2022 14:32:18
+ Date: 23/07/2022 13:17:44
 */
 
 SET NAMES utf8mb4;
@@ -77,6 +77,11 @@ CREATE TABLE `goods`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of goods
+-- ----------------------------
+INSERT INTO `goods` VALUES ('g100001', 's10001', '测试商品', '测试商品', 0, 'c10002', 99.00, 'http://tansci.top:18003/images/20220722065bb13e7a.png', 10, 100, 'gl10001', NULL, 'bc3ac26e69731b617eb80274453f6dba', '2022-07-22 20:18:31', '2022-07-22 20:18:34', NULL);
+
+-- ----------------------------
 -- Table structure for goods_classify
 -- ----------------------------
 DROP TABLE IF EXISTS `goods_classify`;
@@ -89,6 +94,14 @@ CREATE TABLE `goods_classify`  (
   `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品分类' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of goods_classify
+-- ----------------------------
+INSERT INTO `goods_classify` VALUES ('c10001', '0', '全类', 1, '2022-07-22 17:53:07', '2022-07-22 17:53:09');
+INSERT INTO `goods_classify` VALUES ('c10002', 'c10001', '运动', 1, '2022-07-22 17:53:07', '2022-07-22 17:53:09');
+INSERT INTO `goods_classify` VALUES ('c10003', 'c10001', '休闲', 2, '2022-07-22 17:53:07', '2022-07-22 17:53:09');
+INSERT INTO `goods_classify` VALUES ('c10004', 'c10001', '老年', 3, '2022-07-22 17:53:07', '2022-07-22 17:53:09');
 
 -- ----------------------------
 -- Table structure for goods_comment
@@ -113,11 +126,32 @@ DROP TABLE IF EXISTS `goods_image`;
 CREATE TABLE `goods_image`  (
   `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
   `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品id',
-  `image_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '图片地址',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '图片名称',
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '图片地址',
   `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`, `goods_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品图片表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for goods_label
+-- ----------------------------
+DROP TABLE IF EXISTS `goods_label`;
+CREATE TABLE `goods_label`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'id',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '分类名称',
+  `type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型：primary、success、warning、danger、info',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品标签' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of goods_label
+-- ----------------------------
+INSERT INTO `goods_label` VALUES ('gl10001', '新品', 'success', '2022-07-22 17:51:17', '2022-07-22 17:51:19');
+INSERT INTO `goods_label` VALUES ('gl10002', '爆品', 'warning', '2022-07-22 17:51:17', '2022-07-22 17:51:19');
+INSERT INTO `goods_label` VALUES ('gl10003', '精品', 'danger', '2022-07-22 17:51:17', '2022-07-22 17:51:19');
 
 -- ----------------------------
 -- Table structure for goods_order
@@ -289,6 +323,14 @@ CREATE TABLE `sys_login_log`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of sys_login_log
+-- ----------------------------
+INSERT INTO `sys_login_log` VALUES ('243eb83fd1852a90b1134bb8c6fe004f', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 8.1', 'Chrome', '127.0.0.1', '2022-07-22 21:35:48', '2022-07-22 21:35:49');
+INSERT INTO `sys_login_log` VALUES ('8d47df316d78394954c56b8ee038d524', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 8.1', 'Chrome', '127.0.0.1', '2022-07-22 09:59:56', '2022-07-22 09:59:58');
+INSERT INTO `sys_login_log` VALUES ('9e35a9e64f26c18e42d3ed708c3b1301', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 8.1', 'Chrome', '127.0.0.1', '2022-07-23 12:50:56', '2022-07-23 12:50:59');
+INSERT INTO `sys_login_log` VALUES ('f6332a22cdd811b5ff8f318ab8875c98', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 8.1', 'Chrome', '127.0.0.1', '2022-07-22 16:55:50', '2022-07-22 16:55:50');
+
+-- ----------------------------
 -- Table structure for sys_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu`;
@@ -313,15 +355,20 @@ CREATE TABLE `sys_menu`  (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('52be034c743ff0ce55b4dc2627a750d8', '856eabdd6f15324d3c51560e0d82ac7f', 'loginLog', '/admin/LoginLog', 'Cpu', 1, 1, '登录日志', 'LoginLog', 2, 5, '2022-07-17 22:37:32', '2022-07-17 22:37:32', '');
-INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7d093f0534', '856eabdd6f15324d3c51560e0d82ac7f', 'dic', '/admin/dic', 'SetUp', 1, 1, '字典管理', 'DicInfo', 2, 4, '2022-07-17 21:51:04', '2022-07-17 21:37:25', NULL);
-INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7d09snjfsd1', '0', 'order', '/admin/Order', 'Avatar', 1, 1, '订单管理', 'UserList', 1, 4, '2022-07-17 21:52:22', '2021-07-20 22:09:46', NULL);
-INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7d0sbhjfshf', '0', 'goods', '/admin/Goods', 'Tools', 1, 1, '商品管理', 'System', 1, 3, '2022-07-17 21:52:13', '2021-10-23 19:50:28', NULL);
-INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7d2545fsds', '856eabdd6f15324d3c51560e0d82ac7f', 'role', '/admin/Role', 'Guide', 1, 1, '角色管理', 'Role', 2, 3, '2022-07-17 21:50:55', '2021-07-22 17:09:46', NULL);
-INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7ddsbvdsbh', '856eabdd6f15324d3c51560e0d82ac7f', 'user', '/admin/User', 'Help', 1, 1, '用户管理', 'Role', 2, 1, '2022-07-17 21:50:27', '2021-07-23 16:09:30', NULL);
-INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7dndjshgus', '856eabdd6f15324d3c51560e0d82ac7f', 'menu', '/admin/Menu', 'Grid', 1, 1, '菜单管理', 'Menu', 2, 2, '2022-07-17 21:50:39', '2021-07-22 17:11:10', NULL);
+INSERT INTO `sys_menu` VALUES ('05ed0ac751eaf99859b75b4a5a6a9a7d', '2b5f7fd4d42b56f4eb03a744fa59f0d6', 'order', '/admin/order/Order', 'SetUp', 1, 1, '订单管理', 'Order', 2, 1, '2022-07-23 12:59:23', '2022-07-23 12:59:23', '');
+INSERT INTO `sys_menu` VALUES ('2b5f7fd4d42b56f4eb03a744fa59f0d6', '0', 'order', '/order', 'SetUp', 1, 1, '订单管理', 'Order', 1, 3, '2022-07-23 12:58:34', '2022-07-23 12:58:34', '');
+INSERT INTO `sys_menu` VALUES ('52be034c743ff0ce55b4dc2627a750d8', '856eabdd6f15324d3c51560e0d82ac7f', 'loginLog', '/admin/system/LoginLog', 'Cpu', 1, 1, '登录日志', 'LoginLog', 2, 5, '2022-07-17 22:37:32', '2022-07-17 22:37:32', '');
+INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7d093f0534', '856eabdd6f15324d3c51560e0d82ac7f', 'dic', '/admin/system/Dic', 'SetUp', 1, 1, '字典管理', 'DicInfo', 2, 4, '2022-07-17 21:51:04', '2022-07-17 21:37:25', NULL);
+INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7d2545fsds', '856eabdd6f15324d3c51560e0d82ac7f', 'role', '/admin/system/Role', 'Guide', 1, 1, '角色管理', 'Role', 2, 3, '2022-07-17 21:50:55', '2021-07-22 17:09:46', NULL);
+INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7ddsbvdsbh', '856eabdd6f15324d3c51560e0d82ac7f', 'user', '/admin/system/User', 'Help', 1, 1, '用户管理', 'Role', 2, 1, '2022-07-17 21:50:27', '2021-07-23 16:09:30', NULL);
+INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7dndjshgus', '856eabdd6f15324d3c51560e0d82ac7f', 'menu', '/admin/system/Menu', 'Grid', 1, 1, '菜单管理', 'Menu', 2, 2, '2022-07-17 21:50:39', '2021-07-22 17:11:10', NULL);
 INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7snjfhsd1545dsgds45', '0', 'home', '/admin/Home', 'HomeFilled', 1, 1, '工作台', 'Home', 1, 1, '2022-07-17 21:47:13', '2021-07-20 22:02:18', NULL);
+INSERT INTO `sys_menu` VALUES ('707eaca13c7c9de7442b7960f005797d', 'b47050cbb8e2d3bd87d470a15c6a788c', 'goodsLabel', '/admin/goods/GoodsLabel', 'PriceTag', 1, 1, '商品标签', 'GoodsLabel', 2, 3, '2022-07-23 12:57:08', '2022-07-23 12:57:08', '');
+INSERT INTO `sys_menu` VALUES ('832178b32fafec3168f139b760d37d30', 'b47050cbb8e2d3bd87d470a15c6a788c', 'goods', '/admin/goods/Goods', 'Fries', 1, 1, '商品管理', 'goods', 2, 1, '2022-07-23 12:54:12', '2022-07-23 12:54:12', '');
 INSERT INTO `sys_menu` VALUES ('856eabdd6f15324d3c51560e0d82ac7f', '0', 'system', '/system', 'CopyDocument', 1, 1, '系统管理', 'System', 1, 1, '2022-07-17 21:49:14', '2022-07-17 21:49:14', '');
+INSERT INTO `sys_menu` VALUES ('b47050cbb8e2d3bd87d470a15c6a788c', '0', 'goods', '/goods', 'Present', 1, 1, '商品管理', 'Goods', 1, 3, '2022-07-23 12:52:48', '2022-07-23 12:52:48', '');
+INSERT INTO `sys_menu` VALUES ('df785cb43e428403dbfac6d4ece0189d', '2b5f7fd4d42b56f4eb03a744fa59f0d6', 'goodsOrder', '/admin/order/GoodsOrder', 'Operation', 1, 1, '商品订单', 'GoodsOrder', 2, 2, '2022-07-23 13:00:34', '2022-07-23 13:00:34', '');
+INSERT INTO `sys_menu` VALUES ('eded3ad528e3ab905b773d236d4bad7a', 'b47050cbb8e2d3bd87d470a15c6a788c', 'goodsClassify', '/admin/goods/GoodsClassify', 'ScaleToOriginal', 1, 1, '商品分类', 'GoodsClassify', 2, 2, '2022-07-23 12:55:45', '2022-07-23 12:55:45', '');
 
 -- ----------------------------
 -- Table structure for sys_menu_role

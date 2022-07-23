@@ -36,8 +36,11 @@ public class GoodsImage {
     @ApiModelProperty(value = "商品id")
     private String goodsId;
 
+    @ApiModelProperty(value = "图片名称")
+    private String name;
+
     @ApiModelProperty(value = "图片地址")
-    private String imageUrl;
+    private String url;
 
     @ApiModelProperty(value = "更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")

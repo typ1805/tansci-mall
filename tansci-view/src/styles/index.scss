@@ -45,16 +45,30 @@ html, body {
 
 // ==============公共样式==================
 /**
- * Dialog 对话框
+ * Dialog、Drawer
  */
-.el-dialog__header{
+.el-dialog__header, .el-drawer__header{
     background-color: #242e42;
-    margin-right: 0;
+    margin: 0;
     padding: 12px 20px;
+    color: #fff;
     .el-dialog__title{
         color: #fff;
     }
 }
+.el-drawer__body::-webkit-scrollbar {
+    width: 5px;
+    height: 1px;
+}
+.drawer__body::-webkit-scrollbar-thumb {
+    background-color: #909399;
+    border-radius: 5px;
+}
+.drawer__body::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background: #ededed;
+}
+
 /**
  * table组件样式
  */

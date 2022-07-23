@@ -1,7 +1,7 @@
 <template>
   <div class="order">
     <el-card>
-      <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: mobile?80:160,}" :page="page" :loading="loading"
+      <Table :data="tableData" :column="tableTitle" :operation="{show:true, width:160,}" :page="page" :loading="loading"
         @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
         <template #column="scope">
           <el-button @click="onDelete(scope)" type="text" style="color:var(--delete)">删除</el-button>
@@ -14,11 +14,9 @@
     import {onMounted, reactive, toRefs} from 'vue'
     import {ElMessage, ElMessageBox} from "element-plus"
     import Table from '@/components/common/Table.vue'
-    import {isMobile} from '@/utils/utils'
     import {orderPage, delOrder} from "@/api/admin/order"
 
     const state = reactive({
-        mobile: false,
         loading: false,
         page: {
           current: 1,
@@ -41,13 +39,10 @@
     })
 
     const {
-        mobile,loading,page,tableTitle,tableData
+        loading,page,tableTitle,tableData
     } = toRefs(state)
 
     onMounted(() => {
-        if(isMobile()){
-          state.mobile = true;
-        }
         onOrderPage();
     })
 

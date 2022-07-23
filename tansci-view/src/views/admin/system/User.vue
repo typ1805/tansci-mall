@@ -1,7 +1,7 @@
 <template>
     <div class="user">
         <el-card>
-            <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: mobile?80:160,}" :page="page" :loading="loading"
+            <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: 160,}" :page="page" :loading="loading"
                 @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange" @setCellColor="setCellColor">
                 <template #search>
                     <div><el-button type="primary" @click="onAddUser">添加用户</el-button></div>
@@ -15,7 +15,7 @@
                     <el-button @click="onDelete(scope)" type="text" style="color:var(--delete)">删除</el-button>
                 </template>
             </Table>
-            <el-dialog :title="userTitle" v-model="userVisible" :show-close="false" :width="mobile? '100%':'50%'">
+            <el-dialog :title="userTitle" v-model="userVisible" :show-close="false" width="50%">
                 <el-form :model="userForm" :rules="rules" ref="userRuleForm" status-icon label-width="100px">
                     <el-row>
                         <el-col :span="24">
@@ -130,14 +130,13 @@
     import {onMounted, reactive, ref, unref, toRefs} from 'vue'
     import {ElMessage, ElMessageBox} from 'element-plus'
     import Table from '@/components/common/Table.vue'
-    import {dateFormat,isMobile,getCheckTreeIds}from '@/utils/utils'
+    import {dateFormat,getCheckTreeIds}from '@/utils/utils'
     import {userPage, addUser, updateUser, delUser} from '@/api/admin/user'
     import {roleList,userRoleSave} from '@/api/admin/role'
 
     const userRuleForm = ref(null)
     const roleFormRef = ref(null)
     const state = reactive({
-        mobile: false,
         searchForm:{
             nickname: null,
         },
@@ -188,14 +187,11 @@
     })
 
     const {
-        mobile,searchForm,loading,page,tableHeight,tableTitle,tableData,
+        searchForm,loading,page,tableHeight,tableTitle,tableData,
         userVisible,userTitle,operate,userForm,roles,roleVisible,roleForm
     } = toRefs(state)
 
     onMounted(() => {
-        if(isMobile()){
-            state.mobile = true;
-        }
         onUserPage();
         onRoleList();
     })

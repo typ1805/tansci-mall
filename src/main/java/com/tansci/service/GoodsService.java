@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tansci.domain.Goods;
-import com.tansci.domain.dto.GoodsDto;
 
 /**
  * @path：com.tansci.service.GoodsService.java
@@ -16,8 +15,12 @@ import com.tansci.domain.dto.GoodsDto;
  */
 public interface GoodsService extends IService<Goods> {
 
-    IPage<Goods> page(Page page, GoodsDto dto);
+    IPage<Goods> page(Page page, Goods goods);
 
-    Boolean del(GoodsDto dto);
+    boolean save(Goods goods);
+
+    Object update(Goods goods);
+
+    Object delete(Goods goods);
 
 }

@@ -11,11 +11,9 @@
     import {onMounted, reactive, toRefs} from 'vue'
     import {ElMessage, ElMessageBox} from "element-plus"
     import Table from '@/components/common/Table.vue'
-    import {isMobile} from '@/utils/utils'
     import {loginLogPage} from "@/api/admin/loginLog"
 
     const state = reactive({
-        mobile: false,
         loading: false,
         page: {
             current: 1,
@@ -34,13 +32,10 @@
     })
 
     const {
-        mobile,loading,page,tableTitle,tableData
+        loading,page,tableTitle,tableData
     } = toRefs(state)
 
     onMounted(() => {
-        if(isMobile()){
-            state.mobile = true;
-        }
         onLoginLogPage();
     })
 

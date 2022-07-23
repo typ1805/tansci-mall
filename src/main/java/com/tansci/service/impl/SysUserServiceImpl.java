@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tansci.common.Enums;
+import com.tansci.domain.Shop;
 import com.tansci.domain.SysLoginLog;
 import com.tansci.domain.SysUser;
 import com.tansci.domain.SysUserRole;
@@ -12,6 +13,7 @@ import com.tansci.domain.dto.SysUserDto;
 import com.tansci.domain.vo.SysUserVo;
 import com.tansci.exception.BusinessException;
 import com.tansci.mapper.SysUserMapper;
+import com.tansci.service.ShopService;
 import com.tansci.service.SysLoginLogService;
 import com.tansci.service.SysUserRoleService;
 import com.tansci.service.SysUserService;
@@ -53,6 +55,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private SysUserRoleService sysUserRoleService;
+
+    @Autowired
+    private ShopService shopService;
 
     @Override
     public IPage<SysUser> page(Page page, SysUserDto dto) {
@@ -103,6 +108,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser user = this.baseMapper.selectOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, dto.getUsername()));
         if (Objects.isNull(user)) {
             throw new BusinessException("用户名或密码有误！");
+        }
+
+        // 是否有店铺信息
+        Shop shop = shopService.getOne(Wrappers.<Shop>lambdaQuery().eq(Shop::getUserId, user.getId()));
+        if (Objects.nonNull(shop)) {
+            user.setShopId(shop.getShopId());
+            userVo.setShop(shop);
         }
 
         UserDetails userDetails = new SecurityUtils(user);

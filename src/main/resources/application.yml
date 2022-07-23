@@ -4,6 +4,8 @@ server:
     context-path: /tansci/
 
 spring:
+  main:
+    allow-circular-references: true # 报循环依赖错误
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

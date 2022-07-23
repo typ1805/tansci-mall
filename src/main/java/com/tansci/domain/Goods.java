@@ -1,6 +1,7 @@
 package com.tansci.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @path：com.tansci.domain.Goods.java
@@ -80,5 +82,33 @@ public class Goods {
 
     @ApiModelProperty(value = "备注")
     private String remarks;
+
+    @ApiModelProperty(value = "状态名称")
+    @TableField(exist = false)
+    private String statusName;
+
+    @ApiModelProperty(value = "分类名称")
+    @TableField(exist = false)
+    private String classifyName;
+
+    @ApiModelProperty(value = "标签列表")
+    @TableField(exist = false)
+    private List<GoodsLabel> labelList;
+
+    @ApiModelProperty(value = "商户名称")
+    @TableField(exist = false)
+    private String userName;
+
+    @ApiModelProperty(value = "店铺名称")
+    @TableField(exist = false)
+    private String shopName;
+
+    @ApiModelProperty(value = "店铺")
+    @TableField(exist = false)
+    private Shop shop;
+
+    @ApiModelProperty(value = "商品图片")
+    @TableField(exist = false)
+    private List<GoodsImage> imageList;
 
 }
