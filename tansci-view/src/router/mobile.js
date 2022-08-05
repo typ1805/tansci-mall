@@ -112,7 +112,26 @@ const mobile = [
         meta: {title: "客户服务"},
         component: () => import('@/views/mobile/setting/CustomerService.vue')
     },
-     // =======================我的=============end=======================================
+    // =======================我的=============end=======================================
+
+    // ===================登录、注册========start=====================
+    {
+        path: '/miniapp/login',
+        name: 'login',
+        chineseName: '登录',
+        type: 2,
+        meta: {title: "登录"},
+        component: () => import('@/views/mobile/Login.vue')
+    },
+    {
+        path: '/miniapp/register',
+        name: 'register',
+        chineseName: '注册',
+        type: 2,
+        meta: {title: "注册"},
+        component: () => import('@/views/mobile/Register.vue')
+    },
+    // ===================登录、注册========end=====================
     
 ]
 
