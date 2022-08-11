@@ -5,6 +5,6 @@ import axios from '@/utils/axios'
  * @param params
  * @returns {Promise<AxiosResponse<T>>}
  */
- export function goodsList(userId) {
+export function goodsList(userId) {
     return axios.post('/tansci/api/goodsList/' + userId);
 }

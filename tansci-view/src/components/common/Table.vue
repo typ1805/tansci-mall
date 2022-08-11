@@ -47,11 +47,11 @@
                     <el-table-column v-else-if="item.type == 'switch'" show-overflow-tooltip 
                         :label="item.label" :align="item.align != null ? item.align : 'center'" :width="item.width">
                         <template #default="scope">
-                            <el-switch @change="$emit('onSwitchChange',scope.row)" inline-prompt 
+                            <el-switch @change="$emit('onSwitchChange',scope.row)" :inline-prompt="item.option.inlinePrompt?false:true"
                                 :active-value="item.option.activeValue" :active-color="item.option.activeColor" :active-text="item.option.activeText" 
                                 :inactive-value="item.option.inactiveValue" :inactive-color="item.option.inactiveColor" :inactive-text="item.option.inactiveText"
                                 :size="item.option.size"
-                                v-model="scope.row[item.alias==null?item.prop:item.alias]"
+                                v-model="scope.row[item.prop]"
                             ></el-switch>
                         </template>
                     </el-table-column>

@@ -25,6 +25,9 @@ public class GoodsOrderDto {
     @ApiModelProperty(value = "ID")
     private String id;
 
+    @ApiModelProperty(value = "订单ID")
+    private String orderId;
+
     @ApiModelProperty(value = "状态")
     private Integer status;
 

@@ -5,7 +5,7 @@ import axios from '@/utils/axios'
  * @param params
  * @returns {Promise<AxiosResponse<T>>}
  */
- export function login(params) {
+export function login(params) {
     return axios.post('/tansci/user/login', params);
 }
 
@@ -23,7 +23,7 @@ export function logout(params) {
  * @param {*} params
  * @returns
  */
- export function userPage(params) {
+export function userPage(params) {
     return axios.get('/tansci/user/page', {params: params});
 }
 

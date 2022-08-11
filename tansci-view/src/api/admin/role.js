@@ -3,7 +3,7 @@ import axios from '@/utils/axios'
 /**
  * 角色列表分页
  */
- export function rolePage(params) {
+export function rolePage(params) {
     return axios.get('/tansci/role/page', { params: params });
 }
 /**

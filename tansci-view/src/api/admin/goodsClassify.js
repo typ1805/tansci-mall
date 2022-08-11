@@ -5,7 +5,7 @@ import axios from '@/utils/axios'
  * @param {*} params
  * @returns
  */
- export function goodsClassifyList(params) {
+export function goodsClassifyList(params) {
     return axios.get('/tansci/goodsClassify/list', {params: params});
 }
 

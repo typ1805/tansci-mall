@@ -42,7 +42,7 @@ public class Goods {
     @ApiModelProperty(value = "商品简介")
     private String intro;
 
-    @ApiModelProperty(value = "状态：0、未上架，1、已上架，2、已下架")
+    @ApiModelProperty(value = "状态：0、已下架，1、已上架")
     private Integer status;
 
     @ApiModelProperty(value = "分类")

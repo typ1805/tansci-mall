@@ -116,16 +116,16 @@ const mobile = [
 
     // ===================登录、注册========start=====================
     {
-        path: '/miniapp/login',
-        name: 'login',
+        path: '/miniapp/appLogin',
+        name: 'appLogin',
         chineseName: '登录',
         type: 2,
         meta: {title: "登录"},
         component: () => import('@/views/mobile/Login.vue')
     },
     {
-        path: '/miniapp/register',
-        name: 'register',
+        path: '/miniapp/appRegister',
+        name: 'appRegister',
         chineseName: '注册',
         type: 2,
         meta: {title: "注册"},

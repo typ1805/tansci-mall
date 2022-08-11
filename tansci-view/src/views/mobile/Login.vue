@@ -55,7 +55,7 @@
     }
 
     const onRegister = () =>{
-        router.push({path:'/miniapp/register'})
+        router.push({path:'/miniapp/appRegister'})
     }
 
 </script>

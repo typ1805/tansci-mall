@@ -42,9 +42,9 @@
         treeData:[],
         loading: false,
         page: {
-          current: 1,
-          size: 10,
-          total: 1,
+            current: 1,
+            size: 10,
+            total: 1,
         },
         tableTitle: [
             {prop:'name',label:'名称'},
@@ -123,32 +123,6 @@
         }
     }
 
-    const onSubmit = async () =>{
-        const form = unref(goodsClassifyFormRef);
-        if (!form) return;
-        await form.validate();
-
-        if(state.operate == 1){
-            goodsClassifySave(state.goodsClassifyForm).then(res=>{
-                if(res){
-                    ElMessage.success("添加成功！");
-                    state.operate = 0;
-                    onGoodsClassify();
-                    state.goodsClassifyVisible = false;
-                }
-            })
-        } else if (state.operate == 2) {
-            goodsClassifyUpdate(state.goodsClassifyForm).then(res=>{
-                if(res){
-                    ElMessage.success("更新成功！");
-                    state.operate = 0;
-                    onGoodsClassify();
-                    state.goodsClassifyVisible = false;
-                }
-            })
-        }
-    }
-
     const onNodeClick = (data) =>{
         state.goodsClassifyForm = {
             id: data.id,
@@ -179,8 +153,8 @@
     }
 </script>
 <style lang="scss" scoped>
-  .goods-classify{
-    display: flex;
+    .goods-classify{
+        display: flex;
         padding-bottom: 4rem;
         .classify-tree{
             min-width: 300px;
@@ -197,5 +171,5 @@
             margin-left: 0.2rem;
             width: 100%;
         }
-  }
+    }
 </style>

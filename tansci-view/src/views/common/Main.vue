@@ -14,7 +14,7 @@
 </script>
 <template>
     <div class="main-container">
-        欢迎使用 自助售货平台
+        欢迎使用 TANSCI 商城
     </div>
 </template>
 <style lang="scss" scoped>

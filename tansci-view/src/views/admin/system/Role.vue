@@ -1,7 +1,7 @@
 <template>
     <el-card class="role-container" shadow="always">
         <Table :data="tableData" :column="tableTitle" :operation="true" :page="page" :loading="loading"
-            @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
+            @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange" @onSwitchChange="onSwitchChange">
             <template #search>
                 <div><el-button type="info" @click="onAddRole">添加</el-button></div>
                 <div><el-input v-model="searchForm.name" placeholder="请输入名称"></el-input></div>
@@ -22,9 +22,8 @@
                 </el-form-item>
                 <el-form-item prop="status" label="状态" :rules="[{required: true, message: '请选择状态', trigger: 'change'}]">
                     <el-radio-group v-model="roleForm.status">
-                        <el-radio :label="0">未启用</el-radio>
+                        <el-radio :label="0">禁用</el-radio>
                         <el-radio :label="1">启用</el-radio>
-                        <el-radio :label="2">禁用</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item prop="remarks" label="备注">
@@ -76,7 +75,13 @@
         tableTitle: [
             {prop:'',label:'',fixed:'left'},
             {prop:'name',label:'名称'},
-            {prop:'status',alias:'statusName',label:'状态',type:'tag',option:{type:'success',size:'small',effect:'plain'}},
+            {prop:'status',alias:'statusName',label:'状态',type:'switch',
+                option:{
+                    activeValue:1,activeColor:'#13ce66',activeText:'启用',
+                    inactiveValue:0,inactiveColor:'#ff4949',inactiveText:'禁用',
+                    inlinePrompt: false,size:'large'
+                }
+            },
             {prop:'creator',alias:'creatorName',label:'创建人',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
             {prop:'updateTime',label:'更新时间'},
             {prop:'createTime',label:'创建时间'},
@@ -135,6 +140,19 @@
     }
     const onSearch = () =>{
         onRolePage();
+    }
+
+    // 更新状态
+    const onSwitchChange = (row) =>{
+        updateRole({
+            id: row.id,
+            status: row.status
+        }).then(res=>{
+            if(res){
+                ElMessage.success('操作成功！');
+                onRolePage();
+            }
+        });
     }
 
     // 编辑

@@ -14,7 +14,7 @@ export function goodsLabelPage(params) {
  * @param {*} params
  * @returns
  */
- export function goodsLabelList(params) {
+export function goodsLabelList(params) {
     return axios.get('/tansci/goodsLabel/list', {params: params});
 }
 

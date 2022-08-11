@@ -53,6 +53,12 @@ public class GoodsController {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, goodsService.update(goods));
     }
 
+    @ApiOperation(value = "更新状态", notes = "更新状态")
+    @PostMapping("/updateStatus")
+    public Wrapper<Object> updateStatus(@RequestBody Goods goods) {
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, goodsService.updateById(goods));
+    }
+
     @ApiOperation(value = "删除", notes = "删除")
     @GetMapping("/delete")
     public Wrapper<Object> delete(Goods goods) {

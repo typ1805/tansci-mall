@@ -5,7 +5,7 @@ import axios from '@/utils/axios'
  * @param {*} params 
  * @returns 
  */
- export function menuList(params) {
+export function menuList(params) {
     return axios.get('/tansci/menu/list', { params: params });
 }
 

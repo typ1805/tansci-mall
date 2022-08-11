@@ -3,7 +3,7 @@ import axios from '@/utils/axios'
 /**
  * 分页列表
  */
- export function dicList(params) {
+export function dicList(params) {
     return axios.get('/tansci/dic/dicList', { params: params });
 }
 /**

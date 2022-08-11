@@ -4,7 +4,7 @@
             <el-card v-show="!isCollapse" shadow="always">
                 <div>
                     <el-icon :size="26" style="vertical-align: middle;"><OfficeBuilding/></el-icon>
-                    <span style="vertical-align: middle;padding-left:1rem;">自动售货系统</span>
+                    <span style="vertical-align: middle;padding-left:1rem;">TANSCI商城</span>
                 </div>
             </el-card>
             <el-menu router :default-active="$route.path" :collapse="isCollapse"

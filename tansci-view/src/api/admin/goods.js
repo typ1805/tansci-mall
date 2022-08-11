@@ -23,6 +23,16 @@ export function addGoods(params) {
  * @param {*} params
  * @returns
  */
+export function updateGoodsStatus(params) {
+    return axios.post('/tansci/goods/updateStatus', params);
+}
+
+
+/**
+ * 修改商品
+ * @param {*} params
+ * @returns
+ */
 export function updateGoods(params) {
     return axios.post('/tansci/goods/update', params);
 }
@@ -41,6 +51,6 @@ export function delGoods(params) {
  * @param {*} params
  * @returns
  */
- export function goodsImageList(params) {
+export function goodsImageList(params) {
     return axios.get('/tansci/goods/goodsImageList', {params: params});
 }

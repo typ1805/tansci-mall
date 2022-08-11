@@ -54,9 +54,8 @@ public enum Enums {
     /**
      * 商品状态
      */
-    GOODS_STATUS_0(0, "goods_status", "未上架"),
+    GOODS_STATUS_0(0, "goods_status", "已下架"),
     GOODS_STATUS_1(1, "goods_status", "已上架"),
-    GOODS_STATUS_2(2, "goods_status", "已下架"),
 
     /**
      * 订单状态

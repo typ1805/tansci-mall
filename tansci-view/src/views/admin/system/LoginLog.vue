@@ -1,11 +1,11 @@
 <template>
-  <div class="loginlog">
-    <el-card>
-        <Table :data="tableData" :column="tableTitle" :page="page" :loading="loading"
-            @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
-        </Table>
-    </el-card>
-  </div>
+    <div class="loginlog">
+        <el-card>
+            <Table :data="tableData" :column="tableTitle" :page="page" :loading="loading"
+                @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
+            </Table>
+        </el-card>
+    </div>
 </template>
 <script setup>
     import {onMounted, reactive, toRefs} from 'vue'

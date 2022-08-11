@@ -1,6 +1,7 @@
 package com.tansci.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -42,8 +43,12 @@ public class GoodsOrder {
     @ApiModelProperty(value = "商品数量")
     private Integer goodsNum;
 
-    @ApiModelProperty(value = "状态：0、未支付，1、已支付，2、失败，3、退款")
+    @ApiModelProperty(value = "状态：0、未支付，1、支付成功，2、支付失败，3、已退款")
     private Integer status;
+
+    @ApiModelProperty(value = "订单状态")
+    @TableField(exist = false)
+    private String statusName;
 
     @ApiModelProperty(value = "支付时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
@@ -54,6 +59,10 @@ public class GoodsOrder {
 
     @ApiModelProperty(value = "商户ID")
     private String userId;
+
+    @ApiModelProperty(value = "商户名称")
+    @TableField(exist = false)
+    private String userName;
 
     @ApiModelProperty(value = "更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")

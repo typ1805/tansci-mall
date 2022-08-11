@@ -37,7 +37,7 @@ public class GoodsOrderController {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, goodsOrderService.page(page, dto));
     }
 
-    @ApiOperation(value = "添加", notes = "添加")
+    @ApiOperation(value = "更新", notes = "更新")
     @PostMapping("/update")
     public Wrapper<Boolean> update(@RequestBody GoodsOrder order) {
         order.setUpdateTime(LocalDateTime.now());

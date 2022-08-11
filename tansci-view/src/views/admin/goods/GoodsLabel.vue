@@ -1,39 +1,39 @@
 <template>
-  <div class="goods-label">
-    <el-card>
-      <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: 160,}" :page="page" :loading="loading"
-        @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
-        <template #search>
-            <div><el-button type="primary" @click="onAdd">添加标签</el-button></div>
-            <div><el-input v-model="searchForm.name" placeholder="请输入名称"></el-input></div>
-            <div><el-button @click="onRefresh" icon="RefreshRight" circle></el-button></div>
-            <div><el-button @click="onSearch" type="primary" icon="Search">查询</el-button></div>
-        </template>
-        <template #column="scope">
-            <el-button @click="onEdit(scope)" type="text" style="color:var(--edit)">编辑</el-button>
-            <el-button @click="onDelete(scope)" type="text" style="color:var(--delete)">删除</el-button>
-        </template>
-      </Table>
-    </el-card>
-    <el-dialog title="标签管理" v-model="goodsLabelVisible" width="40%" :show-close="false">
-        <el-form :model="goodsLabelForm" :rules="rules" ref="goodsLabelFormRef" label-position="right" label-width="100px">
-            <el-form-item label="名称" prop="name" :rules="[{required: true, message: '请输入名称', trigger: 'blur'}]">
-                <el-input v-model="goodsLabelForm.name" placeholder="请输入名称" style="width:100%"></el-input>
-            </el-form-item>
-            <el-form-item prop="type" label="类型" :rules="[{required: true, message: '请选择类型', trigger: 'change'}]">
-                <el-radio-group v-model="goodsLabelForm.type">
-                    <el-radio v-for="item in typeList" :key="item" :label="item.value">
-                      <el-tag :type="item.value" effect="dark" round>{{item.label}}</el-tag>
-                    </el-radio>
-                </el-radio-group>
-            </el-form-item>
-        </el-form>
-        <template #footer>
-            <el-button @click="goodsLabelVisible = false">取 消</el-button>
-            <el-button type="primary" @click="onSubmit(goodsLabelFormRef)">确 定</el-button>
-        </template>
-    </el-dialog>
-  </div>
+    <div class="goods-label">
+        <el-card>
+        <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: 160,}" :page="page" :loading="loading"
+            @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
+            <template #search>
+                <div><el-button type="primary" @click="onAdd">添加标签</el-button></div>
+                <div><el-input v-model="searchForm.name" placeholder="请输入名称"></el-input></div>
+                <div><el-button @click="onRefresh" icon="RefreshRight" circle></el-button></div>
+                <div><el-button @click="onSearch" type="primary" icon="Search">查询</el-button></div>
+            </template>
+            <template #column="scope">
+                <el-button @click="onEdit(scope)" type="text" style="color:var(--edit)">编辑</el-button>
+                <el-button @click="onDelete(scope)" type="text" style="color:var(--delete)">删除</el-button>
+            </template>
+        </Table>
+        </el-card>
+        <el-dialog title="标签管理" v-model="goodsLabelVisible" width="40%" :show-close="false">
+            <el-form :model="goodsLabelForm" :rules="rules" ref="goodsLabelFormRef" label-position="right" label-width="100px">
+                <el-form-item label="名称" prop="name" :rules="[{required: true, message: '请输入名称', trigger: 'blur'}]">
+                    <el-input v-model="goodsLabelForm.name" placeholder="请输入名称" style="width:100%"></el-input>
+                </el-form-item>
+                <el-form-item prop="type" label="类型" :rules="[{required: true, message: '请选择类型', trigger: 'change'}]">
+                    <el-radio-group v-model="goodsLabelForm.type">
+                        <el-radio v-for="item in typeList" :key="item" :label="item.value">
+                        <el-tag :type="item.value" effect="dark" round>{{item.label}}</el-tag>
+                        </el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="goodsLabelVisible = false">取 消</el-button>
+                <el-button type="primary" @click="onSubmit(goodsLabelFormRef)">确 定</el-button>
+            </template>
+        </el-dialog>
+    </div>
 </template>
 <script setup>
     import {onMounted, reactive, ref, unref, toRefs} from 'vue'
@@ -48,31 +48,31 @@
         },
         loading: false,
         page: {
-          current: 1,
-          size: 10,
-          total: 1,
+            current: 1,
+            size: 10,
+            total: 1,
         },
         tableTitle: [
-          {prop:'',label:'',fixed:'left'},
-          {prop:'name',label:'名称'},
-          {prop:'type',label:'类型',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
-          {prop:'updateTime',label:'更新时间'},
-          {prop:'createTime',label:'创建时间'},
+            {prop:'',label:'',fixed:'left'},
+            {prop:'name',label:'名称'},
+            {prop:'type',label:'类型',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
+            {prop:'updateTime',label:'更新时间'},
+            {prop:'createTime',label:'创建时间'},
         ],
         tableData:[],
         operate: 0,
         typeList: [
-          {value:'primary',label:'primary'},
-          {value:'success',label:'success'},
-          {value:'warning',label:'warning'},
-          {value:'danger',label:'danger'},
-          {value:'info',label:'info'},
+            {value:'primary',label:'primary'},
+            {value:'success',label:'success'},
+            {value:'warning',label:'warning'},
+            {value:'danger',label:'danger'},
+            {value:'info',label:'info'},
         ],
         goodsLabelVisible: false,
         goodsLabelForm:{
-          id:'',
-          name:'',
-          type: '',
+            id:'',
+            name:'',
+            type: '',
         },
     })
 

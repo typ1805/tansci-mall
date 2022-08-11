@@ -2,7 +2,7 @@
     <div class="goods">
         <el-card>
             <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: 160,}" :page="page" :loading="loading"
-                @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
+                @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange" @onSwitchChange="onSwitchChange">
                 <template #search>
                     <div><el-button type="primary" @click="onAdd">添加商品</el-button></div>
                     <div><el-input v-model="searchForm.name" placeholder="请输入商品名称"></el-input></div>
@@ -124,7 +124,7 @@
     import {ElMessage, ElMessageBox} from "element-plus"
     import {useTokenStore} from '@/store/settings'
     import Table from '@/components/common/Table.vue'
-    import {goodsPage, addGoods, updateGoods, delGoods,goodsImageList} from "@/api/admin/goods"
+    import {goodsPage, addGoods, updateGoods, updateGoodsStatus, delGoods,goodsImageList} from "@/api/admin/goods"
     import {goodsLabelList} from '@/api/admin/goodsLabel'
     import {goodsClassifyList} from '@/api/admin/goodsClassify'
     import {uploadImage, delFile} from "@/api/admin/upload"
@@ -162,7 +162,13 @@
             {prop:'name',label:'名称'},
             {prop:'coverImg',label:'主图',type:'image'},
             {prop:'intro',label:'简介'},
-            {prop:'status',alias:'statusName',label:'状态',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
+            {prop:'status',alias:'statusName',label:'状态',type:'switch',
+                option:{
+                    activeValue:1,activeColor:'#13ce66',activeText:'上架',
+                    inactiveValue:0,inactiveColor:'#ff4949',inactiveText:'下架',
+                    inlinePrompt: false,size:'large'
+                }
+            },
             {prop:'classify',alias:'classifyName',label:'分类'},
             {prop:'price',label:'价格',type:'price'},
             {prop:'stock',label:'库存'},
@@ -176,9 +182,8 @@
         ],
         tableData:[],
         statusList:[
-            {label:'未上架',value:0},
             {label:'已上架',value:1},
-            {label:'已下架',value:2},
+            {label:'已下架',value:0},
         ],
         labelList: [], // 商品标签
         classifyList:[], // 商品分类
@@ -249,6 +254,19 @@
     }
     const onSearch = () =>{
         onGoodsPage();
+    }
+
+    // 上下架
+    const onSwitchChange = (row) =>{
+        updateGoodsStatus({
+            goodsId: row.goodsId,
+            status: row.status
+        }).then(res=>{
+            if(res){
+                ElMessage.success('操作成功！');
+                onGoodsPage();
+            }
+        });
     }
 
     // 商品标签

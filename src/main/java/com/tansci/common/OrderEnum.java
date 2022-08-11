@@ -31,6 +31,14 @@ public enum OrderEnum {
     ORDER_STATUS_OVERTIME_CLOSE(6, "order_status", "超时关闭"),
     ORDER_STATUS_REFUND(7, "order_status", "订单退款"),
 
+    /**
+     * 商品订单状态
+     */
+    GOODS_ORDER_STATUS_UNPAID(0, "goods_order_status", "未支付"),
+    GOODS_ORDER_STATUS_TRADED(1, "goods_order_status", "支付成功"),
+    GOODS_ORDER_STATUS_FAIL(2, "goods_order_status", "支付失败"),
+    GOODS_ORDER_STATUS_REFUND(3, "goods_order_status", "已退款"),
+
     ;
 
     private Integer key;
