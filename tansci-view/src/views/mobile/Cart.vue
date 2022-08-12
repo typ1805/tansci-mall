@@ -94,7 +94,7 @@
 
     // 购物车为空，跳转至首页
     const toIndex = () =>{
-        router.push({path: '/miniapp/index'})
+        router.push({path: '/app/index'})
     }
 
     // 购物车列表
@@ -264,7 +264,7 @@
     // 商品详情
     const toGoodsDetail = (goodsId) =>{
         router.push({
-            path: '/miniapp/goodsDetail',
+            path: '/app/goodsDetail',
             query:{
                 goodsId: goodsId
             }

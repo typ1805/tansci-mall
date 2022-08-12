@@ -82,7 +82,7 @@
     }
 
     const toIndex = () =>{
-        router.push({path:'/miniapp/index'})
+        router.push({path:'/app/index'})
     }
 
     const toBack = () =>{

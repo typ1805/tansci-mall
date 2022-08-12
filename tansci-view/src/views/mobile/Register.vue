@@ -71,7 +71,7 @@
     }
 
     const onLogin = () =>{
-        router.push({path:'/miniapp/appLogin'})
+        router.push({path:'/app/appLogin'})
     }
 
 </script>

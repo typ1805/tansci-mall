@@ -1,6 +1,6 @@
 const mobile = [
     {
-        path: '/miniapp/index',
+        path: '/app/index',
         name: 'index',
         chineseName: '首页',
         type: 2,
@@ -8,7 +8,7 @@ const mobile = [
         component: () => import('@/views/mobile/Index.vue')
     },
     {
-        path: '/miniapp/search',
+        path: '/app/search',
         name: 'search',
         chineseName: '搜索',
         type: 2,
@@ -16,7 +16,7 @@ const mobile = [
         component: () => import('@/views/mobile/Search.vue')
     },
     {
-        path: '/miniapp/cart',
+        path: '/app/cart',
         name: 'cart',
         chineseName: '购物车',
         type: 2,
@@ -24,7 +24,7 @@ const mobile = [
         component: () => import('@/views/mobile/Cart.vue')
     },
     {
-        path: '/miniapp/shop',
+        path: '/app/shop',
         name: 'shop',
         chineseName: '店铺',
         type: 2,
@@ -32,7 +32,7 @@ const mobile = [
         component: () => import('@/views/mobile/Shop.vue')
     },
     {
-        path: '/miniapp/goodsDetail',
+        path: '/app/goodsDetail',
         name: 'goodsDetail',
         chineseName: '商品详情',
         type: 2,
@@ -40,7 +40,7 @@ const mobile = [
         component: () => import('@/views/mobile/GoodsDetail.vue')
     },
     {
-        path: '/miniapp/order',
+        path: '/app/order',
         name: 'order',
         chineseName: '订单',
         type: 2,
@@ -48,7 +48,7 @@ const mobile = [
         component: () => import('@/views/mobile/Order.vue')
     },
     {
-        path: '/miniapp/orderList',
+        path: '/app/orderList',
         name: 'orderList',
         chineseName: '订单列表',
         type: 2,
@@ -57,7 +57,7 @@ const mobile = [
     },
     // =======================我的=============start=======================================
     {
-        path: '/miniapp/settings',
+        path: '/app/settings',
         name: 'settings',
         chineseName: '我的',
         type: 2,
@@ -65,7 +65,7 @@ const mobile = [
         component: () => import('@/views/mobile/Settings.vue')
     },
     {
-        path: '/miniapp/accountSetting',
+        path: '/app/accountSetting',
         name: 'accountSetting',
         chineseName: '账户设置',
         type: 2,
@@ -73,7 +73,7 @@ const mobile = [
         component: () => import('@/views/mobile/setting/AccountSetting.vue')
     },
     {
-        path: '/miniapp/addressEdit',
+        path: '/app/addressEdit',
         name: 'addressEdit',
         chineseName: '地址管理',
         type: 2,
@@ -81,7 +81,7 @@ const mobile = [
         component: () => import('@/views/mobile/setting/AddressEdit.vue')
     },
     {
-        path: '/miniapp/coupon',
+        path: '/app/coupon',
         name: 'coupon',
         chineseName: '优惠券',
         type: 2,
@@ -89,7 +89,7 @@ const mobile = [
         component: () => import('@/views/mobile/setting/Coupon.vue')
     },
     {
-        path: '/miniapp/integral',
+        path: '/app/integral',
         name: 'integral',
         chineseName: '我的积分',
         type: 2,
@@ -97,7 +97,7 @@ const mobile = [
         component: () => import('@/views/mobile/setting/Integral.vue')
     },
     {
-        path: '/miniapp/member',
+        path: '/app/member',
         name: 'member',
         chineseName: '我的会员',
         type: 2,
@@ -105,7 +105,7 @@ const mobile = [
         component: () => import('@/views/mobile/setting/Member.vue')
     },
     {
-        path: '/miniapp/customerService',
+        path: '/app/customerService',
         name: 'customerService',
         chineseName: '客户服务',
         type: 2,
@@ -116,7 +116,7 @@ const mobile = [
 
     // ===================登录、注册========start=====================
     {
-        path: '/miniapp/appLogin',
+        path: '/app/appLogin',
         name: 'appLogin',
         chineseName: '登录',
         type: 2,
@@ -124,7 +124,7 @@ const mobile = [
         component: () => import('@/views/mobile/Login.vue')
     },
     {
-        path: '/miniapp/appRegister',
+        path: '/app/appRegister',
         name: 'appRegister',
         chineseName: '注册',
         type: 2,

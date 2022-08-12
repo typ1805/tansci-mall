@@ -230,17 +230,17 @@
             // 添加购物成功后跳转至购物车
 
         }
-        router.push({path:'/miniapp/cart'})
+        router.push({path:'/app/cart'})
     }
 
     const onSubmit = () =>{
         // 添加订单成功后跳转至确认订单
-        router.push({path:'/miniapp/order'})
+        router.push({path:'/app/order'})
     }
 
     const toShop = () =>{
         // 跳转店铺
-        router.push({path:'/miniapp/shop'})
+        router.push({path:'/app/shop'})
     }
 
     const toBack = () =>{

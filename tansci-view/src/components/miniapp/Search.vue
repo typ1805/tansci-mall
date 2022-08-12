@@ -26,14 +26,14 @@
 
     const onSearch = () =>{
         if(!state.keyword){
-            router.push({path: '/miniapp/search'});
+            router.push({path: '/app/search'});
             return;
         }
         emit('onSearch', state.keyword);
     }
 
     const toSearch = () =>{
-        router.push({path: '/miniapp/search'});
+        router.push({path: '/app/search'});
     }
 
 </script>

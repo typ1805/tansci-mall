@@ -52,7 +52,7 @@
 
     const toGoodsDetail = (goodsId) =>{
         router.push({
-            path: '/miniapp/goodsDetail',
+            path: '/app/goodsDetail',
             query:{
                 goodsId: goodsId
             }

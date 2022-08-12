@@ -30,10 +30,10 @@
 
     const onMenuList = () =>{
         state.menuList = [
-            {path: '/miniapp/index', name: '首页', icon: 'House'},
-            {path: '/miniapp/search', name: '搜索', icon: 'Search'},
-            {path: '/miniapp/cart', name: '购物车', icon: 'ShoppingCart'},
-            {path: '/miniapp/settings', name: '我的', icon: 'User'},
+            {path: '/app/index', name: '首页', icon: 'House'},
+            {path: '/app/search', name: '搜索', icon: 'Search'},
+            {path: '/app/cart', name: '购物车', icon: 'ShoppingCart'},
+            {path: '/app/settings', name: '我的', icon: 'User'},
         ]
     }
 

@@ -92,17 +92,17 @@
     }
 
     const onOrder = (val) =>{
-        router.push({path: '/miniapp/orderList', query:{type: val}})
+        router.push({path: '/app/orderList', query:{type: val}})
     }
 
     const onServiceList = () =>{
         state.serviceList = [
-            {path:'/miniapp/accountSetting', icon: 'Setting', color:'#303133', name: '账号管理'},
-            {path:'/miniapp/coupon', icon: 'Ticket', color:'#303133', name: '优惠券'},
-            {path:'/miniapp/integral', icon: 'Coin', color:'#303133', name: '我的积分'},
-            {path:'/miniapp/member', icon: 'Medal', color:'#303133', name: '我的会员'},
-            {path:'/miniapp/addressEdit', icon: 'OfficeBuilding', color:'#303133', name: '地址管理'},
-            {path:'/miniapp/customerService', icon: 'Service', color:'#303133', name: '客户服务'},
+            {path:'/app/accountSetting', icon: 'Setting', color:'#303133', name: '账号管理'},
+            {path:'/app/coupon', icon: 'Ticket', color:'#303133', name: '优惠券'},
+            {path:'/app/integral', icon: 'Coin', color:'#303133', name: '我的积分'},
+            {path:'/app/member', icon: 'Medal', color:'#303133', name: '我的会员'},
+            {path:'/app/addressEdit', icon: 'OfficeBuilding', color:'#303133', name: '地址管理'},
+            {path:'/app/customerService', icon: 'Service', color:'#303133', name: '客户服务'},
         ]
     }
 
