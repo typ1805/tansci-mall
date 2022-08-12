@@ -4,8 +4,8 @@
 <mapper namespace="com.tansci.mapper.HomeMapper">
 
     <select id="statistics" resultType="com.tansci.domain.vo.StatisticsVo">
-        SELECT COUNT(o.id) orderNum, SUM(o.amount) orderAmount, ROUND(SUM(o.amount)*0.9,2) netIncome, g.goodsNum, 0 goodsTypeNum
-        FROM goods_order o
+        SELECT COUNT(o.order_id) orderNum, SUM(o.price) orderAmount, ROUND(SUM(o.price)*0.9,2) netIncome, g.goodsNum, 0 goodsTypeNum
+        FROM order_info o
         INNER JOIN (
             SELECT COUNT(1) goodsNum FROM goods
             <where>
@@ -24,10 +24,10 @@
     <select id="orderOverview" resultType="com.tansci.domain.vo.OrderOverviewVo">
         select DATE_FORMAT(create_time,'%Y-%m') date,
         count(1) orderNum,
-        SUM(amount) amount,
-        SUM(if(pay_type=1,amount,0)) wxAmout,
-        SUM(if(pay_type=2,amount,0)) aliAmout
-        FROM goods_order
+        SUM(price) amount,
+        SUM(if(pay_type=1,price,0)) wxAmout,
+        SUM(if(pay_type=2,price,0)) aliAmout
+        FROM order_info
         <where>
             <if test="userId != null and userId != ''">
                 and user_id = #{userId}
@@ -45,8 +45,8 @@
              else '银联'
             end
         ) as name,
-        sum(amount) value
-        from goods_order
+        sum(price) value
+        from order_info
         <where>
             <if test="userId != null and userId != ''">
                 and user_id = #{userId}

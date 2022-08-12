@@ -20,7 +20,7 @@
                     <el-table-column v-else-if="item.type == 'image'" 
                         :label="item.label" :align="item.align != null ? item.align : 'center'" :width="item.width">
                         <template #default="scope">
-                            <el-image @click="onImageView(scope.row[item.prop])" :src="scope.row[item.prop]" fit="fit" style="width: 50px; height: 50px"/>
+                            <el-image :src="scope.row[item.prop]" :preview-src-list="[scope.row[item.prop]]" :z-index="9999" fit="cover" style="width: 50px; height: 50px"/>
                         </template>
                     </el-table-column>
                     <!-- el-tag -->
@@ -89,9 +89,6 @@
             :page-size="page.size"
             :total="page.total"/>
         </div>
-        <el-dialog v-model="imageVisible" title="图片预览" :show-close="false">
-            <el-image style="width: 100%; height: 100%;" :src="imageUrl" fit="fit" />
-        </el-dialog>
     </div>
 </template>
 <script setup>
@@ -150,11 +147,9 @@
             obj.padding = '2px';
             return obj;
         },
-        imageVisible: false,
-        imageUrl: '',
     })
     const {
-        maxHeight,tableHeight,headerCellStyle,cellStyle,imageVisible,imageUrl
+        maxHeight,tableHeight,headerCellStyle,cellStyle,
     } = toRefs(state)
 
     const onSizeChange = (e) =>{
@@ -162,12 +157,6 @@
     }
     const onCurrentChange = (e) =>{
         emit('onCurrentChange', e)
-    }
-
-    const onImageView = (url) =>{
-        if(!url) return;
-        state.imageUrl = url;
-        state.imageVisible = true;
     }
 
     // 金额格式化
