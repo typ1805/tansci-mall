@@ -17,6 +17,10 @@ public interface GoodsService extends IService<Goods> {
 
     IPage<Goods> page(Page page, Goods goods);
 
+    IPage<Goods> getGoodsPage(Page page, Goods goods);
+
+    Goods getGoodsInfo(Goods goods);
+
     boolean save(Goods goods);
 
     Object update(Goods goods);

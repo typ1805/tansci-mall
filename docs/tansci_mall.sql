@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 11/08/2022 11:30:31
+ Date: 16/08/2022 16:15:13
 */
 
 SET NAMES utf8mb4;
@@ -35,6 +35,29 @@ CREATE TABLE `cart`  (
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for config_goods
+-- ----------------------------
+DROP TABLE IF EXISTS `config_goods`;
+CREATE TABLE `config_goods`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
+  `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品id',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `sort` int(10) NULL DEFAULT NULL COMMENT '排序',
+  `type` int(10) NULL DEFAULT NULL COMMENT '类型：1、秒杀，2、排行榜',
+  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户id',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品配置表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of config_goods
+-- ----------------------------
+INSERT INTO `config_goods` VALUES ('dgsfdgfdgdf', 'f9468bdbff35242d3ff761dcc9b1da32', '排行榜', 1, 2, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 15:47:35', '2022-08-16 15:47:39');
+INSERT INTO `config_goods` VALUES ('dgsfdgfdgdgdsf', 'f9468bdbff35242d3ff761dcc9b1da3d', '排行榜', 2, 2, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 15:47:35', '2022-08-16 15:47:39');
+INSERT INTO `config_goods` VALUES ('gfdhfgdhfgfd', 'f01c51c427d8568a162f7327b4aa91a8', '秒杀', 1, 1, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 15:47:35', '2022-08-16 15:47:39');
 
 -- ----------------------------
 -- Table structure for coupon
@@ -78,6 +101,8 @@ CREATE TABLE `goods`  (
   `labels` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标签：多个以逗号分隔',
   `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '商品详情',
   `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户id',
+  `comment` int(10) NULL DEFAULT NULL COMMENT '评论量',
+  `rating` float NULL DEFAULT NULL COMMENT '好评论率',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
@@ -87,8 +112,11 @@ CREATE TABLE `goods`  (
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('f01c51c427d8568a162f7327b4aa91a8', NULL, '鸿星尔克跑步鞋', '鸿星尔克跑步鞋', 1, 'c10002', 99.00, 'http://tansci.top:18003/images/202208114d23c2eac2.jpg', 100, 4, 'gl10001,gl10002,gl10003', '<p>鸿星尔克跑步鞋</p><p><img src=\"http://tansci.top:18003/images/2022081138da8be710.jpg\" alt=\"null\" data-href=\"null\" style=\"\"/></p>', 'bc3ac26e69731b617eb80274453f6dba', '2022-08-11 09:16:05', '2022-08-11 09:16:05', '');
-INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da3d', NULL, '测试商品', '测试商品测试商品测试商品', 0, 'c10003', 19.00, 'http://tansci.top:18003/images/202208110aa378bfa0.jpg', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
+INSERT INTO `goods` VALUES ('f01c51c427d8568a162f7327b4aa91a8', 's10001', '鸿星尔克跑步鞋', '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚百搭休闲运动休闲鞋子男士夏季新款舒适 正黑 41', 1, 'c10002', 99.00, 'http://tansci.top:18003/images/202208114d23c2eac2.jpg', 100, 4, 'gl10001,gl10002,gl10003', '<p>鸿星尔克跑步鞋</p><p><img src=\"http://tansci.top:18003/images/2022081138da8be710.jpg\" alt=\"null\" data-href=\"null\" style=\"\"/></p>', 'bc3ac26e69731b617eb80274453f6dba', 200, 85, '2022-08-11 09:16:05', '2022-08-11 09:16:05', '');
+INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da31', 's10001', '的非官方的', '飞过的痕迹付个定金的规范化发过的计划分割的', 1, 'c10003', 19.00, 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/151287/11/6299/88753/5fab4128E87c46fe5/769a497c164a554c.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
+INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da32', 's10001', '返回给对方', '刚部署电饭锅和德国并进行假道伐虢贺岁档品', 1, 'c10003', 19.00, 'https://m.360buyimg.com/babel/s200x200_jfs/t1/106777/29/30068/284228/62be64faE956a8da2/e4b08f6349798e56.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
+INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da33', 's10001', '法国恢复到', '报关单发生了更舒服的返回南方尽快改好是地方官', 1, 'c10003', 19.00, 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/132097/2/22280/370382/62bab80aE34809e28/055504818282cd3d.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
+INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da3d', 's10001', '测试商品', '个梵蒂冈IU第三个很舒服地关键词VB插画你金发地个很舒服的后果', 1, 'c10003', 19.00, 'http://tansci.top:18003/images/202208110aa378bfa0.jpg', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
 
 -- ----------------------------
 -- Table structure for goods_classify
@@ -131,6 +159,10 @@ CREATE TABLE `goods_comment`  (
 -- ----------------------------
 -- Records of goods_comment
 -- ----------------------------
+INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdh', 'f01c51c427d8568a162f7327b4aa91a8', '22f60277c18a0f185cfa794af0d58f2a', '2022-08-16', 4.20, '发个黄金分割几个号kg', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
+INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdh4', 'f01c51c427d8568a162f7327b4aa91a8', '22f60277c18a0f185cfa794af0d58f2a', '2022-08-11', 4.90, '风格就发个黄金分割', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
+INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdhs', 'f01c51c427d8568a162f7327b4aa91a8', '496347ab137029d80ed8929283d9a48b', '2022-08-13', 5.00, '换几个号光棍节风格', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
+INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdhs1', 'f01c51c427d8568a162f7327b4aa91a8', '496347ab137029d80ed8929283d9a48b', '2022-08-09', 4.70, '风格的回复个就', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
 
 -- ----------------------------
 -- Table structure for goods_image
@@ -204,7 +236,7 @@ INSERT INTO `goods_order` VALUES ('HGDHFG4545BSDHF4', 'o100001', 'f01c51c427d856
 -- ----------------------------
 DROP TABLE IF EXISTS `index_carousel`;
 CREATE TABLE `index_carousel`  (
-  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
   `image_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '图片地址',
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '连接地址',
   `sort` int(10) NOT NULL COMMENT '排序',
@@ -212,11 +244,15 @@ CREATE TABLE `index_carousel`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '首页轮播' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '首页轮播' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of index_carousel
 -- ----------------------------
+INSERT INTO `index_carousel` VALUES ('vbncvbnvbnh545', 'https://m.360buyimg.com/babel/s1000x2000_jfs/t1/117064/40/26924/138402/62b55f9dE1e33b404/4113ba35a942ec15.png.avif', 'f01c51c427d8568a162f7327b4aa91a8', 1, 0, '2022-08-16 15:11:39', '2022-08-16 15:11:41');
+INSERT INTO `index_carousel` VALUES ('vbncvbnvbnh545q', 'https://m.360buyimg.com/babel/s800x1000_jfs/t1/216574/9/20786/109035/62b5748cE2c79da73/2e9634a5275fc246.png.avif', 'f9468bdbff35242d3ff761dcc9b1da31', 2, 0, '2022-08-16 15:11:39', '2022-08-16 15:11:41');
+INSERT INTO `index_carousel` VALUES ('vbncvbnvbnh545r', 'https://m.360buyimg.com/babel/s800x1000_jfs/t1/65230/4/19689/112010/62b55d66E434e50f1/16512285c9a368aa.png.avif', 'f9468bdbff35242d3ff761dcc9b1da33', 4, 0, '2022-08-16 15:11:39', '2022-08-16 15:11:41');
+INSERT INTO `index_carousel` VALUES ('vbncvbnvbnh545s', 'https://m.360buyimg.com/babel/s800x1000_jfs/t1/193025/29/25347/137721/62b561cfE97ac1235/18ef380a8f11ab5b.png.avif', 'f9468bdbff35242d3ff761dcc9b1da32', 3, 0, '2022-08-16 15:11:39', '2022-08-16 15:11:41');
 
 -- ----------------------------
 -- Table structure for index_config
@@ -239,6 +275,16 @@ CREATE TABLE `index_config`  (
 -- ----------------------------
 -- Records of index_config
 -- ----------------------------
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfd4', '乐购手机', NULL, 'Apple', '#67C23A', 2, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdg', '乐购超市', NULL, 'AlarmClock', '#409EFC', 1, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdg7', '乐购家电', NULL, 'Bicycle', '#E6A23C', 3, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdgd', '乐购百货', NULL, 'Cherry', '#F56C6C', 4, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdge', '新潮配件', NULL, 'Film', '#72afd3', 6, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdgr', '生鲜到家', NULL, 'ElementPlus', '#f68084', 8, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdgrr', '二手拍拍', NULL, 'IceTea', '#d4fc79', 10, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdgrw', '下单立返', NULL, 'Goblet', '#8fd3f4', 9, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdgt', '领券中心', NULL, 'HotWater', '#fee140', 7, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdgw', '充值中心', NULL, 'ColdDrink', '#3cba92', 5, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
 
 -- ----------------------------
 -- Table structure for order_info
@@ -291,24 +337,6 @@ CREATE TABLE `refund`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for seckill_goods
--- ----------------------------
-DROP TABLE IF EXISTS `seckill_goods`;
-CREATE TABLE `seckill_goods`  (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
-  `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商品id',
-  `sort` int(10) NULL DEFAULT NULL COMMENT '排序',
-  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户id',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '秒杀商品表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of seckill_goods
--- ----------------------------
-
--- ----------------------------
 -- Table structure for shop
 -- ----------------------------
 DROP TABLE IF EXISTS `shop`;
@@ -329,6 +357,7 @@ CREATE TABLE `shop`  (
 -- ----------------------------
 -- Records of shop
 -- ----------------------------
+INSERT INTO `shop` VALUES ('s10001', '平台旗舰店', '平台旗舰店', NULL, 4.50, 0, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 11:28:47', '2022-08-16 11:28:43', NULL);
 
 -- ----------------------------
 -- Table structure for sys_dic
@@ -393,6 +422,7 @@ CREATE TABLE `sys_login_log`  (
 -- Records of sys_login_log
 -- ----------------------------
 INSERT INTO `sys_login_log` VALUES ('2c7906a23818cc7ccb47f53e0ab13724', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-11 09:01:10', '2022-08-11 09:01:10');
+INSERT INTO `sys_login_log` VALUES ('a978c9e1a51258baabb1ae8d981d5c2d', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-12 10:59:07', '2022-08-12 10:59:07');
 
 -- ----------------------------
 -- Table structure for sys_menu

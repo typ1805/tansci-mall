@@ -12,7 +12,7 @@
                 <div class="main-carousel">
                     <el-carousel height="200px" :autoplay="true" :interval="5000">
                         <el-carousel-item v-for="image in goodsInfo.imageList" :key="image" style="height: 100%">
-                            <el-image :src="image" style="width: 100%; height: 100%;" fit="fit"/>
+                            <el-image :src="image.url" style="width: 100%; height: 100%;" fit="fit"/>
                         </el-carousel-item>
                     </el-carousel>
                 </div>
@@ -21,7 +21,7 @@
                         <div class="content-price">
                             <span style="font-size: 12px;">￥</span><span>{{onDecimal(goodsInfo.price)}}</span>
                         </div>
-                        <div class="content-title">{{goodsInfo.name}}</div>
+                        <div class="content-title">{{goodsInfo.name}} - {{goodsInfo.intro}}</div>
                         <div class="content-service">
                             <el-alert type="error" center :closable="false">
                                 <template #default>
@@ -44,7 +44,7 @@
                         <div class="address-content">
                             <div>
                                 <span class="content-title">送至</span>
-                                <span>{{goodsInfo.address}}</span>
+                                <span>{{goodsInfo.address?goodsInfo.address:'您还未登录！'}}</span>
                             </div>
                             <div style="padding: 0.4rem 0;">
                                 <span class="content-service-title">现货</span>
@@ -65,25 +65,25 @@
                     <el-card :shadow="shadow">
                         <template #header>
                             <div class="card-header">
-                                <span>评价 {{goodsInfo.commentNum}}条</span>
+                                <span>评价 {{goodsInfo.comment}}条</span>
                                 <div>
-                                    <span style="font-size: 12px;font-weight: 500;padding-right: 0.4rem;">好评度{{goodsInfo.commentRating}}%</span>
+                                    <span style="font-size: 12px;font-weight: 500;padding-right: 0.4rem;">好评度{{goodsInfo.rating}}%</span>
                                     <el-button icon="MoreFilled" type="primary" link></el-button>
                                 </div>
                             </div>
                         </template>
-                        <div v-if="goodsInfo.commentList && goodsInfo.commentList.length > 0">
-                            <div v-for="(comment,index) in goodsInfo.commentList" :key="index" class="comment-content">
+                        <div v-if="goodsInfo.goodsCommentList && goodsInfo.goodsCommentList.length > 0">
+                            <div v-for="(comment,index) in goodsInfo.goodsCommentList" :key="index" class="comment-content">
                                 <div class="content-user">
                                     <div>
                                         <el-avatar :size="20" icon="UserFilled" style="color: #F56C6C;"/>
                                         <span style="padding:0 0.4rem; font-size: 12px;">{{comment.userName}}</span>
                                         <el-rate v-model="comment.rating" :max="5" size="small" disabled/>
                                     </div>
-                                    <div style="color:#909399;font-size: 12px;">{{comment.data}}</div>
+                                    <div style="color:#909399;font-size: 12px;">{{comment.date}}</div>
                                 </div>
-                                <div class="content-text">{{comment.text}}</div>
-                                <el-divider v-show="index+1 < goodsInfo.commentList.length" />
+                                <div class="content-text">{{comment.content}}</div>
+                                <el-divider v-show="index+1 < goodsInfo.goodsCommentList.length" />
                             </div>
                             <div class="comment-but">
                                 <el-button @click="onComment" round>查看全部评价</el-button>
@@ -104,9 +104,9 @@
                                         <span style="padding:0 0.4rem; font-size: 12px;">{{comment.userName}}</span>
                                         <el-rate v-model="comment.rating" :max="5" size="small" disabled/>
                                     </div>
-                                    <div style="color:#909399;font-size: 12px;">{{comment.data}}</div>
+                                    <div style="color:#909399;font-size: 12px;">{{comment.date}}</div>
                                 </div>
-                                <div class="content-text">{{comment.text}}</div>
+                                <div class="content-text">{{comment.content}}</div>
                                 <el-divider v-show="index+1 < commentList.length" />
                             </div>
                         </div>
@@ -121,9 +121,7 @@
                                 <el-button icon="MoreFilled" type="primary" link></el-button>
                             </div>
                         </template>
-                        <div class="detail-content">
-                            {{goodsInfo.detail}}
-                        </div>
+                        <div class="detail-content" v-html="goodsInfo.details"></div>
                     </el-card>
                 </div>
             </div>
@@ -150,6 +148,8 @@
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
     import {useRouter, useRoute} from 'vue-router'
     import {toDecimal} from '@/utils/utils'
+    import {getGoodsInfo} from '@/api/mobile/goods'
+    import {getGoodsCommentPage} from '@/api/mobile/goodsComment'
 
     const router = useRouter()
     const route = useRoute()
@@ -165,11 +165,16 @@
             {icon:'CircleCheck',name:'极速审核'},
         ],
         commentDrawer: false,
+        commentPage: {
+            current: 1,
+            size: 10,
+            total: 1,
+        },
         commentList: [],
     })
 
     const {
-        defaultHeight,goodsInfo,tags,commentDrawer,commentList
+        defaultHeight,goodsInfo,tags,commentDrawer,commentPage,commentList
     } = toRefs(state)
 
     onBeforeMount(() => {
@@ -183,41 +188,18 @@
     })
 
     const onGoodsInfo = () =>{
-        state.goodsInfo = {
-            goodsId: route.query.goodsId,
-            name: '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚百搭休闲运动休闲鞋子男士夏季新款舒适 正黑 41',
-            price: 147.00,
-            address: '甘肃省兰州市安宁区银滩路街道北滨河路永新华世界湾1#1-803室',
-            commentNum: 200,
-            commentRating: 48,
-            commentList: [
-                {userName:'张三',rating:4,data:'2022-07-07',text:'网面的设计，夏天穿很透气不会猛将，的机房第三方反倒是尽快发哈市豆腐干绝代风华申达股份。'},
-                {userName:'李四',rating:4.5,data:'2022-07-07',text:'网面的设计，夏天穿很透气不会猛将，的机房第三方反倒是尽快发哈市豆腐干绝代风华申达股份。'},
-            ],
-            imageList: [
-                'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/151287/11/6299/88753/5fab4128E87c46fe5/769a497c164a554c.jpg.avif',
-                'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/101509/24/30810/163038/62ba60cbE65baa74a/88628943ed2025c7.jpg.avif',
-                'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/62238/2/19413/220830/62b0abeaE4acbc470/add9ae4ee0c022c3.jpg.avif',
-                'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/181621/38/26357/228605/62c3a488E491bc614/b10cb208f31ccf8d.jpg.avif'
-            ],
-            labelList: [
-                {name:'新品', type:'success'},
-            ],
-            detail: '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚百搭休闲运动休闲鞋子男士夏季新款舒适，鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚百搭休闲运动休闲鞋子男士夏季新款舒适，鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚百搭休闲运动休闲鞋子男士夏季新款舒适',
-        }
+        getGoodsInfo({goodsId: route.query.goodsId}).then(res=>{
+            state.goodsInfo = res.result
+        })
     }
 
     const onCommentList = () =>{
-        state.commentList = [
-            {userName:'张三',rating:4,data:'2022-07-07',text:'网面的设计，夏天穿很透气不会猛将，的机房第三方反倒是尽快发哈市豆腐干绝代风华申达股份。'},
-            {userName:'李四',rating:4.5,data:'2022-07-07',text:'网面的设计，夏天穿很透气不会猛将，的机房第三方反倒是尽快发哈市豆腐干绝代风华申达股份。'},
-            {userName:'王五',rating:3.9,data:'2022-07-07',text:'网面的设计，夏天穿很透气不会猛将，的机房第三方反倒是尽快发哈市豆腐干绝代风华申达股份。'},
-            {userName:'地方',rating:3.9,data:'2022-07-07',text:'网面的设计，夏天穿很透气不会猛将，的机房第三方反倒是尽快发哈市豆腐干绝代风华申达股份。'},
-            {userName:'胜多负少',rating:3.9,data:'2022-07-07',text:'网面的设计，夏天穿很透气不会猛将，的机房第三方反倒是尽快发哈市豆腐干绝代风华申达股份。'},
-            {userName:'fdgdfg',rating:3.9,data:'2022-07-07',text:'网面的设计，夏天穿很透气不会猛将，的机房第三方反倒是尽快发哈市豆腐干绝代风华申达股份。'},
-            {userName:'fgdg',rating:3.9,data:'2022-07-07',text:'网面的设计，夏天穿很透气不会猛将，的机房第三方反倒是尽快发哈市豆腐干绝代风华申达股份。'},
-            {userName:'代付',rating:3.9,data:'2022-07-07',text:'网面的设计，夏天穿很透气不会猛将，的机房第三方反倒是尽快发哈市豆腐干绝代风华申达股份。'},
-        ]
+        let param = {
+            goodsId: route.query.goodsId
+        }
+        getGoodsCommentPage(Object.assign(state.commentPage, param)).then(res=>{
+            state.commentList = res.result.records;
+        })
     }
 
     const onComment = () =>{
@@ -302,6 +284,7 @@
                     padding-bottom: 0.6rem;
                 }
                 .content-service{
+                    margin-top: -0.2rem;
                     i,span{
                         vertical-align: middle;
                     }

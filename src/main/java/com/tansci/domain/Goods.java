@@ -72,6 +72,12 @@ public class Goods {
     @ApiModelProperty(value = "店铺ID")
     private String shopId;
 
+    @ApiModelProperty(value = "评论量")
+    private Integer comment;
+
+    @ApiModelProperty(value = "好评论率")
+    private Float rating;
+
     @ApiModelProperty(value = "更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private LocalDateTime updateTime;
@@ -110,5 +116,9 @@ public class Goods {
     @ApiModelProperty(value = "商品图片")
     @TableField(exist = false)
     private List<GoodsImage> imageList;
+
+    @ApiModelProperty(value = "商品评价")
+    @TableField(exist = false)
+    private List<GoodsComment> goodsCommentList;
 
 }

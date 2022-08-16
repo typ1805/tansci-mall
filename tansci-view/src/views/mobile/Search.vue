@@ -18,17 +18,23 @@
     import Search from '@/components/miniapp/Search.vue'
     import GoodsList from '@/components/miniapp/GoodsList.vue'
     import FooterMenu from '@/components/miniapp/FooterMenu.vue'
+    import {getGoodsPage} from '@/api/mobile/goods'
 
     const state = reactive({
         defaultHeight: null,
         searchFrom: {
-            keyword: null
+            name: null
+        },
+        page: {
+            current: 1,
+            size: 10,
+            total: 1,
         },
         goodsList: [], 
     })
 
     const {
-        defaultHeight,searchFrom,goodsList
+        defaultHeight,searchFrom,page,goodsList
     } = toRefs(state)
 
     onBeforeMount(() => {
@@ -37,85 +43,15 @@
 
     const onSearch = (val) =>{
         if(val && val != ''){
-            onRecommendList()
+            state.searchFrom.name = val;
+            onGoodsPage()
         }
     }
 
-    const onRecommendList = () =>{
-        state.goodsList = [
-            {
-                goodsId: 'g00001',
-                name: '可配置定义更丰富的内容展',
-                price: 147.00,
-                comment: 200,
-                rating: 48,
-                image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/151287/11/6299/88753/5fab4128E87c46fe5/769a497c164a554c.jpg.avif',
-                labelList: [
-                    {name:'新品', type:'success'},
-                ]
-            },
-            {
-                goodsId: 'g00002',
-                name: '可配置定义更丰富的内容展',
-                price: 447.00,
-                comment: 200,
-                rating: 48,
-                image: 'https://29553125.s61i.faiusr.com/2/AD0I5eOLDhACGAAgv5PvlQYozJLmiAIw7gU47gU!400x400.jpg',
-                labelList: [
-                    {name:'爆品', type:'danger'},
-                ]
-            },
-            {
-                goodsId: 'g00003',
-                name: '可配置定义更丰富的内容展',
-                price: 447.00,
-                comment: 200,
-                rating: 48,
-                image: 'https://m.360buyimg.com/babel/s200x200_jfs/t1/106777/29/30068/284228/62be64faE956a8da2/e4b08f6349798e56.jpg.avif',
-                labelList: [
-                    {name:'新品', type:'success'},
-                    {name:'爆品', type:'danger'},
-                ]
-            },
-            {
-                goodsId: 'g00004',
-                name: '可配置定义更丰富的内容展',
-                price: 47.00,
-                comment: 200,
-                rating: 48,
-                image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/132097/2/22280/370382/62bab80aE34809e28/055504818282cd3d.jpg.avif',
-                labelList: [
-                    {name:'秒杀', type:'warning'},
-                ]
-            },
-            {
-                goodsId: 'g00005',
-                name: '可配置定义更丰富的内容展',
-                price: 472.00,
-                comment: 200,
-                rating: 48,
-                image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/2828/33/19368/238363/62bbbe12Ee47c0996/2c92c0a2ebc78f0c.jpg.avif',
-                labelList: [
-                    {name:'爆品', type:'danger'},
-                ]
-            },
-            {
-                goodsId: 'g00006',
-                name: '可配置定义更丰富的内容展',
-                price: 472.00,
-                comment: 200,
-                rating: 48,
-                image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
-            },
-            {
-                goodsId: 'g00007',
-                name: '可配置定义更丰富的内容展',
-                price: 472.00,
-                comment: 200,
-                rating: 48,
-                image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
-            },
-        ]
+    const onGoodsPage = () =>{
+        getGoodsPage(Object.assign(state.page, state.searchFrom)).then(res=>{
+            state.goodsList = res.result.records;
+        })
     }
 
 </script>

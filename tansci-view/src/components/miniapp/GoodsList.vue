@@ -3,13 +3,13 @@
         <div v-if="mode == 'vertical' && goodsList && goodsList.length > 0" class="goods-vertical-list">
             <el-card v-if="carouselList && carouselList.length > 0" :shadow="shadow" :body-style="{padding: '0px'}">  
                 <el-carousel height="273px" :autoplay="true" indicator-position="none">
-                    <el-carousel-item v-for="goods in carouselList" :key="goods" @click="toGoodsDetail(goods.goodsId)" style="height: 100%">
-                        <el-image :src="goods.image" style="width: 100%; height: 100%;" fit="fit"/>
+                    <el-carousel-item v-for="item in carouselList" :key="item" @click="toGoodsDetail(goods.url)" style="height: 100%">
+                        <el-image :src="item.imageUrl" style="width: 100%; height: 100%;" fit="fit"/>
                     </el-carousel-item>
                 </el-carousel>
             </el-card>
             <el-card v-for="item in goodsList" :key="item" @click="toGoodsDetail(item.goodsId)" :shadow="shadow" :body-style="{padding: '0px'}">  
-                <el-image :src="item.image" style="width: 100%; height: 180px;" fit="fit"/>
+                <el-image :src="item.coverImg" style="width: 100%; height: 180px;" fit="fit"/>
                 <div class="goods-content">
                     <div class="content-title">{{item.name}}</div>
                     <div class="content-price">
@@ -30,7 +30,7 @@
             <el-card v-for="item in goodsList" :key="item" @click="toGoodsDetail(item.goodsId)" :shadow="shadow" :body-style="{padding: '0px'}">  
                 <div class="goods-list">
                     <div class="goods-image">
-                        <el-image :src="item.image" style="width: 120px; height: 120px;" fit="fit"/>
+                        <el-image :src="item.coverImg" style="width: 120px; height: 120px;" fit="fit"/>
                     </div>
                     <div class="goods-content">
                         <div class="content-title">{{item.name}}</div>
@@ -45,7 +45,7 @@
                 </div>
             </el-card>
         </div>
-        <div v-if="goodsList && goodsList.length > 4" class="goods-tips">~已经到底了！~</div>
+        <div v-if="goodsList && goodsList.length > 1" class="goods-tips">~已经到底了！~</div>
         <el-empty v-else :image-size="200" description="没找到您需要的商品，试试其他的吧~"/>
     </div>
 </template>

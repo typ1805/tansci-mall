@@ -8,8 +8,8 @@
             <div>
                 <el-carousel height="80px" direction="vertical" :autoplay="true" indicator-position="none">
                     <el-carousel-item v-for="seckill in seckillList" :key="seckill">
-                        <div v-for="item in seckill.goods" :key="item" @click="toGoodsDetail(item.goodsId)" class="goods">
-                            <el-image :src="item.image" style="width: 100%; height: 100%;border-radius: 8px;" fit="fit"/>
+                        <div @click="toGoodsDetail(seckill.goodsId)" class="goods">
+                            <el-image :src="seckill.goods.coverImg" style="width: 100%; height: 100%;" fit="fit"/>
                         </div>
                     </el-carousel-item>
                 </el-carousel>
@@ -23,8 +23,8 @@
             <div>
                 <el-carousel height="80px" direction="vertical" :interval="4000" :autoplay="true" indicator-position="none">
                     <el-carousel-item v-for="ranking in rankingList" :key="ranking">
-                        <div v-for="item in ranking.goods" :key="item" @click="toGoodsDetail(item.goodsId)" class="goods">
-                            <el-image :src="item.image" style="width: 100%; height: 100%;border-radius: 8px;" fit="fit"/>
+                        <div @click="toGoodsDetail(ranking.goodsId)" class="goods">
+                            <el-image :src="ranking.goods.coverImg" style="width: 100%; height: 100%;" fit="fit"/>
                         </div>
                     </el-carousel-item>
                 </el-carousel>
@@ -91,13 +91,13 @@
         }
         .activity-seckill, .activity-ranking{
             .el-carousel__item{
-                display: flex;
-                justify-content: space-between;
-                flex-wrap: wrap;
-                align-items: center;
+                // display: flex;
+                // justify-content: space-between;
+                // flex-wrap: wrap;
+                // align-items: center;
             }
             .goods{
-                width: 48%;
+                border-radius: 8px;
             }
         }
     }

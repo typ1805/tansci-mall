@@ -27,7 +27,7 @@ axios.interceptors.response.use(res => {
     }
 
     // 下载文件特殊处理
-    if(res.config.responseType == 'blob'){
+    if(res.config.responseType && res.config.responseType == 'blob'){
         return res;
     } else {
         if (res.data.code != 200) {

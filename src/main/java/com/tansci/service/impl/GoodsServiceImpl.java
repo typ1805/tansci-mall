@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,6 +43,10 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     private ShopService shopService;
     @Autowired
     private GoodsImageService goodsImageService;
+    @Autowired
+    private GoodsLabelService goodsLabelService;
+    @Autowired
+    private GoodsCommentService goodsCommentService;
 
     @Override
     public IPage<Goods> page(Page page, Goods goods) {
@@ -87,6 +92,50 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         }
 
         return iPage;
+    }
+
+    @Override
+    public IPage<Goods> getGoodsPage(Page page, Goods goods) {
+        IPage<Goods> iPage = this.baseMapper.selectPage(page,
+                Wrappers.<Goods>lambdaQuery()
+                        .eq(Goods::getStatus, Enums.GOODS_STATUS_1.getKey())
+                        .like(Objects.nonNull(goods.getName()), Goods::getName, goods.getName())
+                        .orderByDesc(Goods::getSales)
+        );
+        if (Objects.nonNull(iPage.getRecords()) && iPage.getRecords().size() > 0) {
+            List<GoodsLabel> labelList = goodsLabelService.list();
+            iPage.getRecords().forEach(item -> {
+                if (Objects.nonNull(item.getLabels()) && item.getLabels().length() > 0) {
+                    List<String> labelds = Arrays.asList(item.getLabels().split(","));
+                    item.setLabelList(labelList.stream().filter(l -> labelds.contains(l.getId())).collect(Collectors.toList()));
+                }
+            });
+        }
+        return iPage;
+    }
+
+    @Override
+    public Goods getGoodsInfo(Goods goods) {
+        Goods goodsInfo = this.baseMapper.selectById(goods.getGoodsId());
+        if (Objects.nonNull(goodsInfo)) {
+            goodsInfo.setShop(
+                    shopService.getById(goodsInfo.getShopId())
+            );
+
+            goodsInfo.setImageList(
+                    goodsImageService.list(Wrappers.<GoodsImage>lambdaQuery().eq(GoodsImage::getGoodsId, goodsInfo.getGoodsId()))
+            );
+
+            String[] labels = goodsInfo.getLabels().split(",");
+            if (Objects.nonNull(labels) && labels.length > 0) {
+                goodsInfo.setLabelList(
+                        goodsLabelService.listByIds(Arrays.asList(labels))
+                );
+            }
+
+            goodsInfo.setGoodsCommentList(goodsCommentService.page(new Page(1, 3), GoodsComment.builder().goodsId(goodsInfo.getGoodsId()).build()).getRecords());
+        }
+        return goodsInfo;
     }
 
     @Transactional
