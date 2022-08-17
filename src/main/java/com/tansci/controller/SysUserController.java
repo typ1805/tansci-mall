@@ -86,4 +86,15 @@ public class SysUserController {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysUserService.login(dto, request));
     }
 
+    @ApiOperation(value = "商户注册")
+    @PostMapping("/register")
+    public Wrapper<Object> register(@RequestBody SysUser user) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setCreateTime(LocalDateTime.now());
+        user.setUpdateTime(LocalDateTime.now());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRemarks("商户");
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysUserService.save(user));
+    }
+
 }

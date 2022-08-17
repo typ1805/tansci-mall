@@ -4,6 +4,9 @@ import { defineStore } from 'pinia'
 export const useUserStore = defineStore('user', {
     state: () => ({
         username: '',
+        nickname: '',
+        type: '',
+        shop: '',
         loginTime: '',
     }),
     getters: {
@@ -11,10 +14,16 @@ export const useUserStore = defineStore('user', {
             if(!this.username){
                 let user = JSON.parse(sessionStorage.getItem('user'))
                 this.username = user.username
+                this.nickname = user.nickname
+                this.type = user.type
+                this.shop = user.shop
                 this.loginTime = user.loginTime
             }
             return {
                 username: this.username,
+                nickname: this.nickname,
+                type: this.type,
+                shop: this.shop,
                 loginTime: this.loginTime
             }
         }
@@ -22,9 +31,15 @@ export const useUserStore = defineStore('user', {
     actions: {
         setUser (data) {
             this.username = data.username
+            this.nickname = data.nickname
+            this.type = data.type
+            this.shop = data.shop
             this.loginTime = data.loginTime
             sessionStorage.setItem('user', JSON.stringify({
                 username: data.username,
+                nickname: data.nickname,
+                type: data.type,
+                shop: data.shop,
                 loginTime: data.loginTime
             }))
         },

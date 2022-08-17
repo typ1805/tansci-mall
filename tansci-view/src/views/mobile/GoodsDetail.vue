@@ -147,10 +147,14 @@
 <script setup>
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
     import {useRouter, useRoute} from 'vue-router'
+    import {useUserStore} from '@/store/settings'
     import {toDecimal} from '@/utils/utils'
     import {getGoodsInfo} from '@/api/mobile/goods'
     import {getGoodsCommentPage} from '@/api/mobile/goodsComment'
+    import {userAddressList} from '@/api/admin/userAddress'
+    import {qryByUserName} from '@/api/admin/user'
 
+    const userStore = useUserStore();
     const router = useRouter()
     const route = useRoute()
     const state = reactive({
@@ -171,10 +175,12 @@
             total: 1,
         },
         commentList: [],
+        userInfo: {},
+        addressList: [],
     })
 
     const {
-        defaultHeight,goodsInfo,tags,commentDrawer,commentPage,commentList
+        defaultHeight,goodsInfo,tags,commentDrawer,commentPage,commentList,userInfo,addressList
     } = toRefs(state)
 
     onBeforeMount(() => {
@@ -184,6 +190,7 @@
     onMounted(()=>{
         if(route.query.goodsId){
             onGoodsInfo(route.query.goodsId); 
+            onUserInfo();
         }
     })
 
@@ -207,6 +214,33 @@
         state.commentDrawer = true;
     }
 
+    // 获取商户信心
+    const onUserInfo = () =>{
+        const username = userStore.getUser.username;
+        if(!username){
+            return;
+        }
+        qryByUserName({username: username}).then(res=>{
+            state.userInfo = res.result;
+            onUserAddressList();
+        })
+    }
+    // 获取商户地址
+    const onUserAddressList = () =>{
+        if(!state.userInfo.id){
+            return;
+        }   
+        userAddressList({userId: state.userInfo.id}).then(res=>{
+            state.addressList = res.result;
+            let address = state.addressList.find(item=>{
+                return item.flag = 1;
+            });
+            if(address){
+                state.goodsInfo.address = address.details;
+            } 
+        })
+    }
+
     const onAddCart = (type) =>{
         if(type == 1){
             // 添加购物成功后跳转至购物车
@@ -222,7 +256,7 @@
 
     const toShop = () =>{
         // 跳转店铺
-        router.push({path:'/app/shop'})
+        router.push({path:'/app/shop', query:{shopId: state.goodsInfo.shopId}})
     }
 
     const toBack = () =>{

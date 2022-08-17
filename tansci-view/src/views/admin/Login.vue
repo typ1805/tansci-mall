@@ -80,7 +80,6 @@
 		if (!form) return;
 		await form.validate();
 
-		// 登录成功后设置token到vuex中
 		let param = {
 			username: state.loginForm.username,
 			password: state.loginForm.password

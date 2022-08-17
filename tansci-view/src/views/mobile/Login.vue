@@ -20,7 +20,7 @@
                         <el-button @click="onRegister" type="primary" link>注册账号</el-button>
                     </div>
                     <div style="padding-bottom: 2rem">
-                        <el-button @click="onSubmit" type="primary" size="large" round style="width: 100%;">登录</el-button>
+                        <el-button @click="onSubmit" :loading="loading" type="primary" size="large" round style="width: 100%;">登录</el-button>
                     </div>
                 </el-form>
             </el-card>
@@ -30,11 +30,16 @@
 <script setup>
     import {reactive, ref, unref, toRefs} from 'vue'
     import {useRouter} from 'vue-router'
+    import {useUserStore,useTokenStore} from '@/store/settings'
+    import {login} from '@/api/admin/user'
 
+    const userStore = useUserStore()
+	const tokenStore = useTokenStore()
     const router = useRouter()
     const userFormRef = ref(null)
     const state = reactive({
         shadow: 'always',
+        loading: false,
         userForm: {
             username: '',
             password: '',
@@ -43,7 +48,7 @@
     })
 
     const {
-        shadow,userForm
+        shadow,loading,userForm
     } = toRefs(state)
 
     const onSubmit = async () =>{
@@ -51,7 +56,23 @@
         if (!form) return;
         await form.validate()
 
-        console.log(state.userForm)
+        let param = {
+			username: state.userForm.username,
+			password: state.userForm.password
+		}
+
+		state.loading = true;
+		login(param).then(res=>{
+			if(res){
+				// 存储用户信息和token
+				userStore.setUser(res.result);
+				tokenStore.setToken(res.result.token);
+				state.loading = false;
+				router.push({path: '/app/index'});
+			}
+		}).catch(()=>{
+			state.loading = false;
+		})
     }
 
     const onRegister = () =>{

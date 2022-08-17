@@ -4,7 +4,11 @@ const mobile = [
         name: 'index',
         chineseName: '首页',
         type: 2,
-        meta: {title: "首页"},
+        meta: {
+            title: "首页",
+            type: 'app',
+            auth: false,
+        },
         component: () => import('@/views/mobile/Index.vue')
     },
     {
@@ -12,7 +16,11 @@ const mobile = [
         name: 'search',
         chineseName: '搜索',
         type: 2,
-        meta: {title: "搜索"},
+        meta: {
+            title: "搜索",
+            type: 'app',
+            auth: false,
+        },
         component: () => import('@/views/mobile/Search.vue')
     },
     {
@@ -20,7 +28,11 @@ const mobile = [
         name: 'cart',
         chineseName: '购物车',
         type: 2,
-        meta: {title: "购物车"},
+        meta: {
+            title: "购物车",
+            type: 'app',
+            auth: true,
+        },
         component: () => import('@/views/mobile/Cart.vue')
     },
     {
@@ -28,7 +40,11 @@ const mobile = [
         name: 'shop',
         chineseName: '店铺',
         type: 2,
-        meta: {title: "店铺"},
+        meta: {
+            title: "店铺",
+            type: 'app',
+            auth: false,
+        },
         component: () => import('@/views/mobile/Shop.vue')
     },
     {
@@ -36,7 +52,11 @@ const mobile = [
         name: 'goodsDetail',
         chineseName: '商品详情',
         type: 2,
-        meta: {title: "商品详情"},
+        meta: {
+            title: "商品详情",
+            type: 'app',
+            auth: false,
+        },
         component: () => import('@/views/mobile/GoodsDetail.vue')
     },
     {
@@ -44,7 +64,11 @@ const mobile = [
         name: 'order',
         chineseName: '订单',
         type: 2,
-        meta: {title: "订单"},
+        meta: {
+            title: "订单",
+            type: 'app',
+            auth: true,
+        },
         component: () => import('@/views/mobile/Order.vue')
     },
     {
@@ -52,7 +76,11 @@ const mobile = [
         name: 'orderList',
         chineseName: '订单列表',
         type: 2,
-        meta: {title: "订单列表"},
+        meta: {
+            title: "订单列表",
+            type: 'app',
+            auth: true,
+        },
         component: () => import('@/views/mobile/OrderList.vue')
     },
     // =======================我的=============start=======================================
@@ -61,7 +89,11 @@ const mobile = [
         name: 'settings',
         chineseName: '我的',
         type: 2,
-        meta: {title: "我的"},
+        meta: {
+            title: "我的",
+            type: 'app',
+            auth: true,
+        },
         component: () => import('@/views/mobile/Settings.vue')
     },
     {
@@ -69,7 +101,11 @@ const mobile = [
         name: 'accountSetting',
         chineseName: '账户设置',
         type: 2,
-        meta: {title: "账户设置"},
+        meta: {
+            title: "账户设置",
+            type: 'app',
+            auth: true,
+        },
         component: () => import('@/views/mobile/setting/AccountSetting.vue')
     },
     {
@@ -77,7 +113,11 @@ const mobile = [
         name: 'addressEdit',
         chineseName: '地址管理',
         type: 2,
-        meta: {title: "地址管理"},
+        meta: {
+            title: "地址管理",
+            type: 'app',
+            auth: true,
+        },
         component: () => import('@/views/mobile/setting/AddressEdit.vue')
     },
     {
@@ -85,7 +125,11 @@ const mobile = [
         name: 'coupon',
         chineseName: '优惠券',
         type: 2,
-        meta: {title: "优惠券"},
+        meta: {
+            title: "优惠券",
+            type: 'app',
+            auth: true,
+        },
         component: () => import('@/views/mobile/setting/Coupon.vue')
     },
     {
@@ -93,7 +137,11 @@ const mobile = [
         name: 'integral',
         chineseName: '我的积分',
         type: 2,
-        meta: {title: "我的积分"},
+        meta: {
+            title: "我的积分",
+            type: 'app',
+            auth: true,
+        },
         component: () => import('@/views/mobile/setting/Integral.vue')
     },
     {
@@ -101,7 +149,11 @@ const mobile = [
         name: 'member',
         chineseName: '我的会员',
         type: 2,
-        meta: {title: "我的会员"},
+        meta: {
+            title: "我的会员",
+            type: 'app',
+            auth: true,
+        },
         component: () => import('@/views/mobile/setting/Member.vue')
     },
     {
@@ -109,7 +161,11 @@ const mobile = [
         name: 'customerService',
         chineseName: '客户服务',
         type: 2,
-        meta: {title: "客户服务"},
+        meta: {
+            title: "客户服务",
+            type: 'app',
+            auth: true,
+        },
         component: () => import('@/views/mobile/setting/CustomerService.vue')
     },
     // =======================我的=============end=======================================
@@ -120,7 +176,11 @@ const mobile = [
         name: 'appLogin',
         chineseName: '登录',
         type: 2,
-        meta: {title: "登录"},
+        meta: {
+            title: "登录",
+            type: 'app',
+            auth: false,
+        },
         component: () => import('@/views/mobile/Login.vue')
     },
     {
@@ -128,7 +188,11 @@ const mobile = [
         name: 'appRegister',
         chineseName: '注册',
         type: 2,
-        meta: {title: "注册"},
+        meta: {
+            title: "注册",
+            type: 'app',
+            auth: false,
+        },
         component: () => import('@/views/mobile/Register.vue')
     },
     // ===================登录、注册========end=====================

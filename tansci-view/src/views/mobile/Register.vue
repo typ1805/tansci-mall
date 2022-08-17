@@ -40,7 +40,9 @@
 </template>
 <script setup>
     import {reactive, ref, unref, toRefs} from 'vue'
+    import {ElMessage} from 'element-plus'
     import {useRouter} from 'vue-router'
+    import {register} from '@/api/admin/user'
 
     const router = useRouter()
     const userFormRef = ref(null)
@@ -52,6 +54,7 @@
             id_card: '',
             phone: '',
             email: '',
+            type: 2,
         },
     })
 
@@ -64,10 +67,13 @@
         if (!form) return;
         await form.validate()
 
-        console.log(state.userForm)
-
         // 注册成功去登录
-        onLogin();
+        register(state.userForm).then(res=>{
+            if(res){
+                ElMessage.success("注册成功！");
+                onLogin();
+            }
+        })
     }
 
     const onLogin = () =>{

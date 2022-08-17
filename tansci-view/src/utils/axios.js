@@ -34,7 +34,12 @@ axios.interceptors.response.use(res => {
             ElMessage.error(res.data.message)
             if (res.data.code == 403 || res.data.code == 401){
                 sessionStorage.clear();
-                router.push({path: 'login'});
+                let route = router.currentRoute.value;
+                if(route.meta.type == 'app'){
+                    router.push({path: '/app/appLogin'});
+                } else {
+                    router.push({path: 'login'});
+                }
             }
             return Promise.reject(res.data)
         }
@@ -63,7 +68,12 @@ axios.interceptors.response.use(res => {
         if (res.code == 403 || res.code == 401) {
             ElMessage.error(message)
             sessionStorage.clear();
-            router.push({path: 'login'});
+            let route = router.currentRoute.value;
+            if(route.meta.type == 'app'){
+                router.push({path: '/app/appLogin'});
+            } else {
+                router.push({path: 'login'});
+            }
         }
     } 
     ElMessage.error(message)

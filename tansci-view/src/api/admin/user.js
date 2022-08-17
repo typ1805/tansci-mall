@@ -3,16 +3,25 @@ import axios from '@/utils/axios'
 /**
  * 登录
  * @param params
- * @returns {Promise<AxiosResponse<T>>}
+ * @returns 
  */
 export function login(params) {
     return axios.post('/tansci/user/login', params);
 }
 
 /**
+ * 商户注册
+ * @param params
+ * @returns 
+ */
+export function register(params) {
+    return axios.post('/tansci/user/register', params);
+}
+
+/**
  * 登出
  * @param params
- * @returns {Promise<AxiosResponse<T>>}
+ * @returns 
  */
 export function logout(params) {
     return axios.post('/tansci/user/logout', params);

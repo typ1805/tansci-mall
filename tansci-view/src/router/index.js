@@ -22,11 +22,6 @@ const router = createRouter({
 let flag = true // 刷新标识
 router.beforeEach(async (to, from, next) => {
 
-    // 是否登陆
-    // if (!sessionStorage.getItem('token') && to.path !== "/login") {
-    //     return next({ path: "/login" });
-    // };
-
     // 设置头部
     if (to.meta.title) {
         document.title = to.meta.title
@@ -34,8 +29,19 @@ router.beforeEach(async (to, from, next) => {
         document.title = "商城"
     }
 
+    // 判断App是否需要登录
+    if(to.meta.auth && !sessionStorage.getItem('token')){
+        return next({ path: "/app/appLogin" });
+    }
+
+    // 判断App不加载动态路由
+    let isApp = false;
+    if(to.meta.type == 'app'){
+        isApp = true;
+    }
+
     // 动态添加路由
-    if(sessionStorage.getItem('token') && flag){
+    if(sessionStorage.getItem('token') && flag && !isApp){
         const menuStore = useMenuStore();
         await menuList({types:'0,1', status: 1}).then((res)=>{
             let result = routerFilter(res.result)
