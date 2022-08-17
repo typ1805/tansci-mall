@@ -3,45 +3,22 @@ import { defineStore } from 'pinia'
 // 存储用户信息
 export const useUserStore = defineStore('user', {
     state: () => ({
-        username: '',
-        nickname: '',
-        type: '',
-        shop: '',
-        loginTime: '',
+        user: ''
     }),
     getters: {
         getUser(){
-            if(!this.username){
-                let user = JSON.parse(sessionStorage.getItem('user'))
-                this.username = user.username
-                this.nickname = user.nickname
-                this.type = user.type
-                this.shop = user.shop
-                this.loginTime = user.loginTime
+            if(!this.user){
+                this.user = JSON.parse(sessionStorage.getItem('user'))
             }
             return {
-                username: this.username,
-                nickname: this.nickname,
-                type: this.type,
-                shop: this.shop,
-                loginTime: this.loginTime
+                user: this.user
             }
         }
     },
     actions: {
         setUser (data) {
-            this.username = data.username
-            this.nickname = data.nickname
-            this.type = data.type
-            this.shop = data.shop
-            this.loginTime = data.loginTime
-            sessionStorage.setItem('user', JSON.stringify({
-                username: data.username,
-                nickname: data.nickname,
-                type: data.type,
-                shop: data.shop,
-                loginTime: data.loginTime
-            }))
+            this.user = data
+            sessionStorage.setItem('user', JSON.stringify(data))
         },
         delUser () {
             sessionStorage.clear()

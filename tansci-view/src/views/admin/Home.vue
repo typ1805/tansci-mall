@@ -58,7 +58,7 @@
     let orderOverviewChart = null;
     let channelAnalysisChart =null;
     const state = reactive({
-        username: userStore.getUser.username == null ? '未登录':userStore.getUser.username,
+        username: userStore.getUser.user.username == null ? '未登录':userStore.getUser.user.username,
         cardList: [],
     })
 

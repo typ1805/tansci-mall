@@ -121,4 +121,16 @@ public class Goods {
     @TableField(exist = false)
     private List<GoodsComment> goodsCommentList;
 
+    @TableField(exist = false)
+    @ApiModelProperty(value = "是否选中")
+    private Integer isSelect;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "商品个数")
+    private Integer goodsNum;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "购物车ID")
+    private String cartId;
+
 }

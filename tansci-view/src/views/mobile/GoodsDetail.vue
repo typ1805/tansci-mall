@@ -31,6 +31,10 @@
                                 </template>
                             </el-alert>
                         </div>
+                        <div class="content-number">
+                            <span>数量</span>
+                            <el-input-number v-model="goodsInfo.goodsNum" :min="1" :max="100" size="small" style="width:86px;"/>
+                        </div>
                     </el-card>
                 </div>
                 <div class="main-address">
@@ -146,6 +150,7 @@
 </template>
 <script setup>
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
+    import {ElMessage} from 'element-plus'
     import {useRouter, useRoute} from 'vue-router'
     import {useUserStore} from '@/store/settings'
     import {toDecimal} from '@/utils/utils'
@@ -153,6 +158,7 @@
     import {getGoodsCommentPage} from '@/api/mobile/goodsComment'
     import {userAddressList} from '@/api/admin/userAddress'
     import {qryByUserName} from '@/api/admin/user'
+    import {saveCart} from '@/api/admin/cart'
 
     const userStore = useUserStore();
     const router = useRouter()
@@ -196,7 +202,8 @@
 
     const onGoodsInfo = () =>{
         getGoodsInfo({goodsId: route.query.goodsId}).then(res=>{
-            state.goodsInfo = res.result
+            state.goodsInfo = res.result;
+            state.goodsInfo.goodsNum = 1;
         })
     }
 
@@ -216,12 +223,13 @@
 
     // 获取商户信心
     const onUserInfo = () =>{
-        const username = userStore.getUser.username;
-        if(!username){
+        const user = userStore.getUser.user;
+        if(!user.username){
             return;
         }
-        qryByUserName({username: username}).then(res=>{
+        qryByUserName({username: user.username}).then(res=>{
             state.userInfo = res.result;
+            state.goodsInfo.userId = state.userInfo.id;
             onUserAddressList();
         })
     }
@@ -237,25 +245,41 @@
             });
             if(address){
                 state.goodsInfo.address = address.details;
+                state.goodsInfo.addressId = address.id;
             } 
         })
     }
 
+    // 购物车：type: 1、跳转购物车，0、添加购物
     const onAddCart = (type) =>{
-        if(type == 1){
+        if(type == 0){
             // 添加购物成功后跳转至购物车
-
+            console.log(state.goodsInfo)
+            let param = {
+                shopId: state.goodsInfo.shopId,
+                goodsId: state.goodsInfo.goodsId,
+                goodsNum: state.goodsInfo.goodsNum?state.goodsInfo.goodsNum:1,
+                userId: state.goodsInfo.userId,
+                status: 0,
+            }
+            saveCart(param).then(res=>{
+                if(res){
+                    ElMessage.success("已加入购物车，去购物车支付！")
+                }
+            })
+        } else {
+            router.push({path:'/app/cart'})
         }
-        router.push({path:'/app/cart'})
     }
 
+    // 立即购买
     const onSubmit = () =>{
         // 添加订单成功后跳转至确认订单
         router.push({path:'/app/order'})
     }
 
+    // 跳转店铺
     const toShop = () =>{
-        // 跳转店铺
         router.push({path:'/app/shop', query:{shopId: state.goodsInfo.shopId}})
     }
 
@@ -321,6 +345,26 @@
                     margin-top: -0.2rem;
                     i,span{
                         vertical-align: middle;
+                    }
+                }
+                .content-number{
+                    padding-top: 1rem;
+                    display: flex;
+                    justify-content: space-between;
+                    span{
+                        font-size: 14px;
+                        font-weight: 700;
+                    }
+                    .el-input-number__increase, .el-input-number__decrease{
+                        background: #fff;
+                        color: #000;
+                        border: none;
+                    }
+                    .el-input__wrapper{
+                        box-shadow: none;
+                    }
+                    .el-input--small .el-input__inner{
+                        background-color: #F0F2F5;
                     }
                 }
             }

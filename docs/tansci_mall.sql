@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 16/08/2022 16:15:13
+ Date: 17/08/2022 17:34:26
 */
 
 SET NAMES utf8mb4;
@@ -26,6 +26,7 @@ CREATE TABLE `cart`  (
   `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品id',
   `goods_num` int(10) NOT NULL COMMENT '数量',
   `status` int(1) NULL DEFAULT NULL COMMENT '状态：0、正常，1、失效',
+  `shop_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '店铺ID',
   `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品id',
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
@@ -35,6 +36,8 @@ CREATE TABLE `cart`  (
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
+INSERT INTO `cart` VALUES ('afcac08ea4779e5ee6dfc9d90dfeec3c', 'f01c51c427d8568a162f7327b4aa91a8', 2, 0, 's10001', 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-17 16:02:41', '2022-08-17 16:02:41');
+INSERT INTO `cart` VALUES ('afcac08ea4779e5ee6dfc9d90dfeec3r', 'f9468bdbff35242d3ff761dcc9b1da3d', 1, 0, 's10002', 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-17 16:02:41', '2022-08-17 16:02:41');
 
 -- ----------------------------
 -- Table structure for config_goods
@@ -116,7 +119,7 @@ INSERT INTO `goods` VALUES ('f01c51c427d8568a162f7327b4aa91a8', 's10001', '鸿�
 INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da31', 's10001', '的非官方的', '飞过的痕迹付个定金的规范化发过的计划分割的', 1, 'c10003', 19.00, 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/151287/11/6299/88753/5fab4128E87c46fe5/769a497c164a554c.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
 INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da32', 's10001', '返回给对方', '刚部署电饭锅和德国并进行假道伐虢贺岁档品', 1, 'c10003', 19.00, 'https://m.360buyimg.com/babel/s200x200_jfs/t1/106777/29/30068/284228/62be64faE956a8da2/e4b08f6349798e56.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
 INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da33', 's10001', '法国恢复到', '报关单发生了更舒服的返回南方尽快改好是地方官', 1, 'c10003', 19.00, 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/132097/2/22280/370382/62bab80aE34809e28/055504818282cd3d.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
-INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da3d', 's10001', '测试商品', '个梵蒂冈IU第三个很舒服地关键词VB插画你金发地个很舒服的后果', 1, 'c10003', 19.00, 'http://tansci.top:18003/images/202208110aa378bfa0.jpg', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
+INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da3d', 's10002', '测试商品', '个梵蒂冈IU第三个很舒服地关键词VB插画你金发地个很舒服的后果', 1, 'c10003', 19.00, 'http://tansci.top:18003/images/202208110aa378bfa0.jpg', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
 
 -- ----------------------------
 -- Table structure for goods_classify
@@ -148,6 +151,7 @@ CREATE TABLE `goods_comment`  (
   `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评论id',
   `goods_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品id',
   `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户id',
+  `user_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '商户名称',
   `date` date NULL DEFAULT NULL COMMENT '评价时间',
   `rating` double(10, 2) NULL DEFAULT NULL COMMENT '评分',
   `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '评语',
@@ -159,10 +163,10 @@ CREATE TABLE `goods_comment`  (
 -- ----------------------------
 -- Records of goods_comment
 -- ----------------------------
-INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdh', 'f01c51c427d8568a162f7327b4aa91a8', '22f60277c18a0f185cfa794af0d58f2a', '2022-08-16', 4.20, '发个黄金分割几个号kg', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
-INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdh4', 'f01c51c427d8568a162f7327b4aa91a8', '22f60277c18a0f185cfa794af0d58f2a', '2022-08-11', 4.90, '风格就发个黄金分割', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
-INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdhs', 'f01c51c427d8568a162f7327b4aa91a8', '496347ab137029d80ed8929283d9a48b', '2022-08-13', 5.00, '换几个号光棍节风格', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
-INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdhs1', 'f01c51c427d8568a162f7327b4aa91a8', '496347ab137029d80ed8929283d9a48b', '2022-08-09', 4.70, '风格的回复个就', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
+INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdh', 'f01c51c427d8568a162f7327b4aa91a8', '22f60277c18a0f185cfa794af0d58f2a', '李四', '2022-08-16', 4.20, '发个黄金分割几个号kg', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
+INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdh4', 'f01c51c427d8568a162f7327b4aa91a8', '22f60277c18a0f185cfa794af0d58f2a', '李四', '2022-08-11', 4.90, '风格就发个黄金分割', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
+INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdhs', 'f01c51c427d8568a162f7327b4aa91a8', '496347ab137029d80ed8929283d9a48b', '张三', '2022-08-13', 5.00, '换几个号光棍节风格', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
+INSERT INTO `goods_comment` VALUES ('dffdgfdgfdhgfdhs1', 'f01c51c427d8568a162f7327b4aa91a8', '496347ab137029d80ed8929283d9a48b', '张三', '2022-08-09', 4.70, '风格的回复个就', '2022-08-16 14:33:16', '2022-08-16 14:33:20');
 
 -- ----------------------------
 -- Table structure for goods_image
@@ -357,7 +361,8 @@ CREATE TABLE `shop`  (
 -- ----------------------------
 -- Records of shop
 -- ----------------------------
-INSERT INTO `shop` VALUES ('s10001', '平台旗舰店', '平台旗舰店', NULL, 4.50, 0, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 11:28:47', '2022-08-16 11:28:43', NULL);
+INSERT INTO `shop` VALUES ('s10001', '鸿星尔克安宁旗舰店', '鸿星尔克安宁旗舰店', 'https://www.baidu.com/img/flexible/logo/pc/result.png', 4.50, 0, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 11:28:47', '2022-08-16 11:28:43', NULL);
+INSERT INTO `shop` VALUES ('s10002', '李宁安宁旗舰店', '鸿星尔克安宁旗舰店', '李宁安宁旗舰店', 4.50, 0, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 11:28:47', '2022-08-16 11:28:43', NULL);
 
 -- ----------------------------
 -- Table structure for sys_dic
@@ -421,8 +426,20 @@ CREATE TABLE `sys_login_log`  (
 -- ----------------------------
 -- Records of sys_login_log
 -- ----------------------------
+INSERT INTO `sys_login_log` VALUES ('12b4e385dcd929a164d8b700440acabe', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:39:27', '2022-08-17 09:39:27');
+INSERT INTO `sys_login_log` VALUES ('1e7b456b3446f97e18f7377f052e99e0', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:55', '2022-08-17 10:48:55');
 INSERT INTO `sys_login_log` VALUES ('2c7906a23818cc7ccb47f53e0ab13724', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-11 09:01:10', '2022-08-11 09:01:10');
+INSERT INTO `sys_login_log` VALUES ('33fdf691022587a5d47fec70ac3ea99a', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:39', '2022-08-17 10:48:39');
+INSERT INTO `sys_login_log` VALUES ('3dd297b4e08b34126541da70791d8b3a', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:46:24', '2022-08-17 10:46:24');
+INSERT INTO `sys_login_log` VALUES ('3f7ed1eb092555a8532786c5bdb88d2e', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:47:10', '2022-08-17 09:47:10');
+INSERT INTO `sys_login_log` VALUES ('50d958ea9c3bfde6ab6199720b104c77', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:37', '2022-08-17 10:48:37');
+INSERT INTO `sys_login_log` VALUES ('5bb95f667e40fc55ca995b418ee2a05d', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 15:20:57', '2022-08-17 15:20:57');
+INSERT INTO `sys_login_log` VALUES ('a39fde8e8499bccf84bc093066aa3d1b', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:46:58', '2022-08-17 09:46:58');
 INSERT INTO `sys_login_log` VALUES ('a978c9e1a51258baabb1ae8d981d5c2d', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-12 10:59:07', '2022-08-12 10:59:07');
+INSERT INTO `sys_login_log` VALUES ('ac9bf03ab950b7acf24085223453c040', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:17', '2022-08-17 10:48:17');
+INSERT INTO `sys_login_log` VALUES ('b919cd6236caf5090c1f9c7ebd5dad39', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:40', '2022-08-17 10:48:40');
+INSERT INTO `sys_login_log` VALUES ('de9aecca16134ffe5a76ff129ba12f2a', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:48:01', '2022-08-17 09:48:01');
+INSERT INTO `sys_login_log` VALUES ('f91c1df03eaac4cc26724be690455758', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:49:38', '2022-08-17 09:49:38');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -538,9 +555,10 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('22f60277c18a0f185cfa794af0d58f2a', 'user2', '$2a$10$P.RRnq7Ys.6.19XW/ju61O9dtO41AMS06d4ua5M9wjkwno4pzG9bm', '用户2', 2, 1, '2022-06-26', '', '18812563214', NULL, NULL, '', NULL, NULL, '2022-06-30 14:33:47', '2022-06-30 14:33:47', NULL);
-INSERT INTO `sys_user` VALUES ('496347ab137029d80ed8929283d9a48b', 'user1', '$2a$10$NyePi0WfVaT0wzL8dWi7iego7vwENNVCHTUXNtaUzVf7bnh0v6f7y', '用户1', 2, 0, '2022-06-21', '', '18893845632', NULL, NULL, '', NULL, NULL, '2022-06-30 14:33:15', '2022-06-30 14:33:15', NULL);
+INSERT INTO `sys_user` VALUES ('22f60277c18a0f185cfa794af0d58f2a', 'user2', '$2a$10$P.RRnq7Ys.6.19XW/ju61O9dtO41AMS06d4ua5M9wjkwno4pzG9bm', '李四', 2, 1, '2022-06-26', '', '18812563214', NULL, NULL, '', NULL, NULL, '2022-06-30 14:33:47', '2022-06-30 14:33:47', NULL);
+INSERT INTO `sys_user` VALUES ('496347ab137029d80ed8929283d9a48b', 'user1', '$2a$10$NyePi0WfVaT0wzL8dWi7iego7vwENNVCHTUXNtaUzVf7bnh0v6f7y', '张三', 2, 0, '2022-06-21', '', '18893845632', NULL, NULL, '', NULL, NULL, '2022-06-30 14:33:15', '2022-06-30 14:33:15', NULL);
 INSERT INTO `sys_user` VALUES ('bc3ac26e69731b617eb80274453f6dba', 'admin', '$2a$10$tlWWfjTObqLsC6ONrhNL/.GIpAoFu205TXPK6xUPHHr1kA/paK4lq', '管理员', 1, 0, '2021-07-09', '甘肃兰州', '18893817562', NULL, NULL, '', NULL, NULL, '2022-03-29 14:01:05', '2022-03-29 14:01:07', '');
+INSERT INTO `sys_user` VALUES ('cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', '$2a$10$5Bnuvra2DLRz.rlX5d5mdexyGVAtsu5asE1IMQHHFu.Nha..JMJy6', NULL, 2, NULL, NULL, NULL, '18893211456', NULL, '623022202205125514', 'zhangs@qq.com', NULL, NULL, '2022-08-17 10:45:24', '2022-08-17 10:45:24', '商户');
 
 -- ----------------------------
 -- Table structure for sys_user_address
@@ -564,6 +582,7 @@ CREATE TABLE `sys_user_address`  (
 -- ----------------------------
 -- Records of sys_user_address
 -- ----------------------------
+INSERT INTO `sys_user_address` VALUES ('cf0fb4667f6261b18ae932bedcedb1b0', 'cf0fb4667f6261b18ae932bedcedb1b0', '张三', '18893621002', 1, '甘肃省', '兰州市', '安宁区', '甘肃省/兰州市/安宁区-永新华世界湾小区1号楼1单元803室', '2022-08-17 11:24:18', '2022-08-17 11:24:22');
 
 -- ----------------------------
 -- Table structure for sys_user_role

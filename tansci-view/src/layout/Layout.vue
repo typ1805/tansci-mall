@@ -107,7 +107,7 @@
     const userStore = useUserStore();
     const tokenStore = useTokenStore();
     const menuStore = useMenuStore();
-    const username = userStore.getUser.username == null ? '未登录':userStore.getUser.username;
+    const username = userStore.getUser.user.username == null ? '未登录':userStore.getUser.user.username;
     const nowTimes = ref('');
     const validateForm = ref(null)
     const state = reactive({
@@ -239,8 +239,8 @@
     }
 
     const onUserInfo = () =>{
-        if(userStore.getUser.username){
-            qryByUserName({username: userStore.getUser.username}).then(res=>{
+        if(userStore.getUser.user){
+            qryByUserName({username: userStore.getUser.user.username}).then(res=>{
                 state.userInfo = res.result
                 state.userDrawer = true
             })

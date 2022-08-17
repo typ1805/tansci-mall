@@ -1,6 +1,7 @@
 package com.tansci.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -39,6 +40,9 @@ public class GoodsComment {
 
     @ApiModelProperty(value = "商户id")
     private String userId;
+
+    @ApiModelProperty(value = "商户名称")
+    private String userName;
 
     @ApiModelProperty(value = "评价时间")
     private LocalDate date;

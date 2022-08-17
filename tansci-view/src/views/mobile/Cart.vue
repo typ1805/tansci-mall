@@ -31,7 +31,7 @@
                             <el-checkbox v-model="goods.isSelect" @change="onBoxChange(item.shopId,goods.goodsId)" :true-label="1" :false-label="0"></el-checkbox>
                         </div>
                         <div class="goods-image" @click="toGoodsDetail(goods.goodsId)">
-                            <el-image :src="goods.image" style="width: 120px; height: 120px;" fit="fit"/>
+                            <el-image :src="goods.coverImg" style="width: 120px; height: 120px;" fit="fit"/>
                         </div>
                         <div class="goods-content">
                             <div class="content-title">{{goods.name}}</div>
@@ -39,7 +39,7 @@
                                 <span style="font-size: 12px;">￥</span><span>{{onDecimal(goods.price)}}</span>
                             </div>
                             <div class="content-number">
-                                <el-input-number @change="onNumChange" v-model="goods.number" :min="1" :max="10" size="small" style="width:86px;"/>
+                                <el-input-number @change="onNumChange" v-model="goods.goodsNum" :min="1" :max="10" size="small" style="width:86px;"/>
                             </div>
                         </div>
                     </div>
@@ -67,10 +67,14 @@
 </template>
 <script setup>
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
+    import {ElMessage} from 'element-plus'
     import {useRouter} from 'vue-router'
     import FooterMenu from '@/components/miniapp/FooterMenu.vue'
+    import {useUserStore} from '@/store/settings'
     import {toDecimal} from '@/utils/utils'
+    import {getCartList, delBatchCart} from '@/api/admin/cart'
 
+    const userStore = useUserStore();
     const router = useRouter()
     const state = reactive({
         shadow: 'always',
@@ -99,63 +103,14 @@
 
     // 购物车列表
     const onCartList = () =>{
-        state.cartList = [
-            {
-                shopId: '10001',
-                shopName: '慢慢旗舰店',
-                isSelect: 1,
-                goodsList: [
-                    {
-                        goodsId: 'g0001',
-                        name: '可配置定义更丰富的规范和地方法官和对方内容展',
-                        price: 147.00,
-                        number: 1,
-                        isSelect: 1,
-                        image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/151287/11/6299/88753/5fab4128E87c46fe5/769a497c164a554c.jpg.avif',
-                    },
-                    {
-                        goodsId: 'g0002',
-                        name: '可配置定义更法规和豆腐干和的丰富的内容展',
-                        price: 144.00,
-                        number: 1,
-                        isSelect: 1,
-                        image: 'https://29553125.s61i.faiusr.com/2/AD0I5eOLDhACGAAgv5PvlQYozJLmiAIw7gU47gU!400x400.jpg',
-                    }
-                ]
-            },
-            {
-                shopId: '10002',
-                shopName: '红线尔康旗舰店',
-                isSelect: 1,
-                goodsList: [
-                    {
-                        goodsId: 'g0003',
-                        name: '可配置定义更丰法规和豆腐干和的富的内容展',
-                        price: 144.00,
-                        number: 1,
-                        isSelect: 1,
-                        image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/2828/33/19368/238363/62bbbe12Ee47c0996/2c92c0a2ebc78f0c.jpg.avif',
-                    }
-                ]
-            },
-            {
-                shopId: '10002',
-                shopName: '金发地个旗舰店',
-                isSelect: 0,
-                goodsList: [
-                    {
-                        goodsId: 'g0004',
-                        name: '可配置定义更法规和豆腐干和的发丰富的内容展',
-                        price: 144.00,
-                        number: 1,
-                        isSelect: 0,
-                        image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
-                    }
-                ]
-            }
-        ]
-
-        onCalculatedAmount();
+        const user = userStore.getUser.user;
+        if(!user.username){
+            return;
+        }
+        getCartList({username: user.username}).then(res=>{
+            state.cartList = res.result;
+            onCalculatedAmount();
+        })
     }
 
     // 提交
@@ -178,19 +133,29 @@
 
     // 移除购物车
     const onDelSubmit = () =>{
+        let delList = [];
         // 数组是引用类型, 深拷贝一下
-        let cartArr = JSON.parse(JSON.stringify(state.cartList));
-        cartArr.forEach((shop, index) =>{
-            let goodsArr = JSON.parse(JSON.stringify(shop.goodsList));
-            let newGoodsArr = goodsArr.filter(goods => goods.isSelect === 0);
-            console.log(newGoodsArr)
-            if(newGoodsArr.length === 0){
-                cartArr.splice(index,1);
-            } else {
-                shop.goodsList = newGoodsArr;
+        let carts = JSON.parse(JSON.stringify(state.cartList));
+        carts.forEach(shop =>{
+            let goodsList = JSON.parse(JSON.stringify(shop.goodsList));
+            let delGoodsList = goodsList.filter(goods => goods.isSelect === 1);
+            delGoodsList.forEach(item =>{
+                delList.push(item);
+            })
+        })
+
+        if(!delList || delList.length == 0 ){
+            return;
+        }
+        let cartIds = delList.map(item=> item.cartId);
+        let _cartIds = Array.from(new Set(cartIds));
+        delBatchCart({cartIds: _cartIds}).then(res=>{
+            if(res){
+                ElMessage.success("删除购物车成功！");
+                state.isEdit = false;
+                onCartList();
             }
         })
-        state.cartList = cartArr;
     }
 
     // 购物车编辑
@@ -244,7 +209,7 @@
         _cartList.forEach(item=>{
             item.goodsList.forEach(goods=>{
                 if(goods.isSelect){
-                    _totalAmount = _totalAmount + goods.price * goods.number;
+                    _totalAmount = _totalAmount + goods.price * goods.goodsNum;
                 }
             })
         })
