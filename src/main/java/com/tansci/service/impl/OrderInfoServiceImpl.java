@@ -6,10 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tansci.common.OrderEnum;
 import com.tansci.common.PayEnum;
-import com.tansci.domain.Goods;
-import com.tansci.domain.GoodsOrder;
-import com.tansci.domain.OrderInfo;
-import com.tansci.domain.SysUser;
+import com.tansci.domain.*;
 import com.tansci.domain.dto.OrderDto;
 import com.tansci.exception.BusinessException;
 import com.tansci.mapper.OrderInfoMapper;
@@ -21,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -48,6 +42,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     private GoodsOrderService goodsOrderService;
     @Autowired
     private CartService cartService;
+    @Autowired
+    private ShopService shopService;
 
     @Override
     public IPage<OrderInfo> page(Page page, OrderInfo order) {
@@ -66,7 +62,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             iPage.getRecords().forEach(item -> {
                 Optional<SysUser> uOptional = userList.stream().filter(u -> Objects.equals(u.getId(), item.getUserId())).findFirst();
                 if (uOptional.isPresent()) {
-                    item.setUserName(uOptional.get().getUsername());
+                    item.setUsername(uOptional.get().getUsername());
                 }
 
                 item.setPayStatusName(Objects.nonNull(item.getPayStatus()) ? PayEnum.getVlaueByGroup(item.getPayStatus(), "pay_status") : null);
@@ -75,6 +71,48 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             });
         }
         return iPage;
+    }
+
+    @Override
+    public List<OrderInfo> list(OrderInfo order) {
+        SysUser user = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, order.getUsername()));
+        if (Objects.isNull(user)) {
+            throw new BusinessException("登录失效，请重新登录！");
+        }
+
+        List<OrderInfo> orders = this.baseMapper.selectList(
+                Wrappers.<OrderInfo>lambdaQuery()
+                        .eq(OrderInfo::getUserId, user.getId())
+                        .in(Objects.nonNull(order.getStatus()) && order.getStatus().size() > 0, OrderInfo::getOrderStatus, order.getStatus())
+                        .orderByDesc(OrderInfo::getUpdateTime)
+        );
+
+        if (Objects.nonNull(orders) && orders.size() > 0) {
+            // 商品
+            List<Goods> goodsList = goodsOrderService.goodsOrderList(orders.stream().map(OrderInfo::getOrderId).collect(Collectors.toList()));
+            // 根据订单分组商品
+            Map<String, List<Goods>> goodsMap = goodsList.stream().collect(Collectors.groupingBy(Goods::getOrderId));
+
+            // 店铺
+            List<Shop> shops = shopService.listByIds(goodsList.stream().map(Goods::getShopId).collect(Collectors.toList()));
+
+
+            orders.forEach(item -> {
+                // 订单状态
+                item.setOrderStatusName(Objects.nonNull(item.getOrderStatus()) ? OrderEnum.getVlaueByGroup(item.getOrderStatus(), "order_status") : null);
+                // 商品信息
+                List<Goods> _goodsList = goodsMap.get(item.getOrderId());
+                item.setGoodsList(_goodsList);
+                item.setShopId(_goodsList.get(0).getShopId());
+                // 店铺信息
+                Optional<Shop> sOptional = shops.stream().filter(s -> Objects.equals(s.getShopId(), _goodsList.get(0).getShopId())).findFirst();
+                if (sOptional.isPresent()) {
+                    item.setShopName(sOptional.get().getName());
+                }
+            });
+        }
+
+        return orders;
     }
 
     @Transactional
@@ -98,7 +136,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
                 // 计算金额
                 BigDecimal price = goods.getPrice().multiply(new BigDecimal(item.getGoodsNum()));
-                amount.set(price);
+                amount.updateAndGet(a -> a.add(price));
 
                 // 封装商品订单信息
                 goodsOrders.add(

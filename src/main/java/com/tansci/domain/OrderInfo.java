@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @ClassName： OrderInfo.java
@@ -71,10 +72,6 @@ public class OrderInfo {
     @ApiModelProperty(value = "商户ID")
     private String userId;
 
-    @ApiModelProperty(value = "商户名称")
-    @TableField(exist = false)
-    private String userName;
-
     @ApiModelProperty(value = "更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private LocalDateTime updateTime;
@@ -85,5 +82,25 @@ public class OrderInfo {
 
     @ApiModelProperty(value = "备注")
     private String remarks;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "商品信息")
+    private List<Goods> goodsList;
+
+    @ApiModelProperty(value = "店铺ID")
+    @TableField(exist = false)
+    private String shopId;
+
+    @ApiModelProperty(value = "店铺名称")
+    @TableField(exist = false)
+    private String shopName;
+
+    @ApiModelProperty(value = "用户名称")
+    @TableField(exist = false)
+    private String username;
+
+    @ApiModelProperty(value = "订单状态集合")
+    @TableField(exist = false)
+    private List<String> status;
 
 }

@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @path：com.tansci.controller.OrderInfoController.java
  * @className：OrderInfoController.java
@@ -34,6 +36,12 @@ public class OrderInfoController {
     @GetMapping("/page")
     public Wrapper<IPage<OrderInfo>> page(Page page, OrderInfo order) {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, orderInfoService.page(page, order));
+    }
+
+    @ApiOperation(value = "列表", notes = "列表")
+    @GetMapping("/list")
+    public Wrapper<List<OrderInfo>> list(OrderInfo order) {
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, orderInfoService.list(order));
     }
 
     @ApiOperation(value = "提交订单", notes = "提交订单")

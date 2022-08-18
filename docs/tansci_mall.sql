@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 17/08/2022 17:34:26
+ Date: 18/08/2022 16:12:28
 */
 
 SET NAMES utf8mb4;
@@ -36,8 +36,6 @@ CREATE TABLE `cart`  (
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES ('afcac08ea4779e5ee6dfc9d90dfeec3c', 'f01c51c427d8568a162f7327b4aa91a8', 2, 0, 's10001', 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-17 16:02:41', '2022-08-17 16:02:41');
-INSERT INTO `cart` VALUES ('afcac08ea4779e5ee6dfc9d90dfeec3r', 'f9468bdbff35242d3ff761dcc9b1da3d', 1, 0, 's10002', 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-17 16:02:41', '2022-08-17 16:02:41');
 
 -- ----------------------------
 -- Table structure for config_goods
@@ -233,7 +231,10 @@ CREATE TABLE `goods_order`  (
 -- ----------------------------
 -- Records of goods_order
 -- ----------------------------
-INSERT INTO `goods_order` VALUES ('HGDHFG4545BSDHF4', 'o100001', 'f01c51c427d8568a162f7327b4aa91a8', 1, 1, '2022-08-11 09:39:13', 99.00, '496347ab137029d80ed8929283d9a48b', '2022-08-11 10:28:48', '2022-08-11 09:39:30', NULL);
+INSERT INTO `goods_order` VALUES ('96ac279d35cec9699e97f10a0fa39119', '28516a09559e3f656397c61ef3d108d3', 'f9468bdbff35242d3ff761dcc9b1da32', 1, 0, NULL, 19.00, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 16:11:31', '2022-08-18 16:11:31', NULL);
+INSERT INTO `goods_order` VALUES ('98da6776c40a5a8b494bc912e760877e', '28516a09559e3f656397c61ef3d108d3', 'f01c51c427d8568a162f7327b4aa91a8', 1, 0, NULL, 99.00, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 16:11:31', '2022-08-18 16:11:31', NULL);
+INSERT INTO `goods_order` VALUES ('a020073e768b943ab1b3d9b3913382ca', '28c7d91482cd5467dda312a5a5e5dfbc', 'f01c51c427d8568a162f7327b4aa91a8', 1, 0, NULL, 99.00, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 15:25:53', '2022-08-18 15:25:53', NULL);
+INSERT INTO `goods_order` VALUES ('c1e2b1acb16e8459a2c9efe5fbd16e91', '472f4e8aea0045aa02bb0a3952358351', 'f9468bdbff35242d3ff761dcc9b1da32', 1, 0, NULL, 19.00, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 15:52:01', '2022-08-18 15:52:01', NULL);
 
 -- ----------------------------
 -- Table structure for index_carousel
@@ -296,7 +297,7 @@ INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdgw', '充值中心', NULL, 'Co
 DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE `order_info`  (
   `order_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单id',
-  `order_no` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单号',
+  `order_no` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '订单号',
   `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '订单总价',
   `discount` decimal(10, 2) NULL DEFAULT NULL COMMENT '优惠金额',
   `pay_status` int(1) NULL DEFAULT NULL COMMENT '支付状态：0、未支付，1、支付成功，2、支付失败',
@@ -307,14 +308,15 @@ CREATE TABLE `order_info`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`order_id`, `order_no`) USING BTREE
+  PRIMARY KEY (`order_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '订单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_info
 -- ----------------------------
-INSERT INTO `order_info` VALUES ('o100001', 'o10000214', 56.99, 4.00, 1, 2, 2, '2022-07-23 21:49:38', '22f60277c18a0f185cfa794af0d58f2a', '2022-07-23 21:49:42', '2022-07-23 21:49:46', '支付成功');
-INSERT INTO `order_info` VALUES ('o100002', 'o10000216', 120.00, 4.00, 1, 4, 1, '2022-07-23 21:49:38', '496347ab137029d80ed8929283d9a48b', '2022-07-23 21:49:42', '2022-07-23 21:49:46', '交易完成');
+INSERT INTO `order_info` VALUES ('28516a09559e3f656397c61ef3d108d3', NULL, 118.00, 0.00, 0, 0, 2, NULL, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 16:11:31', '2022-08-18 16:11:31', NULL);
+INSERT INTO `order_info` VALUES ('28c7d91482cd5467dda312a5a5e5dfbc', NULL, 99.00, 0.00, 0, 0, 2, NULL, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 15:25:53', '2022-08-18 15:25:53', NULL);
+INSERT INTO `order_info` VALUES ('472f4e8aea0045aa02bb0a3952358351', NULL, 19.00, 0.00, 0, 0, 2, NULL, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 15:52:01', '2022-08-18 15:52:01', NULL);
 
 -- ----------------------------
 -- Table structure for refund
@@ -428,8 +430,10 @@ CREATE TABLE `sys_login_log`  (
 -- ----------------------------
 INSERT INTO `sys_login_log` VALUES ('12b4e385dcd929a164d8b700440acabe', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:39:27', '2022-08-17 09:39:27');
 INSERT INTO `sys_login_log` VALUES ('1e7b456b3446f97e18f7377f052e99e0', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:55', '2022-08-17 10:48:55');
+INSERT INTO `sys_login_log` VALUES ('2475a78cc0cfdf8dd2d4ed04f529643d', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-18 14:29:56', '2022-08-18 14:29:56');
 INSERT INTO `sys_login_log` VALUES ('2c7906a23818cc7ccb47f53e0ab13724', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-11 09:01:10', '2022-08-11 09:01:10');
 INSERT INTO `sys_login_log` VALUES ('33fdf691022587a5d47fec70ac3ea99a', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:39', '2022-08-17 10:48:39');
+INSERT INTO `sys_login_log` VALUES ('3dad176a4b6c96da141a0b0a5ea6b0d5', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-18 09:22:34', '2022-08-18 09:22:34');
 INSERT INTO `sys_login_log` VALUES ('3dd297b4e08b34126541da70791d8b3a', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:46:24', '2022-08-17 10:46:24');
 INSERT INTO `sys_login_log` VALUES ('3f7ed1eb092555a8532786c5bdb88d2e', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:47:10', '2022-08-17 09:47:10');
 INSERT INTO `sys_login_log` VALUES ('50d958ea9c3bfde6ab6199720b104c77', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:37', '2022-08-17 10:48:37');

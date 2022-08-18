@@ -10,6 +10,15 @@ export function orderPage(params) {
 }
 
 /**
+ * 订单列表
+ * @param {*} params
+ * @returns
+ */
+export function getOrderList(params) {
+    return axios.get('/tansci/order/list', {params: params});
+}
+
+/**
  * 删除订单
  * @param {*} params
  * @returns

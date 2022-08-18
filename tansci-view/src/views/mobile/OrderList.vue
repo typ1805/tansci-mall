@@ -49,12 +49,15 @@
 </template>
 <script setup>
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
+    import {ElMessage,ElMessageBox} from 'element-plus'
     import {useRouter,useRoute} from 'vue-router'
+    import {useUserStore} from '@/store/settings'
     import OrderList from '@/components/miniapp/OrderList.vue'
+    import {getOrderList,delOrder} from '@/api/mobile/order'
 
     const router = useRouter()
     const route = useRoute()
-
+    const userStore = useUserStore();
     const state = reactive({
         defaultHeight: null,
         activeTab: 'all',
@@ -81,72 +84,52 @@
     }
 
     const onOrderList = (type) =>{
-        if(!type){
-            type = state.activeTab;
+        const user = userStore.getUser.user;
+        if(!user || !user.username){
+            return;
         }
-        // 请求接口
-        if('all' == type){
-            state.orderList = [
-                {
-                    shopId: '10002',
-                    shopName: '金发地个旗舰店',
-                    amount: 144,
-                    orderId: 'o1000014',
-                    goodsList: [
-                        {
-                            goodsId: 'g0004',
-                            name: '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚',
-                            number: 1,
-                            image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
-                        }
-                    ]
-                },
-                {
-                    shopId: '10003',
-                    shopName: '丰东股份旗舰店',
-                    amount: 144,
-                    orderId: 'o1000015',
-                    goodsList: [
-                        {
-                            goodsId: 'g0004',
-                            name: '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚',
-                            number: 1,
-                            image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
-                        },
-                        {
-                            goodsId: 'g0004',
-                            name: '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚',
-                            number: 1,
-                            image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
-                        }
-                    ]
-                },
-            ]
-        } else if('pay' == type){
-            state.orderList = [
-                {
-                    shopId: '10002',
-                    shopName: '金发地个旗舰店',
-                    amount: 144,
-                    orderId: 'o1000014',
-                    goodsList: [
-                        {
-                            goodsId: 'g0004',
-                            name: '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚',
-                            number: 1,
-                            image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
-                        }
-                    ]
-                },
-            ]
-        } else {
-             state.orderList = []
-        }     
+
+        let status = null;
+        switch(type){
+            case 'all':
+                status = null;
+                break;
+            case 'pay':
+                status = '0';
+                break;
+            case 'delivery':
+                status = '1,2,3';
+                break;
+            case 'appraise':
+                status = '4';
+                break;
+            default:
+                status = null;
+        }
+
+        getOrderList({username: user.username, status: status}).then(res=>{
+            state.orderList = res.result;
+        })
     }
 
     // 删除订单信息
     const onDelOrder = (orderId) =>{
-        console.log(orderId)
+        ElMessageBox.confirm('此操作将永久删除, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true,
+            showClose: false,
+        }).then(() => {
+            delOrder({orderId: orderId}).then(res=>{
+                if(res){
+                    ElMessage.success("删除成功！")
+                    onOrderList()
+                }
+            })
+        }).catch(e=>{
+            console.log(e)
+        })
     }
 
     // 评价
@@ -155,8 +138,8 @@
     }
 
     // 再次购买
-    const onBuyAgain = (orderId) =>{
-        console.log(orderId)
+    const onBuyAgain = (goodsId) =>{
+        router.push({path: '/app/goodsDetail', query:{goodsId: goodsId}})
     }
 
     const toBack = () =>{

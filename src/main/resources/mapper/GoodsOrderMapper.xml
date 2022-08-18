@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tansci.mapper.GoodsOrderMapper">
+
+    <select id="goodsOrderList" parameterType="String" resultType="com.tansci.domain.Goods">
+        SELECT g.*,o.goods_num,o.order_id
+        FROM goods_order o
+        inner join goods g on g.goods_id = o.goods_id
+        where o.order_id in
+        <foreach collection="orderIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

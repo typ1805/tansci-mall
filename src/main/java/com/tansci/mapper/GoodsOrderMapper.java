@@ -1,8 +1,12 @@
 package com.tansci.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tansci.domain.Goods;
 import com.tansci.domain.GoodsOrder;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @ClassName： GoodsOrderMapper.java
@@ -13,4 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
  **/
 @Mapper
 public interface GoodsOrderMapper extends BaseMapper<GoodsOrder> {
+
+    List<Goods> goodsOrderList(@Param("orderIds") List<String> orderIds);
+
 }

@@ -133,4 +133,8 @@ public class Goods {
     @ApiModelProperty(value = "购物车ID")
     private String cartId;
 
+    @TableField(exist = false)
+    @ApiModelProperty(value = "订单ID")
+    private String orderId;
+
 }

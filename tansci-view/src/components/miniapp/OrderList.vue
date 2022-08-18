@@ -7,31 +7,31 @@
                     <span>{{order.shopName}}</span>
                 </div>
                 <div>
-                    <span>完成</span>
+                    <span>{{order.orderStatusName}}</span>
                     <el-divider direction="vertical" />
                     <el-button @click="onDelOrder(order.orderId)" type="primary" icon="Delete" link></el-button>
                 </div>
             </div>
             <div v-for="goods in order.goodsList" :key="goods" class="goods-list">
                 <div class="goods-image">
-                    <el-image :src="goods.image" style="width: 120px; height: 120px;" fit="fit"/>
+                    <el-image :src="goods.coverImg" style="width: 120px; height: 120px;" fit="fit"/>
                 </div>
                 <div class="goods-content">
                     <div class="content-title">{{goods.name}}</div>
                     <div>
-                        <span style="font-size: 12px;">数量：</span><span style="font-weight: 700;">{{goods.number}}</span>
+                        <span style="font-size: 12px;">数量：</span><span style="font-weight: 700;">{{goods.goodsNum}}</span>
                     </div>
                 </div>
             </div>
             <div class="order-amount">
                 <span>实付：</span>
                 <span style="font-size: 12px;font-weight: 700;">￥</span>
-                <span style="font-weight: 700;font-size: 16px;">{{onDecimal(order.amount)}}</span>
+                <span style="font-weight: 700;font-size: 16px;">{{onDecimal(order.price)}}</span>
             </div>
             <el-divider/>
             <div class="order-but">
                 <el-button @click="onEvaluate(order.orderId)" round>评价晒单</el-button>
-                <el-button @click="onBuyAgain(order.orderId)" type="danger" round>再次购买</el-button>
+                <el-button @click="onBuyAgain(order.goodsList[0].goodsId)" type="danger" round>再次购买</el-button>
             </div>
         </el-card>
         <div v-if="orderList && orderList.length" class="order-tips">~已经到底了！~</div>
@@ -73,8 +73,8 @@
     }
 
     // 再次购买
-    const onBuyAgain = (orderId) =>{
-        emit('onBuyAgain', orderId);
+    const onBuyAgain = (goodsId) =>{
+        emit('onBuyAgain', goodsId);
     }
 
 </script>

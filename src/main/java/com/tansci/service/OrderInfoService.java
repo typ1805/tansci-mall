@@ -6,17 +6,21 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.tansci.domain.OrderInfo;
 import com.tansci.domain.dto.OrderDto;
 
+import java.util.List;
+
 /**
  * @path：com.tansci.service.OrderInfoService.java
  * @className：OrderInfoService.java
  * @description： 订单
  * @author：tanyp
- * @dateTime：2022/7/21 13:15 
+ * @dateTime：2022/7/21 13:15
  * @editNote：
  */
 public interface OrderInfoService extends IService<OrderInfo> {
 
     IPage<OrderInfo> page(Page page, OrderInfo order);
+
+    List<OrderInfo> list(OrderInfo order);
 
     Object submit(OrderDto order);
 

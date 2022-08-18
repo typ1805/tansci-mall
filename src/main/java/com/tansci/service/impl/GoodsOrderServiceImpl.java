@@ -5,9 +5,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tansci.common.OrderEnum;
-import com.tansci.common.PayEnum;
+import com.tansci.domain.Goods;
 import com.tansci.domain.GoodsOrder;
-import com.tansci.domain.OrderInfo;
 import com.tansci.domain.SysUser;
 import com.tansci.domain.dto.GoodsOrderDto;
 import com.tansci.mapper.GoodsOrderMapper;
@@ -59,6 +58,11 @@ public class GoodsOrderServiceImpl extends ServiceImpl<GoodsOrderMapper, GoodsOr
             });
         }
         return iPage;
+    }
+
+    @Override
+    public List<Goods> goodsOrderList(List<String> orderIds) {
+        return this.baseMapper.goodsOrderList(orderIds);
     }
 
 }
