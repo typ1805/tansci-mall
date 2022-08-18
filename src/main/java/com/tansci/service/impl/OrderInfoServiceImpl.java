@@ -6,18 +6,26 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tansci.common.OrderEnum;
 import com.tansci.common.PayEnum;
+import com.tansci.domain.Goods;
+import com.tansci.domain.GoodsOrder;
 import com.tansci.domain.OrderInfo;
 import com.tansci.domain.SysUser;
+import com.tansci.domain.dto.OrderDto;
+import com.tansci.exception.BusinessException;
 import com.tansci.mapper.OrderInfoMapper;
-import com.tansci.service.OrderInfoService;
-import com.tansci.service.SysUserService;
+import com.tansci.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -25,7 +33,7 @@ import java.util.stream.Collectors;
  * @className：OrderInfoServiceImpl.java
  * @description： 订单
  * @author：tanyp
- * @dateTime：2022/7/21 13:15 
+ * @dateTime：2022/7/21 13:15
  * @editNote：
  */
 @Slf4j
@@ -34,6 +42,12 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     @Autowired
     private SysUserService sysUserService;
+    @Autowired
+    private GoodsService goodsService;
+    @Autowired
+    private GoodsOrderService goodsOrderService;
+    @Autowired
+    private CartService cartService;
 
     @Override
     public IPage<OrderInfo> page(Page page, OrderInfo order) {
@@ -63,18 +77,86 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         return iPage;
     }
 
+    @Transactional
     @Override
-    public boolean save(OrderInfo order) {
-        return false;
+    public Object submit(OrderDto dto) {
+        log.info("=========购物车===开始=====......==========");
+        // 用户验证
+        SysUser user = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, dto.getUsername()));
+        if (Objects.isNull(user)) {
+            log.error("===购物车==支付失败====用户信息有误======");
+            throw new BusinessException("登录失效，请重新登录！");
+        }
+
+        try {
+            // 获取商品信息，计算金额
+            AtomicReference<BigDecimal> amount = new AtomicReference<>(BigDecimal.ZERO);
+            List<String> carts = new ArrayList<>();
+            List<GoodsOrder> goodsOrders = new ArrayList<>();
+            dto.getGoodsOrders().forEach(item -> {
+                Goods goods = goodsService.getById(item.getGoodsId());
+
+                // 计算金额
+                BigDecimal price = goods.getPrice().multiply(new BigDecimal(item.getGoodsNum()));
+                amount.set(price);
+
+                // 封装商品订单信息
+                goodsOrders.add(
+                        GoodsOrder.builder()
+                                .goodsId(item.getGoodsId())
+                                .goodsNum(item.getGoodsNum())
+                                .price(price)
+                                .status(0)
+                                .userId(user.getId())
+                                .updateTime(LocalDateTime.now())
+                                .createTime(LocalDateTime.now())
+                                .build()
+                );
+
+                // 购物车信息
+                carts.add(item.getCartId());
+            });
+
+            // 创建订单
+            OrderInfo order = OrderInfo.builder()
+                    .price(amount.get())
+                    .discount(BigDecimal.ZERO)
+                    .payStatus(PayEnum.PAY_STATUS_UNPAID.getKey())
+                    .orderStatus(OrderEnum.ORDER_STATUS_UNPAID.getKey())
+                    .payType(dto.getPayType())
+                    .userId(user.getId())
+                    .updateTime(LocalDateTime.now())
+                    .createTime(LocalDateTime.now())
+                    .build();
+            this.save(order);
+
+            // 创建商品订单
+            goodsOrders.forEach(item -> item.setOrderId(order.getOrderId()));
+            goodsOrderService.saveBatch(goodsOrders);
+
+            // 删除购物车
+            cartService.removeBatchByIds(carts);
+            log.info("=========购物车===结束=====支付成功==========");
+            return "支付成功！";
+        } catch (Exception e) {
+            log.error("===购物车==支付失败====异常信息：{}", e);
+            throw new BusinessException("支付失败！");
+        }
     }
 
     @Override
     public Object update(OrderInfo order) {
+        // todo
         return null;
     }
 
+    @Transactional
     @Override
     public Object delete(OrderInfo order) {
-        return null;
+        int row = this.baseMapper.deleteById(order.getOrderId());
+        if (row > 0) {
+            return goodsOrderService.remove(Wrappers.<GoodsOrder>lambdaQuery().eq(GoodsOrder::getOrderId, order.getOrderId()));
+        }
+        return row;
     }
 }

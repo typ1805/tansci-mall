@@ -224,12 +224,11 @@
     // 获取商户信心
     const onUserInfo = () =>{
         const user = userStore.getUser.user;
-        if(!user.username){
+        if(!user || !user.username){
             return;
         }
         qryByUserName({username: user.username}).then(res=>{
             state.userInfo = res.result;
-            state.goodsInfo.userId = state.userInfo.id;
             onUserAddressList();
         })
     }
@@ -253,18 +252,16 @@
     // 购物车：type: 1、跳转购物车，0、添加购物
     const onAddCart = (type) =>{
         if(type == 0){
-            // 添加购物成功后跳转至购物车
-            console.log(state.goodsInfo)
             let param = {
                 shopId: state.goodsInfo.shopId,
                 goodsId: state.goodsInfo.goodsId,
                 goodsNum: state.goodsInfo.goodsNum?state.goodsInfo.goodsNum:1,
-                userId: state.goodsInfo.userId,
+                userId: state.userInfo.id,
                 status: 0,
             }
             saveCart(param).then(res=>{
                 if(res){
-                    ElMessage.success("已加入购物车，去购物车支付！")
+                    ElMessage.success("加入成功！")
                 }
             })
         } else {
@@ -274,8 +271,18 @@
 
     // 立即购买
     const onSubmit = () =>{
-        // 添加订单成功后跳转至确认订单
-        router.push({path:'/app/order'})
+        let param = {
+            shopId: state.goodsInfo.shopId,
+            goodsId: state.goodsInfo.goodsId,
+            goodsNum: state.goodsInfo.goodsNum?state.goodsInfo.goodsNum:1,
+            userId: state.userInfo.id,
+            status: 0,
+        }
+        saveCart(param).then(res=>{
+            if(res){
+                router.push({path:'/app/order'})
+            }
+        })
     }
 
     // 跳转店铺

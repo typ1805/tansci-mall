@@ -12,8 +12,8 @@
                 <div class="main-address">
                     <el-card :shadow="shadow">
                         <div class="address-content">
-                            <div>{{addressInfo.detail}}</div>
-                            <div style="font-weight: 700;padding: 0.4rem 0;">{{addressInfo.village}}</div>
+                            <div>{{addressInfo.details}}</div>
+                            <div style="font-weight: 700;padding: 0.4rem 0;">{{addressInfo.province+addressInfo.city+addressInfo.region}}</div>
                             <div>{{addressInfo.name}} {{addressInfo.phone}}</div>
                         </div>
                     </el-card>
@@ -27,7 +27,7 @@
                             </div>
                             <div v-for="goods in order.goodsList" :key="goods" class="goods-list">
                                 <div class="goods-image">
-                                    <el-image :src="goods.image" style="width: 120px; height: 120px;" fit="fit"/>
+                                    <el-image :src="goods.coverImg" style="width: 120px; height: 120px;" fit="fit"/>
                                 </div>
                                 <div class="goods-content">
                                     <div class="content-title">{{goods.name}}</div>
@@ -35,13 +35,13 @@
                                         <span style="font-size: 12px;">￥</span><span>{{onDecimal(goods.price)}}</span>
                                     </div>
                                     <div>
-                                        <span style="font-size: 12px;">数量：</span><span style="font-weight: 700;">{{goods.number}}</span>
+                                        <span style="font-size: 12px;">数量：</span><span style="font-weight: 700;">{{goods.goodsNum}}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="shop-transport">
                                 <div>配送</div>
-                                <div>快递运输</div>
+                                <div>普通快递</div>
                             </div>
                             <div>预计三日后的24:00前送达</div>
                             <el-divider v-show="index+1 < orderInfo.orderList.length"  />
@@ -81,7 +81,13 @@
                             </div>
                             <div class="content-item" style="padding-top: 1rem;">
                                 <div>支付方式</div>
-                                <div style="font-weight: 700;">在线支付</div>
+                                <div>
+                                    <el-radio-group v-model="orderInfo.payType">
+                                        <el-radio :label="2">微信</el-radio>
+                                        <el-radio :label="1">支付宝</el-radio>
+                                        <el-radio :label="3">银联</el-radio>
+                                    </el-radio-group>
+                                </div>
                             </div>
                         </div>
                     </el-card>
@@ -93,28 +99,35 @@
                 <span style="font-size: 12px;">￥</span><span>{{onDecimal(orderInfo.amount)}}</span>
             </div>
             <div class="footer-submit">
-                <el-button @click="onSubmit" type="danger" round>立即支付</el-button>
+                <el-button @click="onSubmit" :disabled="orderInfo.amount>0?false:true" :loading="loading" type="danger" round>立即支付</el-button>
             </div>
         </div>
     </div>
 </template>
 <script setup>
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
-    import {useRouter, useRoute} from 'vue-router'
+    import {ElMessage} from 'element-plus'
+    import {useRouter} from 'vue-router'
+    import {useUserStore} from '@/store/settings'
     import {toDecimal} from '@/utils/utils'
+    import {qryByUserName} from '@/api/admin/user'
+    import {userAddressList} from '@/api/admin/userAddress'
+    import {getCartList} from '@/api/admin/cart'
+    import {submitOrder} from '@/api/mobile/order'
 
     const router = useRouter()
-    const route = useRoute()
-
+    const userStore = useUserStore();
     const state = reactive({
         shadow: 'always',
         defaultHeight: null,
         orderInfo: {},
+        addressList: [],
         addressInfo: {},
+        loading: false,
     })
 
     const {
-        shadow,defaultHeight,orderInfo,addressInfo
+        shadow,defaultHeight,orderInfo,addressList,addressInfo,loading,
     } = toRefs(state)
 
     onBeforeMount(() => {
@@ -122,53 +135,123 @@
     })
 
     onMounted(()=>{
+        onUserAddressList();
         onOrderInfo();
     })
 
+    // 获取订单商品信息
     const onOrderInfo = () =>{
-        state.addressInfo = {
-            name: '小平',
-            phone: '18893524563',
-            village: '永新华世界湾1#1-803室',
-            detail: '甘肃省兰州市安宁区银滩路街道北滨河路',
+        const user = userStore.getUser.user;
+        if(!user || !user.username){
+            return;
         }
-        state.orderInfo = {
-            amount: 144,
-            freight: 10,
-            discount: 0,
-            orderList: [
-                {
-                    shopId: '10002',
-                    shopName: '金发地个旗舰店',
-                    goodsList: [
-                        {
-                            goodsId: 'g0004',
-                            name: '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚',
-                            price: 144.00,
-                            number: 1,
-                            image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
+        getCartList({username: user.username}).then(res=>{
+            if(res.result){
+                let totalAmount = 0;
+                res.result.forEach(item=>{
+                    item.goodsList.forEach(goods=>{
+                        if(goods.isSelect){
+                            totalAmount = totalAmount + goods.price * goods.goodsNum;
                         }
-                    ]
-                },
-                {
-                    shopId: '10003',
-                    shopName: '丰东股份旗舰店',
-                    goodsList: [
-                        {
-                            goodsId: 'g0004',
-                            name: '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚',
-                            price: 144.00,
-                            number: 1,
-                            image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
-                        }
-                    ]
+                    })
+                })
+                state.orderInfo = {
+                    amount: totalAmount,
+                    payType: 2,
+                    freight: 0,
+                    discount: 0,
+                    orderList: res.result,
                 }
-            ]
-        }
+            }
+        })
+
+        // state.orderInfo = {
+        //     amount: 144,
+        //     freight: 10,
+        //     discount: 0,
+        //     orderList: [
+        //         {
+        //             shopId: '10002',
+        //             shopName: '金发地个旗舰店',
+        //             goodsList: [
+        //                 {
+        //                     goodsId: 'g0004',
+        //                     name: '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚',
+        //                     price: 144.00,
+        //                     number: 1,
+        //                     image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
+        //                 }
+        //             ]
+        //         },
+        //         {
+        //             shopId: '10003',
+        //             shopName: '丰东股份旗舰店',
+        //             goodsList: [
+        //                 {
+        //                     goodsId: 'g0004',
+        //                     name: '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚',
+        //                     price: 144.00,
+        //                     number: 1,
+        //                     image: 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/87173/11/29471/354593/62adf573Eac278253/3bc086c45af2cce4.jpg.avif',
+        //                 }
+        //             ]
+        //         }
+        //     ]
+        // }
     }
 
+    // 获取商户地址
+    const onUserAddressList = () =>{
+        const user = userStore.getUser.user;
+        if(!user || !user.username){
+            return;
+        }
+        qryByUserName({username: user.username}).then(res=>{
+            userAddressList({userId: res.result.id}).then(res=>{
+                if(res.result){
+                    state.addressList = res.result;
+                    state.addressInfo = res.result.find(item=>{
+                        return item.flag = 1;
+                    });
+                }
+            });
+        });
+    }
+
+    // 支付
     const onSubmit = () =>{
-        // 支付
+        state.loading = true;
+        let orders = [];
+        let orderList = state.orderInfo.orderList;
+        orderList.forEach(shop=>{
+            let goodsList = JSON.parse(JSON.stringify(shop.goodsList));
+            let _goodsList = goodsList.filter(goods => goods.isSelect === 1);
+            _goodsList.forEach(item =>{
+                orders.push({
+                    cartId: item.cartId,
+                    goodsId: item.goodsId,
+                    goodsNum: item.goodsNum,
+                    price: item.price,
+                    discount: 0,
+                    shopId: item.shopId,
+                    userId: item.userId,
+                });
+            });
+        })
+
+        const user = userStore.getUser.user;
+        let param = {
+            payType: state.orderInfo.payType,
+            username: user.username,
+            goodsOrders: orders,
+        }
+        submitOrder(param).then(res=>{
+            if(res){
+                ElMessage.success(res.result)
+                router.push({path:'/app/settings'});
+                state.loading = false;
+            }
+        })
     }
 
     const toBack = () =>{
@@ -256,6 +339,7 @@
                     .content-item{
                         display: flex;
                         justify-content: space-between;
+                        align-items: center;
                     }
                 }
                 .amount-total{
@@ -272,6 +356,7 @@
                     .content-item{
                         display: flex;
                         justify-content: space-between;
+                        align-items: center;
                     }
                 }
             }

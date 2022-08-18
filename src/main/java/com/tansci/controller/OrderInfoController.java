@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tansci.common.WrapMapper;
 import com.tansci.common.Wrapper;
 import com.tansci.domain.OrderInfo;
+import com.tansci.domain.dto.OrderDto;
 import com.tansci.service.OrderInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * @className：OrderInfoController.java
  * @description： 订单
  * @author：tanyp
- * @dateTime：2022/7/21 13:16 
+ * @dateTime：2022/7/21 13:16
  * @editNote：
  */
 @Slf4j
@@ -35,10 +36,10 @@ public class OrderInfoController {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, orderInfoService.page(page, order));
     }
 
-    @ApiOperation(value = "添加", notes = "添加")
-    @PostMapping("/save")
-    public Wrapper<Object> save(@RequestBody OrderInfo order) {
-        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, orderInfoService.save(order));
+    @ApiOperation(value = "提交订单", notes = "提交订单")
+    @PostMapping("/submit")
+    public Wrapper<Object> submit(@RequestBody OrderDto dto) {
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, orderInfoService.submit(dto));
     }
 
     @ApiOperation(value = "更新", notes = "更新")

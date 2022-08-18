@@ -85,7 +85,7 @@
     })
 
     const {
-        shadow,defaultHeight,cartList,totalAmount,isEdit
+        shadow,defaultHeight,cartList,totalAmount,isEdit,
     } = toRefs(state)
 
     onBeforeMount(() => {
@@ -104,7 +104,7 @@
     // 购物车列表
     const onCartList = () =>{
         const user = userStore.getUser.user;
-        if(!user.username){
+        if(!user || !user.username){
             return;
         }
         getCartList({username: user.username}).then(res=>{
@@ -113,22 +113,9 @@
         })
     }
 
-    // 提交
+    // 跳转至支付页面
     const onSubmit = () =>{
-        let newCartList = [];
-        state.cartList.forEach(shop=>{
-            if(shop.isSelect === 1){
-                newCartList.push(shop);
-            } else {
-                let shopInfo = JSON.parse(JSON.stringify(shop));
-                shopInfo.goodsList = shopInfo.goodsList.filter(goods => goods.isSelect === 1)
-                if(shopInfo.goodsList && shopInfo.goodsList.length > 0){
-                    newCartList.push(shopInfo);
-                }
-            }
-        })
-
-        console.log(newCartList)
+        router.push({path:'/app/order'});
     }
 
     // 移除购物车

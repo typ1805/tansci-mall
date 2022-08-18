@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tansci.domain.OrderInfo;
+import com.tansci.domain.dto.OrderDto;
 
 /**
  * @path：com.tansci.service.OrderInfoService.java
@@ -17,7 +18,7 @@ public interface OrderInfoService extends IService<OrderInfo> {
 
     IPage<OrderInfo> page(Page page, OrderInfo order);
 
-    boolean save(OrderInfo order);
+    Object submit(OrderDto order);
 
     Object update(OrderInfo order);
 
