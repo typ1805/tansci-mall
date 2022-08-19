@@ -62,6 +62,7 @@ router.beforeEach(async (to, from, next) => {
 })
 
 // 格式化路由
+let modules = import.meta.glob('../views/**/**/*.vue')
 export function routerFilter(data) {
     data.forEach((item)=>{
         let flag = false;
@@ -82,7 +83,8 @@ export function routerFilter(data) {
                     chineseName: item.chineseName,
                     englishName: item.englishName,
                     meta: { title: item.chineseName },
-                    component: () => import('../views' + item.url + '.vue')
+                    // component: () => import('../views' + item.url + '.vue')
+                    component: modules['../views' + item.url + '.vue']
                 }];
                 flag = true;
             }
@@ -93,7 +95,8 @@ export function routerFilter(data) {
             item.englishName = item.englishName;
             item.icon = item.icon;
             item.meta = { title: item.chineseName };
-            item.component = () => import('../views' + item.url + '.vue');
+            // item.component = () => import('../views' + item.url + '.vue');
+            item.component = modules['../views' + item.url + '.vue'];
         }
         if(item.children && item.children.length && !flag){
             routerFilter(item.children)
