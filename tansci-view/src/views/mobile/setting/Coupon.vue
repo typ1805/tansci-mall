@@ -9,22 +9,22 @@
         </div>
         <div class="coupon-main">
             <el-scrollbar :height="defaultHeight">
-                <el-card v-for="(coupon,index) in couponList" :key="index" :shadow="shadow">
+                <el-card v-for="(coupon,index) in coupons" :key="index" :shadow="shadow">
                     <div class="coupon-content">
                         <div style="padding-right: 2rem;text-align: center;">
                             <div class="amount">
                                 <span style="font-size: 14px;">￥</span>
-                                <span>{{coupon.amount}}</span>
+                                <span>{{coupon.price}}</span>
                             </div>
                             <div class="text">
                                 <span>满</span>
                                 <span>{{coupon.norm}}</span>
-                                <span>元可用</span>
+                                <span>可用</span>
                             </div>
                         </div>
                         <div>
                             <div class="title">
-                                <el-tag color="#00DDDD" size="small" effect="dark" round>{{coupon.type}}</el-tag>
+                                <el-tag color="#00DDDD" size="small" effect="dark" round>{{coupon.typeName}}</el-tag>
                                 <span style="padding-left: 0.4rem;">{{coupon.name}}</span>
                             </div>
                             <div class="time">
@@ -34,6 +34,11 @@
                             <div class="remarks">
                                 <span>使用说明：</span>
                                 <span>{{coupon.remarks}}</span>
+                            </div>
+                            <div style="float: right;">
+                                <el-tag v-if="coupon.status == 1" type="success" size="small" effect="dark" round>未使用</el-tag>
+                                <el-tag v-if="coupon.status == 2" type="warning" size="small" effect="dark" round>{{coupon.statusName}}</el-tag>
+                                <el-tag v-if="coupon.status == 3" type="danger" size="small" effect="dark" round>{{coupon.statusName}}</el-tag>
                             </div>
                         </div>
                     </div>
@@ -45,17 +50,19 @@
 <script setup>
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
     import {useRouter} from 'vue-router'
+    import {useUserStore} from '@/store/settings'
+    import {couponList} from '@/api/admin/coupon'
 
+    const userStore = useUserStore();
     const router = useRouter()
-
     const state = reactive({
         shadow: 'never',
         defaultHeight: null,
-        couponList: [],
+        coupons: [],
     })
 
     const {
-        shadow,defaultHeight,couponList
+        shadow,defaultHeight,coupons
     } = toRefs(state)
 
     onBeforeMount(() => {
@@ -66,14 +73,15 @@
         onCouponList();
     })
 
-    const onCouponList = (userId) =>{
-        state.couponList = [
-            {couponId: 'c1001',amount:50,norm:69,name:'鸿星尔克旗舰店',type:'店铺券',startTime:'2022-07-19',endTime:'2022-07-31',remarks:'仅可在此店铺使用'},
-            {couponId: 'c1002',amount:10,norm:69,name:'鸿星尔克旗舰店',type:'店铺券',startTime:'2022-07-19',endTime:'2022-07-31',remarks:'仅可在此店铺使用'},
-            {couponId: 'c1003',amount:45,norm:69,name:'平台优惠券',type:'平台券',startTime:'2022-07-19',endTime:'2022-07-31',remarks:'仅可在此店铺使用'},
-            {couponId: 'c1004',amount:20,norm:69,name:'鸿星尔克旗舰店',type:'店铺券',startTime:'2022-07-19',endTime:'2022-07-31',remarks:'仅可在此店铺使用'},
-            {couponId: 'c1005',amount:5,norm:69,name:'平台优惠券',type:'平台券',startTime:'2022-07-19',endTime:'2022-07-31',remarks:'仅可在此店铺使用'},
-        ]
+    const onCouponList = () =>{
+        const user = userStore.getUser.user;
+        if(!user || !user.username){
+            return;
+        }
+
+        couponList({username: user.username}).then(res=>{
+            state.coupons = res.result;
+        })
     }
 
     const toBack = () =>{

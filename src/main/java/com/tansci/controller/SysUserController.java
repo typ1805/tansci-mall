@@ -93,6 +93,8 @@ public class SysUserController {
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setIntegral(100);
+        user.setMember(1);
         user.setRemarks("商户");
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, sysUserService.save(user));
     }

@@ -13,13 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @path：com.tansci.controller.CouponController.java
  * @className：CouponController.java
  * @description： 优惠券
  * @author：tanyp
- * @dateTime：2022/7/21 13:03 
+ * @dateTime：2022/7/21 13:03
  * @editNote：
  */
 @Slf4j
@@ -35,6 +36,12 @@ public class CouponController {
     @GetMapping("/page")
     public Wrapper<IPage<Coupon>> page(Page page, Coupon coupon) {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, couponService.page(page, coupon));
+    }
+
+    @ApiOperation(value = "列表", notes = "列表")
+    @GetMapping("/list")
+    public Wrapper<List<Coupon>> list(Coupon coupon) {
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, couponService.list(coupon));
     }
 
     @ApiOperation(value = "添加", notes = "添加")

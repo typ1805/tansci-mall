@@ -44,14 +44,15 @@
 <script setup>
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
     import {useRouter} from 'vue-router'
+    import {useUserStore} from '@/store/settings'
 
     const router = useRouter()
-
+    const userStore = useUserStore();
     const state = reactive({
         shadow: 'never',
         defaultHeight: null,
         integralInfo: {
-            integral: 0
+            integral: userStore.getUser.user.integral
         },
         ruleList: [
             {price: 10,integral:1},
@@ -70,16 +71,6 @@
     onBeforeMount(() => {
         state.defaultHeight = (document.body.clientHeight || document.documentElement.clientHeight) - 45 + "px";
     })
-
-    onMounted(()=>{
-        onIntegral();
-    })
-
-    const onIntegral = (userId) =>{
-        state.integralInfo = {
-            integral: 500
-        }
-    }
 
     const toIndex = () =>{
         router.push({path:'/app/index'})

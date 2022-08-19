@@ -65,6 +65,19 @@ public enum Enums {
     ORDER_STATUS_2(2, "order_status", "失败"),
     ORDER_STATUS_3(3, "order_status", "退款"),
 
+    /**
+     * 优惠券状态
+     */
+    COUPON_STATUS_0(0, "coupon_status", "正常"),
+    COUPON_STATUS_1(1, "coupon_status", "已领取"),
+    COUPON_STATUS_2(2, "coupon_status", "已使用"),
+    COUPON_STATUS_3(3, "coupon_status", "已失效"),
+    /**
+     * 优惠券类型
+     */
+    COUPON_TYPE_0(0, "coupon_type", "平台券"),
+    COUPON_TYPE_1(1, "coupon_type", "店铺券"),
+
     ;
 
     private Integer key;

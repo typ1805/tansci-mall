@@ -138,6 +138,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             userVo.setNickname(user.getNickname());
             userVo.setUsername(user.getUsername());
             userVo.setType(user.getType());
+            userVo.setMember(user.getMember());
+            userVo.setIntegral(user.getIntegral());
+            userVo.setAvatar(user.getAvatar());
             userVo.setToken(token);
 
             // 记录登录日志

@@ -67,4 +67,8 @@ public class SysUserAddress {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private LocalDateTime createTime;
 
+    @ApiModelProperty(value = "商户名称")
+    @TableField(exist = false)
+    private String username;
+
 }

@@ -221,7 +221,7 @@
         state.commentDrawer = true;
     }
 
-    // 获取商户信心
+    // 获取商户信息
     const onUserInfo = () =>{
         const user = userStore.getUser.user;
         if(!user || !user.username){
@@ -243,7 +243,7 @@
                 return item.flag = 1;
             });
             if(address){
-                state.goodsInfo.address = address.details;
+                state.goodsInfo.address = address.province+address.city+address.region+address.details;
                 state.goodsInfo.addressId = address.id;
             } 
         })

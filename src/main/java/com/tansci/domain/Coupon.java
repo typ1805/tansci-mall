@@ -1,6 +1,7 @@
 package com.tansci.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
  * @className：Coupon.java
  * @description：优惠券
  * @author：tanyp
- * @dateTime：2022/7/21 10:06 
+ * @dateTime：2022/7/21 10:06
  * @editNote：
  */
 @Data
@@ -68,5 +69,20 @@ public class Coupon {
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
+
+    @ApiModelProperty(value = "描述")
+    private String remarks;
+
+    @ApiModelProperty(value = "类型名称")
+    @TableField(exist = false)
+    private String typeName;
+
+    @ApiModelProperty(value = "状态名称")
+    @TableField(exist = false)
+    private String statusName;
+
+    @ApiModelProperty(value = "商户名称")
+    @TableField(exist = false)
+    private String username;
 
 }

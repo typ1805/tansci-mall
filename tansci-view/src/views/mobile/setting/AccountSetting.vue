@@ -61,8 +61,13 @@
 </template>
 <script setup>
     import {onBeforeMount, onMounted, reactive, ref, unref, toRefs} from 'vue'
+    import {ElMessage} from 'element-plus'
     import {useRouter} from 'vue-router'
+    import {useUserStore} from '@/store/settings'
+    import {dateFormat}from '@/utils/utils'
+    import {qryByUserName, updateUser} from '@/api/admin/user'
 
+    const userStore = useUserStore();
     const router = useRouter()
     const userFormRef = ref(null)
     const state = reactive({
@@ -92,19 +97,16 @@
         onAccountSettings();
     })
 
+    // 获取商户信息
     const onAccountSettings = () =>{
-        // session 中获取用户信息
-
-        state.userForm = {
-            id: 'u1001',
-            username: 'tansci',
-            nickname: '小平',
-            gender: 1,
-            birthday: '2008-05-12',
-            phone: '18893814526',
-            idCard: '12154124745787154',
-            email: 'tansci@qq.com',
+        const user = userStore.getUser.user;
+        if(!user || !user.username){
+            return;
         }
+
+        qryByUserName({username: user.username}).then(res=>{
+            state.userForm = res.result;
+        })
     }
 
     const onSubmit = async () =>{
@@ -115,15 +117,12 @@
             state.userForm.birthday = dateFormat(state.userForm.birthday);
         }
 
-        // updateUser(state.userForm).then(res=>{
-        //     if(res){
-        //         ElMessage.success({
-        //             message: '设置成功！',
-        //             type: 'success'
-        //         });
-        //        toBack();
-        //     }
-        // });
+        updateUser(state.userForm).then(res=>{
+            if(res){
+                ElMessage.success('设置成功！');
+                toBack();
+            }
+        });
     }
 
     const onLogout = () =>{

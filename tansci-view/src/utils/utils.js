@@ -183,6 +183,23 @@ export function getCheckTreeIds(data = [], arr = []) {
 }
 
 /**
+ * 根据子获取父集合
+ */
+export function getTreeFindPath (tree, func, path = []) {
+    if (!tree) return [];
+    for (const data of tree) {
+        path.push(data);
+        if (func(data)) return path;
+        if (data.children) {
+            const findChildren = getTreeFindPath(data.children, func, path);
+            if (findChildren.length) return findChildren;
+        }
+        path.pop();
+    }
+    return [];
+}
+
+/**
  * 生成UUID
  * @returns 
  */

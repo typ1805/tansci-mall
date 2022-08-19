@@ -49,7 +49,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
         list = list.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(SysMenu::getId))), ArrayList::new));
         Map<String, List<SysMenu>> map = list.stream().collect(Collectors.groupingBy(SysMenu::getParentId, Collectors.toList()));
-        list.stream().forEach(item -> item.setChildren(map.get(item.getId())));
+        list.stream().forEach(item -> item.setChildren(
+                Objects.nonNull(map.get(item.getId())) ? map.get(item.getId()).stream().sorted(Comparator.comparing(SysMenu::getSort)).collect(Collectors.toList()) : new ArrayList<>()
+        ));
 
         List<SysMenu> menuList = map.get("0").stream().sorted(Comparator.comparing(SysMenu::getSort)).collect(Collectors.toList());
         return menuList;

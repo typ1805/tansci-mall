@@ -3,11 +3,13 @@
         <el-scrollbar :height="defaultHeight">
             <div class="setting-header">
                 <div>
-                    <el-avatar :src="userInfo.avatar" size="large"/>
+                    <el-avatar :src="userInfo.avatar" size="large">
+                        {{userInfo.avatar?'':userInfo.username}}
+                    </el-avatar>
                 </div>
                 <div class="header-title">
                     <div>{{userInfo.username}}</div>
-                    <el-tag type="warning" round size="small">V1 普通会员</el-tag>
+                    <el-tag type="warning" round size="small">V{{userInfo.member?userInfo.member:0}} 普通会员</el-tag>
                 </div>
             </div>
             <div class="setting-main">
@@ -53,17 +55,15 @@
 <script setup>
     import {onBeforeMount, onMounted, reactive, toRefs} from 'vue'
     import {useRouter} from 'vue-router'
+    import {useUserStore} from '@/store/settings'
     import FooterMenu from '@/components/miniapp/FooterMenu.vue'
 
     const router = useRouter();
-
+    const userStore = useUserStore();
     const state = reactive({
         shadow: 'always',
         defaultHeight: null,
-        userInfo: {
-            username: '小泡泡',
-            avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
-        },
+        userInfo: userStore.getUser.user,
         orderList: [],
         serviceList: [],
     })

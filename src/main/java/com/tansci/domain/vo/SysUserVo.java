@@ -33,6 +33,15 @@ public class SysUserVo {
     @ApiModelProperty(value = "用户类型：1、管理员，2、普通用户")
     private Integer type;
 
+    @ApiModelProperty(value = "会员等级")
+    private Integer member;
+
+    @ApiModelProperty(value = "积分")
+    private Integer integral;
+
+    @ApiModelProperty(value = "头像")
+    private String avatar;
+
     @ApiModelProperty(value = "凭证")
     private String token;
 

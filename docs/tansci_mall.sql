@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 18/08/2022 16:12:28
+ Date: 19/08/2022 14:45:16
 */
 
 SET NAMES utf8mb4;
@@ -36,6 +36,7 @@ CREATE TABLE `cart`  (
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
+INSERT INTO `cart` VALUES ('6cc477c21c3973fdeda7e713cdcf2e5d', 'f01c51c427d8568a162f7327b4aa91a8', 1, 0, 's10001', 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-19 11:10:41', '2022-08-19 11:10:41');
 
 -- ----------------------------
 -- Table structure for config_goods
@@ -77,12 +78,18 @@ CREATE TABLE `coupon`  (
   `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '领取人',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '优惠券表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of coupon
 -- ----------------------------
+INSERT INTO `coupon` VALUES ('c1001', '鸿星尔克旗舰店', 50.00, 100.00, 1, 1, '2022-08-19 09:36:55', '2022-08-27 09:36:58', 's10001', 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-19 09:37:09', '2022-08-19 09:37:11', '仅可在此店铺使用');
+INSERT INTO `coupon` VALUES ('c1002', '李宁安宁旗舰店', 20.00, 120.00, 0, 1, '2022-08-19 09:36:55', '2022-08-27 09:36:58', 's10002', NULL, '2022-08-19 09:37:09', '2022-08-19 09:37:11', '仅可在此店铺使用');
+INSERT INTO `coupon` VALUES ('c1003', '平台优惠券', 10.00, 99.00, 0, 0, '2022-08-19 09:36:55', '2022-08-27 09:36:58', NULL, NULL, '2022-08-19 09:37:09', '2022-08-19 09:37:11', '仅可在此店铺使用');
+INSERT INTO `coupon` VALUES ('c1004', '平台优惠券', 5.00, 20.00, 0, 0, '2022-08-19 09:36:55', '2022-08-27 09:36:58', NULL, NULL, '2022-08-19 09:37:09', '2022-08-19 09:37:11', '仅可在此店铺使用');
+INSERT INTO `coupon` VALUES ('c1005', '平台优惠券', 50.00, 500.00, 3, 0, '2022-08-19 09:36:55', '2022-08-27 09:36:58', NULL, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-19 09:37:09', '2022-08-19 09:37:11', '仅可在此店铺使用');
 
 -- ----------------------------
 -- Table structure for goods
@@ -428,16 +435,22 @@ CREATE TABLE `sys_login_log`  (
 -- ----------------------------
 -- Records of sys_login_log
 -- ----------------------------
+INSERT INTO `sys_login_log` VALUES ('08c6da9a0d59a654a22f93e67905970a', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 09:04:20', '2022-08-19 09:04:20');
 INSERT INTO `sys_login_log` VALUES ('12b4e385dcd929a164d8b700440acabe', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:39:27', '2022-08-17 09:39:27');
 INSERT INTO `sys_login_log` VALUES ('1e7b456b3446f97e18f7377f052e99e0', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:55', '2022-08-17 10:48:55');
 INSERT INTO `sys_login_log` VALUES ('2475a78cc0cfdf8dd2d4ed04f529643d', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-18 14:29:56', '2022-08-18 14:29:56');
 INSERT INTO `sys_login_log` VALUES ('2c7906a23818cc7ccb47f53e0ab13724', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-11 09:01:10', '2022-08-11 09:01:10');
 INSERT INTO `sys_login_log` VALUES ('33fdf691022587a5d47fec70ac3ea99a', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:39', '2022-08-17 10:48:39');
+INSERT INTO `sys_login_log` VALUES ('39321bf5782d81c4465a30e61f4e3a28', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 13:22:37', '2022-08-19 13:22:37');
 INSERT INTO `sys_login_log` VALUES ('3dad176a4b6c96da141a0b0a5ea6b0d5', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-18 09:22:34', '2022-08-18 09:22:34');
 INSERT INTO `sys_login_log` VALUES ('3dd297b4e08b34126541da70791d8b3a', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:46:24', '2022-08-17 10:46:24');
 INSERT INTO `sys_login_log` VALUES ('3f7ed1eb092555a8532786c5bdb88d2e', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:47:10', '2022-08-17 09:47:10');
+INSERT INTO `sys_login_log` VALUES ('4ebfbbfe1127b0b500c585cc3e8f32e4', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 13:22:25', '2022-08-19 13:22:25');
 INSERT INTO `sys_login_log` VALUES ('50d958ea9c3bfde6ab6199720b104c77', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:37', '2022-08-17 10:48:37');
 INSERT INTO `sys_login_log` VALUES ('5bb95f667e40fc55ca995b418ee2a05d', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 15:20:57', '2022-08-17 15:20:57');
+INSERT INTO `sys_login_log` VALUES ('5da20d92cea25350b45dbfd6cbe175c3', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 09:21:48', '2022-08-19 09:21:48');
+INSERT INTO `sys_login_log` VALUES ('714ab3a2625b756f52a099cb02c40300', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 13:23:09', '2022-08-19 13:23:09');
+INSERT INTO `sys_login_log` VALUES ('71e46a4abdd985e85b4e14f3b98f6a3e', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 09:15:38', '2022-08-19 09:15:38');
 INSERT INTO `sys_login_log` VALUES ('a39fde8e8499bccf84bc093066aa3d1b', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:46:58', '2022-08-17 09:46:58');
 INSERT INTO `sys_login_log` VALUES ('a978c9e1a51258baabb1ae8d981d5c2d', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-12 10:59:07', '2022-08-12 10:59:07');
 INSERT INTO `sys_login_log` VALUES ('ac9bf03ab950b7acf24085223453c040', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:17', '2022-08-17 10:48:17');
@@ -550,6 +563,7 @@ CREATE TABLE `sys_user`  (
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮件',
   `integral` int(10) NULL DEFAULT NULL COMMENT '积分',
   `member` int(10) NULL DEFAULT NULL COMMENT '会员等级',
+  `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
@@ -559,10 +573,10 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('22f60277c18a0f185cfa794af0d58f2a', 'user2', '$2a$10$P.RRnq7Ys.6.19XW/ju61O9dtO41AMS06d4ua5M9wjkwno4pzG9bm', '李四', 2, 1, '2022-06-26', '', '18812563214', NULL, NULL, '', NULL, NULL, '2022-06-30 14:33:47', '2022-06-30 14:33:47', NULL);
-INSERT INTO `sys_user` VALUES ('496347ab137029d80ed8929283d9a48b', 'user1', '$2a$10$NyePi0WfVaT0wzL8dWi7iego7vwENNVCHTUXNtaUzVf7bnh0v6f7y', '张三', 2, 0, '2022-06-21', '', '18893845632', NULL, NULL, '', NULL, NULL, '2022-06-30 14:33:15', '2022-06-30 14:33:15', NULL);
-INSERT INTO `sys_user` VALUES ('bc3ac26e69731b617eb80274453f6dba', 'admin', '$2a$10$tlWWfjTObqLsC6ONrhNL/.GIpAoFu205TXPK6xUPHHr1kA/paK4lq', '管理员', 1, 0, '2021-07-09', '甘肃兰州', '18893817562', NULL, NULL, '', NULL, NULL, '2022-03-29 14:01:05', '2022-03-29 14:01:07', '');
-INSERT INTO `sys_user` VALUES ('cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', '$2a$10$5Bnuvra2DLRz.rlX5d5mdexyGVAtsu5asE1IMQHHFu.Nha..JMJy6', NULL, 2, NULL, NULL, NULL, '18893211456', NULL, '623022202205125514', 'zhangs@qq.com', NULL, NULL, '2022-08-17 10:45:24', '2022-08-17 10:45:24', '商户');
+INSERT INTO `sys_user` VALUES ('22f60277c18a0f185cfa794af0d58f2a', 'user2', '$2a$10$P.RRnq7Ys.6.19XW/ju61O9dtO41AMS06d4ua5M9wjkwno4pzG9bm', '李四', 2, 1, '2022-06-26', '', '18812563214', NULL, NULL, '', 100, 2, NULL, '2022-06-30 14:33:47', '2022-06-30 14:33:47', NULL);
+INSERT INTO `sys_user` VALUES ('496347ab137029d80ed8929283d9a48b', 'user1', '$2a$10$NyePi0WfVaT0wzL8dWi7iego7vwENNVCHTUXNtaUzVf7bnh0v6f7y', '张三', 2, 0, '2022-06-21', '', '18893845632', NULL, NULL, '', 100, 2, NULL, '2022-06-30 14:33:15', '2022-06-30 14:33:15', NULL);
+INSERT INTO `sys_user` VALUES ('bc3ac26e69731b617eb80274453f6dba', 'admin', '$2a$10$tlWWfjTObqLsC6ONrhNL/.GIpAoFu205TXPK6xUPHHr1kA/paK4lq', '管理员', 1, 0, '2021-07-09', '甘肃兰州', '18893817562', NULL, NULL, '', 50000, 5, NULL, '2022-03-29 14:01:05', '2022-03-29 14:01:07', '');
+INSERT INTO `sys_user` VALUES ('cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', '$2a$10$5Bnuvra2DLRz.rlX5d5mdexyGVAtsu5asE1IMQHHFu.Nha..JMJy6', '张飞', 2, 0, '2015-08-10', NULL, '18893211456', NULL, '623022202205125514', 'zhangs@qq.com', 100, 1, NULL, '2022-08-19 09:35:03', '2022-08-17 10:45:24', '商户');
 
 -- ----------------------------
 -- Table structure for sys_user_address
@@ -586,7 +600,9 @@ CREATE TABLE `sys_user_address`  (
 -- ----------------------------
 -- Records of sys_user_address
 -- ----------------------------
-INSERT INTO `sys_user_address` VALUES ('cf0fb4667f6261b18ae932bedcedb1b0', 'cf0fb4667f6261b18ae932bedcedb1b0', '张三', '18893621002', 1, '甘肃省', '兰州市', '安宁区', '甘肃省/兰州市/安宁区-永新华世界湾小区1号楼1单元803室', '2022-08-17 11:24:18', '2022-08-17 11:24:22');
+INSERT INTO `sys_user_address` VALUES ('0da883065cc16a7bc3dccf395b7080ef', 'cf0fb4667f6261b18ae932bedcedb1b0', '李四', '18893817546', 0, '山西省', '太原市', '小店区', '小店小区', '2022-08-19 14:39:44', '2022-08-19 14:39:44');
+INSERT INTO `sys_user_address` VALUES ('cf0fb4667f6261b18ae932bedcedb1b0', 'cf0fb4667f6261b18ae932bedcedb1b0', '张三', '18893621002', 1, '甘肃省', '兰州市', '安宁区', '永新华世界湾小区1号楼1单元803室', '2022-08-17 11:24:18', '2022-08-17 11:24:22');
+INSERT INTO `sys_user_address` VALUES ('cf0fb4667f6261b18ae932bedcedb1b1', 'cf0fb4667f6261b18ae932bedcedb1b0', '张三', '18893621002', 0, '甘肃省', '兰州市', '七里河区', '兰石家属院1号楼1单元803室', '2022-08-17 11:24:18', '2022-08-19 13:31:11');
 
 -- ----------------------------
 -- Table structure for sys_user_role
