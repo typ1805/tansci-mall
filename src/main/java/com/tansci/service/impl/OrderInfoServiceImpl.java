@@ -8,6 +8,7 @@ import com.tansci.common.OrderEnum;
 import com.tansci.common.PayEnum;
 import com.tansci.domain.*;
 import com.tansci.domain.dto.OrderDto;
+import com.tansci.domain.vo.OrderStatusCountVo;
 import com.tansci.exception.BusinessException;
 import com.tansci.mapper.OrderInfoMapper;
 import com.tansci.service.*;
@@ -113,6 +114,25 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         }
 
         return orders;
+    }
+
+    @Override
+    public List<OrderStatusCountVo> getOrderStatusCount(OrderInfo order) {
+        SysUser user = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, order.getUsername()));
+        if (Objects.isNull(user)) {
+            throw new BusinessException("登录失效，请重新登录！");
+        }
+        order.setUserId(user.getId());
+
+        List<OrderStatusCountVo> voList = new ArrayList<>();
+        List<OrderStatusCountVo> countVos = this.baseMapper.getOrderStatusCount(order);
+        if (Objects.nonNull(countVos) && countVos.size() > 0) {
+            voList.add(OrderStatusCountVo.builder().orderNum(countVos.stream().filter(e -> Objects.equals(0, e.getLabel())).mapToInt(OrderStatusCountVo::getOrderNum).sum()).label(0).build());
+            voList.add(OrderStatusCountVo.builder().orderNum(countVos.stream().filter(e -> Arrays.asList(1, 2).contains(e.getLabel())).mapToInt(OrderStatusCountVo::getOrderNum).sum()).label(1).build());
+            voList.add(OrderStatusCountVo.builder().orderNum(countVos.stream().filter(e -> Objects.equals(3, e.getLabel())).mapToInt(OrderStatusCountVo::getOrderNum).sum()).label(2).build());
+            voList.add(OrderStatusCountVo.builder().orderNum(countVos.stream().filter(e -> Objects.equals(4, e.getLabel())).mapToInt(OrderStatusCountVo::getOrderNum).sum()).label(3).build());
+        }
+        return voList;
     }
 
     @Transactional

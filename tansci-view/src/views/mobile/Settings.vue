@@ -21,7 +21,12 @@
                         </template>
                         <div class="card-order">
                             <div v-for="order in orderList" :key="order" @click="onOrder(order.path)" class="card-order-item">
-                                <el-icon :color="order.color" :size="30">
+                                <el-badge v-if="order.orderNum && order.orderNum > 0" :value="order.orderNum" :max="99">
+                                    <el-icon :color="order.color" :size="30">
+                                        <component :is="order.icon"></component>
+                                    </el-icon>
+                                </el-badge>
+                                <el-icon v-else :color="order.color" :size="30">
                                     <component :is="order.icon"></component>
                                 </el-icon>
                                 <div>{{order.name}}</div>
@@ -57,6 +62,7 @@
     import {useRouter} from 'vue-router'
     import {useUserStore} from '@/store/settings'
     import FooterMenu from '@/components/miniapp/FooterMenu.vue'
+    import {getOrderStatusCount} from '@/api/mobile/order'
 
     const router = useRouter();
     const userStore = useUserStore();
@@ -79,16 +85,34 @@
     onMounted(()=>{
         onOrderList();
         onServiceList();
+        onOrderStatusCount();
     })
 
     const onOrderList = () =>{
         state.orderList = [
-            {path:'pay', icon: 'CreditCard', color:'#303133', name: '待付款'},
-            {path:'delivery', icon: 'Postcard', color:'#303133', name: '待发货'},
-            {path:'delivery', icon: 'Van', color:'#303133', name: '已发货'},
-            {path:'appraise', icon: 'ChatLineSquare', color:'#303133', name: '待评价'},
-            {path:'all', icon: 'Suitcase', color:'#303133', name: '已完成'},
+            {path:'pay', icon: 'CreditCard', color:'#303133', name: '待付款',type: 0},
+            {path:'delivery', icon: 'Postcard', color:'#303133', name: '待发货',type: 1},
+            {path:'delivery', icon: 'Van', color:'#303133', name: '已发货',type: 2},
+            {path:'appraise', icon: 'ChatLineSquare', color:'#303133', name: '待评价',type: 3},
+            {path:'all', icon: 'Suitcase', color:'#303133', name: '已完成', type:4},
         ]
+    }
+
+    const onOrderStatusCount = () =>{
+        if(!userStore.getUser.user){
+            return;
+        }
+        getOrderStatusCount({username: userStore.getUser.user.username}).then(res=>{
+            if(res){
+                let counts = res.result;
+                state.orderList.forEach(item=>{
+                    let order = counts.find(e=>{return e.label == item.type});
+                    if(order){
+                        item.orderNum = order.orderNum;
+                    }
+                })
+            }
+        })
     }
 
     const onOrder = (val) =>{

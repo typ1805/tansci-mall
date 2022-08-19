@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tansci.domain.OrderInfo;
 import com.tansci.domain.dto.OrderDto;
+import com.tansci.domain.vo.OrderStatusCountVo;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public interface OrderInfoService extends IService<OrderInfo> {
     IPage<OrderInfo> page(Page page, OrderInfo order);
 
     List<OrderInfo> list(OrderInfo order);
+
+    List<OrderStatusCountVo> getOrderStatusCount(OrderInfo order);
 
     Object submit(OrderDto order);
 

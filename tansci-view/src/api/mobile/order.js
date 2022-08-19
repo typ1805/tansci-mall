@@ -19,6 +19,15 @@ export function getOrderList(params) {
 }
 
 /**
+ * 订单状态统计
+ * @param {*} params
+ * @returns
+ */
+export function getOrderStatusCount(params) {
+    return axios.get('/tansci/order/getOrderStatusCount', {params: params});
+}
+
+/**
  * 删除订单
  * @param {*} params
  * @returns

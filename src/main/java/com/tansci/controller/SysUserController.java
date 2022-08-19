@@ -8,6 +8,7 @@ import com.tansci.common.Wrapper;
 import com.tansci.domain.SysUser;
 import com.tansci.domain.dto.SysUserDto;
 import com.tansci.domain.vo.SysUserVo;
+import com.tansci.exception.BusinessException;
 import com.tansci.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @path：com.tansci.controller.SysUserController.java
@@ -89,6 +91,10 @@ public class SysUserController {
     @ApiOperation(value = "商户注册")
     @PostMapping("/register")
     public Wrapper<Object> register(@RequestBody SysUser user) {
+        SysUser sysUser = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, user.getUsername()));
+        if(Objects.nonNull(sysUser)){
+            throw new BusinessException("用户名已存在！");
+        }
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());

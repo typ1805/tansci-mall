@@ -6,6 +6,7 @@ import com.tansci.common.WrapMapper;
 import com.tansci.common.Wrapper;
 import com.tansci.domain.OrderInfo;
 import com.tansci.domain.dto.OrderDto;
+import com.tansci.domain.vo.OrderStatusCountVo;
 import com.tansci.service.OrderInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +43,12 @@ public class OrderInfoController {
     @GetMapping("/list")
     public Wrapper<List<OrderInfo>> list(OrderInfo order) {
         return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, orderInfoService.list(order));
+    }
+
+    @ApiOperation(value = "订单状态统计", notes = "订单状态统计")
+    @GetMapping("/getOrderStatusCount")
+    public Wrapper<List<OrderStatusCountVo>> getOrderStatusCount(OrderInfo order) {
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, orderInfoService.getOrderStatusCount(order));
     }
 
     @ApiOperation(value = "提交订单", notes = "提交订单")

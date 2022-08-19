@@ -2,7 +2,11 @@ package com.tansci.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.tansci.domain.OrderInfo;
+import com.tansci.domain.vo.OrderStatusCountVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @path：com.tansci.mapper.OrderInfoMapper.java
@@ -14,4 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
+
+    List<OrderStatusCountVo> getOrderStatusCount(@Param("order") OrderInfo order);
+
 }
