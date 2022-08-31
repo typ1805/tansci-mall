@@ -40,6 +40,10 @@ public class ConfigGoods {
     @ApiModelProperty(value = "类型：1、秒杀，2、排行榜")
     private Integer type;
 
+    @ApiModelProperty(value = "类型：1、秒杀，2、排行榜")
+    @TableField(exist = false)
+    private String typeName;
+
     @ApiModelProperty(value = "排序")
     private Integer sort;
 

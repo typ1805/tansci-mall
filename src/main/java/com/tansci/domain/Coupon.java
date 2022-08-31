@@ -73,6 +73,10 @@ public class Coupon {
     @ApiModelProperty(value = "描述")
     private String remarks;
 
+    @ApiModelProperty(value = "店铺名称")
+    @TableField(exist = false)
+    private String shopName;
+
     @ApiModelProperty(value = "类型名称")
     @TableField(exist = false)
     private String typeName;

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tansci.common.Enums;
 import com.tansci.domain.ConfigGoods;
 import com.tansci.domain.Goods;
 import com.tansci.mapper.ConfigGoodsMapper;
@@ -50,6 +51,7 @@ public class ConfigGoodsServiceImpl extends ServiceImpl<ConfigGoodsMapper, Confi
                 if (optional.isPresent()) {
                     item.setGoods(optional.get());
                 }
+                item.setTypeName(Objects.nonNull(item.getType()) ? Enums.getVlaueByGroup(item.getType(), "activity_goods_type") : null);
             });
         }
         return iPage;

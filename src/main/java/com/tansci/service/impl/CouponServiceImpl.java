@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tansci.common.Enums;
 import com.tansci.domain.Coupon;
+import com.tansci.domain.Shop;
 import com.tansci.domain.SysUser;
 import com.tansci.mapper.CouponMapper;
 import com.tansci.service.CouponService;
+import com.tansci.service.ShopService;
 import com.tansci.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @path：com.tansci.service.impl.CouponServiceImpl.java
@@ -31,6 +35,8 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
 
     @Autowired
     private SysUserService sysUserService;
+    @Autowired
+    private ShopService shopService;
 
     @Override
     public IPage<Coupon> page(Page page, Coupon coupon) {
@@ -43,9 +49,22 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
                         .orderByDesc(Coupon::getUpdateTime)
         );
         if (Objects.nonNull(iPage.getRecords()) && iPage.getRecords().size() > 0) {
+            List<Shop> shopList = shopService.listByIds(iPage.getRecords().stream().map(Coupon::getShopId).collect(Collectors.toList()));
+            List<SysUser> userList = sysUserService.listByIds(iPage.getRecords().stream().map(Coupon::getUserId).collect(Collectors.toList()));
+
             iPage.getRecords().forEach(item -> {
                 item.setTypeName(Objects.nonNull(item.getType()) ? Enums.getVlaueByGroup(item.getType(), "coupon_type") : null);
                 item.setStatusName(Objects.nonNull(item.getStatus()) ? Enums.getVlaueByGroup(item.getStatus(), "coupon_status") : null);
+
+                Optional<Shop> sOptional = shopList.stream().filter(s -> Objects.equals(s.getShopId(), item.getShopId())).findFirst();
+                if (sOptional.isPresent()) {
+                    item.setShopName(sOptional.get().getName());
+                }
+
+                Optional<SysUser> uOptional = userList.stream().filter(s -> Objects.equals(s.getId(), item.getUserId())).findFirst();
+                if (uOptional.isPresent()) {
+                    item.setUsername(uOptional.get().getUsername());
+                }
             });
         }
         return iPage;

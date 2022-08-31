@@ -78,6 +78,11 @@ public enum Enums {
     COUPON_TYPE_0(0, "coupon_type", "平台券"),
     COUPON_TYPE_1(1, "coupon_type", "店铺券"),
 
+    /**
+     * 活动商品类型
+     */
+    ACTIVITY_GOODS_TYPE_1(1, "activity_goods_type", "秒杀"),
+    ACTIVITY_GOODS_TYPE_2(2, "activity_goods_type", "排行榜"),
     ;
 
     private Integer key;
