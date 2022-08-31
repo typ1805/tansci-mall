@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 19/08/2022 14:45:16
+ Date: 31/08/2022 18:19:20
 */
 
 SET NAMES utf8mb4;
@@ -57,9 +57,9 @@ CREATE TABLE `config_goods`  (
 -- ----------------------------
 -- Records of config_goods
 -- ----------------------------
-INSERT INTO `config_goods` VALUES ('dgsfdgfdgdf', 'f9468bdbff35242d3ff761dcc9b1da32', '排行榜', 1, 2, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 15:47:35', '2022-08-16 15:47:39');
-INSERT INTO `config_goods` VALUES ('dgsfdgfdgdgdsf', 'f9468bdbff35242d3ff761dcc9b1da3d', '排行榜', 2, 2, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 15:47:35', '2022-08-16 15:47:39');
-INSERT INTO `config_goods` VALUES ('gfdhfgdhfgfd', 'f01c51c427d8568a162f7327b4aa91a8', '秒杀', 1, 1, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 15:47:35', '2022-08-16 15:47:39');
+INSERT INTO `config_goods` VALUES ('910edd3d957603f03e02ccbfc828ae38', 'f9468bdbff35242d3ff761dcc9b1da3d', '红星尔康活动商品', 2, 1, NULL, '2022-08-31 16:22:20', '2022-08-31 16:22:20');
+INSERT INTO `config_goods` VALUES ('dgsfdgfdgdgdsf', 'f9468bdbff35242d3ff761dcc9b1da3d', '测试商品活动排行榜', 2, 2, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-31 16:23:26', '2022-08-16 15:47:39');
+INSERT INTO `config_goods` VALUES ('gfdhfgdhfgfd', 'f01c51c427d8568a162f7327b4aa91a8', '鸿星尔克活动-秒杀', 1, 1, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-31 16:23:47', '2022-08-16 15:47:39');
 
 -- ----------------------------
 -- Table structure for coupon
@@ -322,7 +322,7 @@ CREATE TABLE `order_info`  (
 -- Records of order_info
 -- ----------------------------
 INSERT INTO `order_info` VALUES ('28516a09559e3f656397c61ef3d108d3', NULL, 118.00, 0.00, 0, 0, 2, NULL, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 16:11:31', '2022-08-18 16:11:31', NULL);
-INSERT INTO `order_info` VALUES ('28c7d91482cd5467dda312a5a5e5dfbc', NULL, 99.00, 0.00, 0, 0, 2, NULL, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 15:25:53', '2022-08-18 15:25:53', NULL);
+INSERT INTO `order_info` VALUES ('28c7d91482cd5467dda312a5a5e5dfbc', NULL, 99.00, 0.00, 1, 1, 2, NULL, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 15:25:53', '2022-08-18 15:25:53', NULL);
 INSERT INTO `order_info` VALUES ('472f4e8aea0045aa02bb0a3952358351', NULL, 19.00, 0.00, 0, 0, 2, NULL, 'cf0fb4667f6261b18ae932bedcedb1b0', '2022-08-18 15:52:01', '2022-08-18 15:52:01', NULL);
 
 -- ----------------------------
@@ -371,7 +371,7 @@ CREATE TABLE `shop`  (
 -- Records of shop
 -- ----------------------------
 INSERT INTO `shop` VALUES ('s10001', '鸿星尔克安宁旗舰店', '鸿星尔克安宁旗舰店', 'https://www.baidu.com/img/flexible/logo/pc/result.png', 4.50, 0, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 11:28:47', '2022-08-16 11:28:43', NULL);
-INSERT INTO `shop` VALUES ('s10002', '李宁安宁旗舰店', '鸿星尔克安宁旗舰店', '李宁安宁旗舰店', 4.50, 0, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 11:28:47', '2022-08-16 11:28:43', NULL);
+INSERT INTO `shop` VALUES ('s10002', '李宁安宁旗舰店', '鸿星尔克安宁旗舰店', '李宁安宁旗舰店', 4.50, 0, '496347ab137029d80ed8929283d9a48b', '2022-08-16 11:28:47', '2022-08-16 11:28:43', NULL);
 
 -- ----------------------------
 -- Table structure for sys_dic
@@ -451,9 +451,12 @@ INSERT INTO `sys_login_log` VALUES ('5bb95f667e40fc55ca995b418ee2a05d', 'cf0fb46
 INSERT INTO `sys_login_log` VALUES ('5da20d92cea25350b45dbfd6cbe175c3', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 09:21:48', '2022-08-19 09:21:48');
 INSERT INTO `sys_login_log` VALUES ('714ab3a2625b756f52a099cb02c40300', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 13:23:09', '2022-08-19 13:23:09');
 INSERT INTO `sys_login_log` VALUES ('71e46a4abdd985e85b4e14f3b98f6a3e', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 09:15:38', '2022-08-19 09:15:38');
+INSERT INTO `sys_login_log` VALUES ('86eb77e6217a044ef6c0d1bf38dfebcb', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-31 14:53:05', '2022-08-31 14:53:05');
+INSERT INTO `sys_login_log` VALUES ('8a57092b780198e048511d869149c7d1', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-31 15:41:03', '2022-08-31 15:41:03');
 INSERT INTO `sys_login_log` VALUES ('a39fde8e8499bccf84bc093066aa3d1b', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:46:58', '2022-08-17 09:46:58');
 INSERT INTO `sys_login_log` VALUES ('a978c9e1a51258baabb1ae8d981d5c2d', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-12 10:59:07', '2022-08-12 10:59:07');
 INSERT INTO `sys_login_log` VALUES ('ac9bf03ab950b7acf24085223453c040', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:17', '2022-08-17 10:48:17');
+INSERT INTO `sys_login_log` VALUES ('ae9393f07919eb2be5dd9a9639d8a4c4', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-31 17:21:04', '2022-08-31 17:21:04');
 INSERT INTO `sys_login_log` VALUES ('b919cd6236caf5090c1f9c7ebd5dad39', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:40', '2022-08-17 10:48:40');
 INSERT INTO `sys_login_log` VALUES ('de9aecca16134ffe5a76ff129ba12f2a', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:48:01', '2022-08-17 09:48:01');
 INSERT INTO `sys_login_log` VALUES ('f91c1df03eaac4cc26724be690455758', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:49:38', '2022-08-17 09:49:38');
@@ -484,8 +487,11 @@ CREATE TABLE `sys_menu`  (
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES ('05ed0ac751eaf99859b75b4a5a6a9a7d', '2b5f7fd4d42b56f4eb03a744fa59f0d6', 'order', '/admin/order/Order', 'SetUp', 1, 1, '订单管理', 'Order', 2, 1, '2022-07-23 12:59:23', '2022-07-23 12:59:23', '');
-INSERT INTO `sys_menu` VALUES ('2b5f7fd4d42b56f4eb03a744fa59f0d6', '0', 'order', '/order', 'SetUp', 1, 1, '订单管理', 'Order', 1, 3, '2022-07-23 12:58:34', '2022-07-23 12:58:34', '');
+INSERT INTO `sys_menu` VALUES ('06b2abf1209a8a898415866d1b43ef1e', '83783f76eab77c6e32fd7ceaa66768e1', 'coupon', '/admin/activity/Coupon', 'Burger', 1, 1, '优惠券', 'Coupon', 2, 2, '2022-08-31 14:59:10', '2022-08-31 14:59:10', '');
+INSERT INTO `sys_menu` VALUES ('08e98909458631af855772ed9423b8b5', '83783f76eab77c6e32fd7ceaa66768e1', 'indexConfig', '/admin/activity/IndexConfig', 'Promotion', 1, 1, '首页配置', 'IndexConfig', 2, 4, '2022-08-31 15:20:02', '2022-08-31 15:20:02', '');
+INSERT INTO `sys_menu` VALUES ('2b5f7fd4d42b56f4eb03a744fa59f0d6', '0', 'order', '/admin/order', 'SetUp', 1, 1, '订单管理', 'Order', 1, 3, '2022-07-23 12:58:34', '2022-07-23 12:58:34', '');
 INSERT INTO `sys_menu` VALUES ('52be034c743ff0ce55b4dc2627a750d8', '856eabdd6f15324d3c51560e0d82ac7f', 'loginLog', '/admin/system/LoginLog', 'Cpu', 1, 1, '登录日志', 'LoginLog', 2, 5, '2022-07-17 22:37:32', '2022-07-17 22:37:32', '');
+INSERT INTO `sys_menu` VALUES ('6356b34492b37428bcacf87200c64f95', '83783f76eab77c6e32fd7ceaa66768e1', 'configGoods', '/admin/activity/ConfigGoods', 'Orange', 1, 1, '活动商品', 'ConfigGoods', 2, 1, '2022-08-31 14:57:39', '2022-08-31 14:57:22', '');
 INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7d093f0534', '856eabdd6f15324d3c51560e0d82ac7f', 'dic', '/admin/system/Dic', 'SetUp', 1, 1, '字典管理', 'DicInfo', 2, 4, '2022-07-17 21:51:04', '2022-07-17 21:37:25', NULL);
 INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7d2545fsds', '856eabdd6f15324d3c51560e0d82ac7f', 'role', '/admin/system/Role', 'Guide', 1, 1, '角色管理', 'Role', 2, 3, '2022-07-17 21:50:55', '2021-07-22 17:09:46', NULL);
 INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7ddsbvdsbh', '856eabdd6f15324d3c51560e0d82ac7f', 'user', '/admin/system/User', 'Help', 1, 1, '用户管理', 'Role', 2, 1, '2022-07-17 21:50:27', '2021-07-23 16:09:30', NULL);
@@ -493,8 +499,10 @@ INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7dndjshgus', '856eabdd6f15
 INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7snjfhsd1545dsgds45', '0', 'home', '/admin/Home', 'HomeFilled', 1, 1, '工作台', 'Home', 1, 1, '2022-07-17 21:47:13', '2021-07-20 22:02:18', NULL);
 INSERT INTO `sys_menu` VALUES ('707eaca13c7c9de7442b7960f005797d', 'b47050cbb8e2d3bd87d470a15c6a788c', 'goodsLabel', '/admin/goods/GoodsLabel', 'PriceTag', 1, 1, '商品标签', 'GoodsLabel', 2, 3, '2022-07-23 12:57:08', '2022-07-23 12:57:08', '');
 INSERT INTO `sys_menu` VALUES ('832178b32fafec3168f139b760d37d30', 'b47050cbb8e2d3bd87d470a15c6a788c', 'goods', '/admin/goods/Goods', 'Fries', 1, 1, '商品管理', 'goods', 2, 1, '2022-07-23 12:54:12', '2022-07-23 12:54:12', '');
-INSERT INTO `sys_menu` VALUES ('856eabdd6f15324d3c51560e0d82ac7f', '0', 'system', '/system', 'CopyDocument', 1, 1, '系统管理', 'System', 1, 1, '2022-07-17 21:49:14', '2022-07-17 21:49:14', '');
-INSERT INTO `sys_menu` VALUES ('b47050cbb8e2d3bd87d470a15c6a788c', '0', 'goods', '/goods', 'Present', 1, 1, '商品管理', 'Goods', 1, 3, '2022-07-23 12:52:48', '2022-07-23 12:52:48', '');
+INSERT INTO `sys_menu` VALUES ('83783f76eab77c6e32fd7ceaa66768e1', '0', 'activity', '/admin/activity', 'TakeawayBox', 1, 1, '活动管理', 'ActivityManage', 1, 5, '2022-08-31 14:56:13', '2022-08-31 14:56:13', '');
+INSERT INTO `sys_menu` VALUES ('856eabdd6f15324d3c51560e0d82ac7f', '0', 'system', '/admin/system', 'CopyDocument', 1, 1, '系统管理', 'System', 1, 1, '2022-07-17 21:49:14', '2022-07-17 21:49:14', '');
+INSERT INTO `sys_menu` VALUES ('9e83a75c395e1c2047549d3778e2163e', '83783f76eab77c6e32fd7ceaa66768e1', 'indexCarousel', '/admin/activity/IndexCarousel', 'Monitor', 1, 1, '首页轮播', 'IndexCarousel', 2, 3, '2022-08-31 15:00:33', '2022-08-31 15:00:33', '');
+INSERT INTO `sys_menu` VALUES ('b47050cbb8e2d3bd87d470a15c6a788c', '0', 'goods', '/admin/goods', 'Present', 1, 1, '商品管理', 'Goods', 1, 3, '2022-07-23 12:52:48', '2022-07-23 12:52:48', '');
 INSERT INTO `sys_menu` VALUES ('df785cb43e428403dbfac6d4ece0189d', '2b5f7fd4d42b56f4eb03a744fa59f0d6', 'goodsOrder', '/admin/order/GoodsOrder', 'Operation', 1, 1, '商品订单', 'GoodsOrder', 2, 2, '2022-07-23 13:00:34', '2022-07-23 13:00:34', '');
 INSERT INTO `sys_menu` VALUES ('eded3ad528e3ab905b773d236d4bad7a', 'b47050cbb8e2d3bd87d470a15c6a788c', 'goodsClassify', '/admin/goods/GoodsClassify', 'ScaleToOriginal', 1, 1, '商品分类', 'GoodsClassify', 2, 2, '2022-07-23 12:55:45', '2022-07-23 12:55:45', '');
 
