@@ -31,6 +31,9 @@ public class SysUserDto {
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
+    @ApiModelProperty(value = "登录类型：1、后台登录，2、前台登录")
+    private Integer type;
+
     @ApiModelProperty(value = "邮箱")
     private String email;
 

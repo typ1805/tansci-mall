@@ -54,7 +54,7 @@ public class IndexApiController {
     @ApiOperation(value = "配置商品分页", notes = "配置商品分页")
     @GetMapping("/getConfigGoodsPage")
     public Wrapper<IPage<ConfigGoods>> getConfigGoodsPage(Page page, ConfigGoods goods) {
-        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, seckillGoodsService.page(page, goods));
+        return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, seckillGoodsService.getConfigGoodsPage(page, goods));
     }
 
 }

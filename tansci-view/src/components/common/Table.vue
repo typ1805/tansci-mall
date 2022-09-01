@@ -9,6 +9,22 @@
                 @selection-change="onSelectionChange" style="width: 100%;">
                 <template v-for="item in column" :key="item">
                     <el-table-column v-if="!item.prop && !item.label" :fixed="item.fixed" type="selection" width="45"></el-table-column>
+                    <!-- color值 -->
+                    <el-table-column v-else-if="item.type == 'color'" 
+                        :label="item.label" :align="item.align != null ? item.align : 'center'" :width="item.width">
+                        <template #default="scope">
+                            <span :style="{color: scope.row[item.prop]}">{{scope.row[item.prop]}}</span>
+                        </template>
+                    </el-table-column>
+                    <!-- icon图标 -->
+                    <el-table-column v-else-if="item.type == 'icon'" 
+                        :label="item.label" :align="item.align != null ? item.align : 'center'" :width="item.width">
+                        <template #default="scope">
+                            <el-icon :size="20">
+                                <component :is="scope.row[item.prop]"></component>
+                            </el-icon>
+                        </template>
+                    </el-table-column>
                     <!-- 金额格式化 -->
                     <el-table-column v-else-if="item.type == 'price'" 
                         :label="item.label" :align="item.align != null ? item.align : 'center'" :width="item.width">
@@ -23,13 +39,20 @@
                             <el-image :src="scope.row[item.prop]" :preview-src-list="[scope.row[item.prop]]" :z-index="9999" fit="cover" style="width: 50px; height: 50px"/>
                         </template>
                     </el-table-column>
+                    <!-- el-rate -->
+                    <el-table-column v-else-if="item.type == 'rate'" 
+                        :label="item.label" :align="item.align != null ? item.align : 'center'" :width="item.width">
+                        <template #default="scope">
+                            <el-rate v-model="scope.row[item.prop]" disabled allow-half />
+                        </template>
+                    </el-table-column>
                     <!-- el-tag -->
                     <el-table-column v-else-if="item.type == 'tag'" show-overflow-tooltip
                         :label="item.label" :align="item.align != null ? item.align : 'center'" :width="item.width">
                         <template #default="scope">
                             <el-tag :size="item.option.size" 
                                 :effect="item.option.effect" 
-                                :type="item.option.type">
+                                :type="onFind(item.option.typeList, scope.row[item.prop])">
                                 {{scope.row[item.alias==null?item.prop:item.alias]}}    
                             </el-tag>
                         </template>
@@ -162,6 +185,15 @@
     // 金额格式化
     function onDecimal(val){
         return toDecimal(val);
+    }
+
+    // 根据属性获取对象值
+    function onFind(arr,val){
+        if(!arr) return 'info';
+        
+        let temp = arr.find(v=>{ return v.value == val});
+        if(temp) return temp.label;
+        return 'info';
     }
 </script>
 <style scoped lang="scss">

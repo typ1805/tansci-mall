@@ -82,7 +82,8 @@
 
 		let param = {
 			username: state.loginForm.username,
-			password: state.loginForm.password
+			password: state.loginForm.password,
+			type: 1
 		}
 
 		state.loading = true;

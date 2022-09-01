@@ -12,6 +12,7 @@ import com.tansci.domain.vo.OrderStatusCountVo;
 import com.tansci.exception.BusinessException;
 import com.tansci.mapper.OrderInfoMapper;
 import com.tansci.service.*;
+import com.tansci.utils.SecurityUserUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,10 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     @Override
     public IPage<OrderInfo> page(Page page, OrderInfo order) {
+        if (Objects.isNull(order.getUserId()) && !Objects.equals(1, SecurityUserUtils.getUser().getType())) {
+            order.setUserId(SecurityUserUtils.getUser().getId());
+        }
+
         IPage<OrderInfo> iPage = this.baseMapper.selectPage(page,
                 Wrappers.<OrderInfo>lambdaQuery()
                         .like(Objects.nonNull(order.getOrderId()), OrderInfo::getOrderId, order.getOrderId())
@@ -76,14 +81,13 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     @Override
     public List<OrderInfo> list(OrderInfo order) {
-        SysUser user = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, order.getUsername()));
-        if (Objects.isNull(user)) {
-            throw new BusinessException("登录失效，请重新登录！");
+        if (Objects.isNull(order.getUserId()) && !Objects.equals(1, SecurityUserUtils.getUser().getType())) {
+            order.setUserId(SecurityUserUtils.getUser().getId());
         }
 
         List<OrderInfo> orders = this.baseMapper.selectList(
                 Wrappers.<OrderInfo>lambdaQuery()
-                        .eq(OrderInfo::getUserId, user.getId())
+                        .eq(Objects.nonNull(order.getUserId()), OrderInfo::getUserId, order.getUserId())
                         .in(Objects.nonNull(order.getStatus()) && order.getStatus().size() > 0, OrderInfo::getOrderStatus, order.getStatus())
                         .orderByDesc(OrderInfo::getUpdateTime)
         );
@@ -118,11 +122,9 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     @Override
     public List<OrderStatusCountVo> getOrderStatusCount(OrderInfo order) {
-        SysUser user = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, order.getUsername()));
-        if (Objects.isNull(user)) {
-            throw new BusinessException("登录失效，请重新登录！");
+        if (Objects.isNull(order.getUserId()) && !Objects.equals(1, SecurityUserUtils.getUser().getType())) {
+            order.setUserId(SecurityUserUtils.getUser().getId());
         }
-        order.setUserId(user.getId());
 
         List<OrderStatusCountVo> voList = new ArrayList<>();
         List<OrderStatusCountVo> countVos = this.baseMapper.getOrderStatusCount(order);

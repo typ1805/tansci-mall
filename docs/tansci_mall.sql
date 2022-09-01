@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 31/08/2022 18:19:20
+ Date: 01/09/2022 17:36:52
 */
 
 SET NAMES utf8mb4;
@@ -120,11 +120,11 @@ CREATE TABLE `goods`  (
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('f01c51c427d8568a162f7327b4aa91a8', 's10001', '鸿星尔克跑步鞋', '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚百搭休闲运动休闲鞋子男士夏季新款舒适 正黑 41', 1, 'c10002', 99.00, 'http://tansci.top:18003/images/202208114d23c2eac2.jpg', 100, 4, 'gl10001,gl10002,gl10003', '<p>鸿星尔克跑步鞋</p><p><img src=\"http://tansci.top:18003/images/2022081138da8be710.jpg\" alt=\"null\" data-href=\"null\" style=\"\"/></p>', 'bc3ac26e69731b617eb80274453f6dba', 200, 85, '2022-08-11 09:16:05', '2022-08-11 09:16:05', '');
-INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da31', 's10001', '的非官方的', '飞过的痕迹付个定金的规范化发过的计划分割的', 1, 'c10003', 19.00, 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/151287/11/6299/88753/5fab4128E87c46fe5/769a497c164a554c.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
-INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da32', 's10001', '返回给对方', '刚部署电饭锅和德国并进行假道伐虢贺岁档品', 1, 'c10003', 19.00, 'https://m.360buyimg.com/babel/s200x200_jfs/t1/106777/29/30068/284228/62be64faE956a8da2/e4b08f6349798e56.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
-INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da33', 's10001', '法国恢复到', '报关单发生了更舒服的返回南方尽快改好是地方官', 1, 'c10003', 19.00, 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/132097/2/22280/370382/62bab80aE34809e28/055504818282cd3d.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
-INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da3d', 's10002', '测试商品', '个梵蒂冈IU第三个很舒服地关键词VB插画你金发地个很舒服的后果', 1, 'c10003', 19.00, 'http://tansci.top:18003/images/202208110aa378bfa0.jpg', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', 'bc3ac26e69731b617eb80274453f6dba', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
+INSERT INTO `goods` VALUES ('f01c51c427d8568a162f7327b4aa91a8', 's10001', '鸿星尔克跑步鞋', '鸿星尔克官方旗舰2022男鞋防滑透气舒适轻便时尚百搭休闲运动休闲鞋子男士夏季新款舒适 正黑 41', 1, 'c10002', 99.00, 'http://tansci.top:18003/images/202208114d23c2eac2.jpg', 100, 4, 'gl10001,gl10002,gl10003', '<p>鸿星尔克跑步鞋</p><p><img src=\"http://tansci.top:18003/images/2022081138da8be710.jpg\" alt=\"null\" data-href=\"null\" style=\"\"/></p>', '496347ab137029d80ed8929283d9a48b', 200, 85, '2022-08-11 09:16:05', '2022-08-11 09:16:05', '');
+INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da31', 's10001', '的非官方的', '飞过的痕迹付个定金的规范化发过的计划分割的', 1, 'c10003', 19.00, 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/151287/11/6299/88753/5fab4128E87c46fe5/769a497c164a554c.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', '496347ab137029d80ed8929283d9a48b', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
+INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da32', 's10001', '返回给对方', '刚部署电饭锅和德国并进行假道伐虢贺岁档品', 1, 'c10003', 19.00, 'https://m.360buyimg.com/babel/s200x200_jfs/t1/106777/29/30068/284228/62be64faE956a8da2/e4b08f6349798e56.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', '496347ab137029d80ed8929283d9a48b', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
+INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da33', 's10001', '法国恢复到', '报关单发生了更舒服的返回南方尽快改好是地方官', 1, 'c10003', 19.00, 'https://m11.360buyimg.com/babel/s1228x1228_jfs/t1/132097/2/22280/370382/62bab80aE34809e28/055504818282cd3d.jpg.avif', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', '496347ab137029d80ed8929283d9a48b', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
+INSERT INTO `goods` VALUES ('f9468bdbff35242d3ff761dcc9b1da3d', 's10002', '测试商品', '个梵蒂冈IU第三个很舒服地关键词VB插画你金发地个很舒服的后果', 1, 'c10003', 19.00, 'http://tansci.top:18003/images/202208110aa378bfa0.jpg', 10, 2, 'gl10001', '<p>测试商品测试商品测试商品测试商品测试商品</p><p>测试商品</p><p><img src=\"http://tansci.top:18003/images/202207235953bf8b92.png\" alt=\"null\" data-href=\"null\" style=\"\"/></p><p>测试商品</p>', '22f60277c18a0f185cfa794af0d58f2a', 1000, 98, '2022-07-23 13:58:00', '2022-07-23 13:58:00', '');
 
 -- ----------------------------
 -- Table structure for goods_classify
@@ -288,7 +288,7 @@ CREATE TABLE `index_config`  (
 -- Records of index_config
 -- ----------------------------
 INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfd4', '乐购手机', NULL, 'Apple', '#67C23A', 2, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
-INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdg', '乐购超市', NULL, 'AlarmClock', '#409EFC', 1, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
+INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdg', '乐购超市', '#', 'MapLocation', '#409EFC', 1, 0, NULL, '2022-09-01 15:16:51', '2022-08-16 15:19:01');
 INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdg7', '乐购家电', NULL, 'Bicycle', '#E6A23C', 3, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
 INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdgd', '乐购百货', NULL, 'Cherry', '#F56C6C', 4, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
 INSERT INTO `index_config` VALUES ('nbvsfdjdg14gfdge', '新潮配件', NULL, 'Film', '#72afd3', 6, 0, NULL, '2022-08-16 15:18:58', '2022-08-16 15:19:01');
@@ -370,8 +370,9 @@ CREATE TABLE `shop`  (
 -- ----------------------------
 -- Records of shop
 -- ----------------------------
-INSERT INTO `shop` VALUES ('s10001', '鸿星尔克安宁旗舰店', '鸿星尔克安宁旗舰店', 'https://www.baidu.com/img/flexible/logo/pc/result.png', 4.50, 0, 'bc3ac26e69731b617eb80274453f6dba', '2022-08-16 11:28:47', '2022-08-16 11:28:43', NULL);
-INSERT INTO `shop` VALUES ('s10002', '李宁安宁旗舰店', '鸿星尔克安宁旗舰店', '李宁安宁旗舰店', 4.50, 0, '496347ab137029d80ed8929283d9a48b', '2022-08-16 11:28:47', '2022-08-16 11:28:43', NULL);
+INSERT INTO `shop` VALUES ('s10000', '平台店铺', '平台店铺', 'https://typ1805.gitee.io/typ1805/logo.png', 5.00, 1, 'bc3ac26e69731b617eb80274453f6dba', '2022-09-01 16:34:15', '2022-08-16 11:28:43', NULL);
+INSERT INTO `shop` VALUES ('s10001', '鸿星尔克旗舰店', '鸿星尔克官方旗舰店', 'https://www.cnlogo8.com/d/file/20210810/rhttohm5upwcnlogo8.jpg', 4.50, 1, '496347ab137029d80ed8929283d9a48b', '2022-09-01 16:34:11', '2022-08-16 11:28:43', NULL);
+INSERT INTO `shop` VALUES ('s10002', '李宁旗舰店', '李宁官方旗舰店', 'https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/8755f1d0dea66c05813e77f6bfe831ec_121_121.png', 4.50, 1, '22f60277c18a0f185cfa794af0d58f2a', '2022-09-01 16:34:15', '2022-08-16 11:28:43', NULL);
 
 -- ----------------------------
 -- Table structure for sys_dic
@@ -441,23 +442,30 @@ INSERT INTO `sys_login_log` VALUES ('1e7b456b3446f97e18f7377f052e99e0', 'cf0fb46
 INSERT INTO `sys_login_log` VALUES ('2475a78cc0cfdf8dd2d4ed04f529643d', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-18 14:29:56', '2022-08-18 14:29:56');
 INSERT INTO `sys_login_log` VALUES ('2c7906a23818cc7ccb47f53e0ab13724', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-11 09:01:10', '2022-08-11 09:01:10');
 INSERT INTO `sys_login_log` VALUES ('33fdf691022587a5d47fec70ac3ea99a', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:39', '2022-08-17 10:48:39');
+INSERT INTO `sys_login_log` VALUES ('35aa7f94a743fe4ca1138f1b86f6d993', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-09-01 17:05:01', '2022-09-01 17:05:01');
 INSERT INTO `sys_login_log` VALUES ('39321bf5782d81c4465a30e61f4e3a28', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 13:22:37', '2022-08-19 13:22:37');
 INSERT INTO `sys_login_log` VALUES ('3dad176a4b6c96da141a0b0a5ea6b0d5', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-18 09:22:34', '2022-08-18 09:22:34');
 INSERT INTO `sys_login_log` VALUES ('3dd297b4e08b34126541da70791d8b3a', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:46:24', '2022-08-17 10:46:24');
 INSERT INTO `sys_login_log` VALUES ('3f7ed1eb092555a8532786c5bdb88d2e', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:47:10', '2022-08-17 09:47:10');
+INSERT INTO `sys_login_log` VALUES ('44dfd9dd1ab3a0563cea2d5566b0c504', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-09-01 14:47:31', '2022-09-01 14:47:31');
 INSERT INTO `sys_login_log` VALUES ('4ebfbbfe1127b0b500c585cc3e8f32e4', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 13:22:25', '2022-08-19 13:22:25');
 INSERT INTO `sys_login_log` VALUES ('50d958ea9c3bfde6ab6199720b104c77', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:37', '2022-08-17 10:48:37');
 INSERT INTO `sys_login_log` VALUES ('5bb95f667e40fc55ca995b418ee2a05d', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 15:20:57', '2022-08-17 15:20:57');
 INSERT INTO `sys_login_log` VALUES ('5da20d92cea25350b45dbfd6cbe175c3', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 09:21:48', '2022-08-19 09:21:48');
+INSERT INTO `sys_login_log` VALUES ('6cd081d846cb3b507263ea0ef8af9f63', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-09-01 16:52:50', '2022-09-01 16:52:50');
 INSERT INTO `sys_login_log` VALUES ('714ab3a2625b756f52a099cb02c40300', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 13:23:09', '2022-08-19 13:23:09');
 INSERT INTO `sys_login_log` VALUES ('71e46a4abdd985e85b4e14f3b98f6a3e', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-19 09:15:38', '2022-08-19 09:15:38');
 INSERT INTO `sys_login_log` VALUES ('86eb77e6217a044ef6c0d1bf38dfebcb', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-31 14:53:05', '2022-08-31 14:53:05');
+INSERT INTO `sys_login_log` VALUES ('8724cbe1d649b6847d4bc26b3e5d4050', '496347ab137029d80ed8929283d9a48b', 'user1', 'Windows 10', 'Chrome', '127.0.0.1', '2022-09-01 17:08:10', '2022-09-01 17:08:10');
 INSERT INTO `sys_login_log` VALUES ('8a57092b780198e048511d869149c7d1', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-31 15:41:03', '2022-08-31 15:41:03');
+INSERT INTO `sys_login_log` VALUES ('98c36601ad3674dbed736d4d93f0d73f', '496347ab137029d80ed8929283d9a48b', 'user1', 'Windows 10', 'Chrome', '127.0.0.1', '2022-09-01 17:03:44', '2022-09-01 17:03:44');
 INSERT INTO `sys_login_log` VALUES ('a39fde8e8499bccf84bc093066aa3d1b', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:46:58', '2022-08-17 09:46:58');
 INSERT INTO `sys_login_log` VALUES ('a978c9e1a51258baabb1ae8d981d5c2d', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-08-12 10:59:07', '2022-08-12 10:59:07');
 INSERT INTO `sys_login_log` VALUES ('ac9bf03ab950b7acf24085223453c040', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:17', '2022-08-17 10:48:17');
 INSERT INTO `sys_login_log` VALUES ('ae9393f07919eb2be5dd9a9639d8a4c4', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-31 17:21:04', '2022-08-31 17:21:04');
 INSERT INTO `sys_login_log` VALUES ('b919cd6236caf5090c1f9c7ebd5dad39', 'cf0fb4667f6261b18ae932bedcedb1b0', 'zhangs', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 10:48:40', '2022-08-17 10:48:40');
+INSERT INTO `sys_login_log` VALUES ('c4e4450047b57d8da8f0748aff16d8e6', 'bc3ac26e69731b617eb80274453f6dba', 'admin', 'Windows 10', 'Chrome', '127.0.0.1', '2022-09-01 17:06:21', '2022-09-01 17:06:21');
+INSERT INTO `sys_login_log` VALUES ('c6b76dc5bd8672cc95ea72942dcbeb9d', '22f60277c18a0f185cfa794af0d58f2a', 'user2', 'Windows 10', 'Chrome', '127.0.0.1', '2022-09-01 17:35:28', '2022-09-01 17:35:28');
 INSERT INTO `sys_login_log` VALUES ('de9aecca16134ffe5a76ff129ba12f2a', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:48:01', '2022-08-17 09:48:01');
 INSERT INTO `sys_login_log` VALUES ('f91c1df03eaac4cc26724be690455758', '496347ab137029d80ed8929283d9a48b', 'user1', 'Mac', 'Safari', '127.0.0.1', '2022-08-17 09:49:38', '2022-08-17 09:49:38');
 
@@ -497,13 +505,15 @@ INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7d2545fsds', '856eabdd6f15
 INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7ddsbvdsbh', '856eabdd6f15324d3c51560e0d82ac7f', 'user', '/admin/system/User', 'Help', 1, 1, '用户管理', 'Role', 2, 1, '2022-07-17 21:50:27', '2021-07-23 16:09:30', NULL);
 INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7120721e7dndjshgus', '856eabdd6f15324d3c51560e0d82ac7f', 'menu', '/admin/system/Menu', 'Grid', 1, 1, '菜单管理', 'Menu', 2, 2, '2022-07-17 21:50:39', '2021-07-22 17:11:10', NULL);
 INSERT INTO `sys_menu` VALUES ('69c502ebb2ff3a7snjfhsd1545dsgds45', '0', 'home', '/admin/Home', 'HomeFilled', 1, 1, '工作台', 'Home', 1, 1, '2022-07-17 21:47:13', '2021-07-20 22:02:18', NULL);
+INSERT INTO `sys_menu` VALUES ('6e8edb9d4343fe462d08ee466fb48a46', 'dfefa00fd4a7966bbab9ee1d8b0bb62d', 'shop', '/admin/shop/Shop', 'Shop', 1, 1, '店铺管理', 'Shop', 2, 1, '2022-09-01 16:12:09', '2022-09-01 16:11:04', '');
 INSERT INTO `sys_menu` VALUES ('707eaca13c7c9de7442b7960f005797d', 'b47050cbb8e2d3bd87d470a15c6a788c', 'goodsLabel', '/admin/goods/GoodsLabel', 'PriceTag', 1, 1, '商品标签', 'GoodsLabel', 2, 3, '2022-07-23 12:57:08', '2022-07-23 12:57:08', '');
-INSERT INTO `sys_menu` VALUES ('832178b32fafec3168f139b760d37d30', 'b47050cbb8e2d3bd87d470a15c6a788c', 'goods', '/admin/goods/Goods', 'Fries', 1, 1, '商品管理', 'goods', 2, 1, '2022-07-23 12:54:12', '2022-07-23 12:54:12', '');
+INSERT INTO `sys_menu` VALUES ('832178b32fafec3168f139b760d37d30', 'b47050cbb8e2d3bd87d470a15c6a788c', 'goods', '/admin/goods/Goods', 'Fries', 1, 1, '商品管理', 'Goods', 2, 1, '2022-07-23 12:54:12', '2022-07-23 12:54:12', '');
 INSERT INTO `sys_menu` VALUES ('83783f76eab77c6e32fd7ceaa66768e1', '0', 'activity', '/admin/activity', 'TakeawayBox', 1, 1, '活动管理', 'ActivityManage', 1, 5, '2022-08-31 14:56:13', '2022-08-31 14:56:13', '');
 INSERT INTO `sys_menu` VALUES ('856eabdd6f15324d3c51560e0d82ac7f', '0', 'system', '/admin/system', 'CopyDocument', 1, 1, '系统管理', 'System', 1, 1, '2022-07-17 21:49:14', '2022-07-17 21:49:14', '');
 INSERT INTO `sys_menu` VALUES ('9e83a75c395e1c2047549d3778e2163e', '83783f76eab77c6e32fd7ceaa66768e1', 'indexCarousel', '/admin/activity/IndexCarousel', 'Monitor', 1, 1, '首页轮播', 'IndexCarousel', 2, 3, '2022-08-31 15:00:33', '2022-08-31 15:00:33', '');
 INSERT INTO `sys_menu` VALUES ('b47050cbb8e2d3bd87d470a15c6a788c', '0', 'goods', '/admin/goods', 'Present', 1, 1, '商品管理', 'Goods', 1, 3, '2022-07-23 12:52:48', '2022-07-23 12:52:48', '');
 INSERT INTO `sys_menu` VALUES ('df785cb43e428403dbfac6d4ece0189d', '2b5f7fd4d42b56f4eb03a744fa59f0d6', 'goodsOrder', '/admin/order/GoodsOrder', 'Operation', 1, 1, '商品订单', 'GoodsOrder', 2, 2, '2022-07-23 13:00:34', '2022-07-23 13:00:34', '');
+INSERT INTO `sys_menu` VALUES ('dfefa00fd4a7966bbab9ee1d8b0bb62d', '0', 'shop', '/admin/shop', 'Shop', 1, 1, '店铺管理', 'Shop', 1, 6, '2022-09-01 16:10:12', '2022-09-01 16:10:12', '');
 INSERT INTO `sys_menu` VALUES ('eded3ad528e3ab905b773d236d4bad7a', 'b47050cbb8e2d3bd87d470a15c6a788c', 'goodsClassify', '/admin/goods/GoodsClassify', 'ScaleToOriginal', 1, 1, '商品分类', 'GoodsClassify', 2, 2, '2022-07-23 12:55:45', '2022-07-23 12:55:45', '');
 
 -- ----------------------------
@@ -519,9 +529,11 @@ CREATE TABLE `sys_menu_role`  (
 -- ----------------------------
 -- Records of sys_menu_role
 -- ----------------------------
-INSERT INTO `sys_menu_role` VALUES ('7908f010a012a2c004120adf487e6e66', '69c502ebb2ff3a7120721e7d09snjfsd1');
-INSERT INTO `sys_menu_role` VALUES ('7908f010a012a2c004120adf487e6e66', '69c502ebb2ff3a7120721e7d0sbhjfshf');
+INSERT INTO `sys_menu_role` VALUES ('7908f010a012a2c004120adf487e6e66', '05ed0ac751eaf99859b75b4a5a6a9a7d');
+INSERT INTO `sys_menu_role` VALUES ('7908f010a012a2c004120adf487e6e66', '2b5f7fd4d42b56f4eb03a744fa59f0d6');
 INSERT INTO `sys_menu_role` VALUES ('7908f010a012a2c004120adf487e6e66', '69c502ebb2ff3a7snjfhsd1545dsgds45');
+INSERT INTO `sys_menu_role` VALUES ('7908f010a012a2c004120adf487e6e66', '832178b32fafec3168f139b760d37d30');
+INSERT INTO `sys_menu_role` VALUES ('7908f010a012a2c004120adf487e6e66', 'df785cb43e428403dbfac6d4ece0189d');
 INSERT INTO `sys_menu_role` VALUES ('967e5b1d1fd3a350adf8a1257662459d', '69c502ebb2ff3a7120721e7d093f0534');
 INSERT INTO `sys_menu_role` VALUES ('967e5b1d1fd3a350adf8a1257662459d', '69c502ebb2ff3a7120721e7d09snjfsd1');
 INSERT INTO `sys_menu_role` VALUES ('967e5b1d1fd3a350adf8a1257662459d', '69c502ebb2ff3a7120721e7d0sbhjfshf');

@@ -41,7 +41,7 @@
 
     const onLoginLogPage = () =>{
         state.loading = true;
-        loginLogPage({}).then(res=>{
+        loginLogPage(state.page).then(res=>{
             state.loading = false;
             state.tableData = res.result.records;
             state.page.current = res.result.current;

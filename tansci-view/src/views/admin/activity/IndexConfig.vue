@@ -4,7 +4,7 @@
         <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: 160,}" :page="page" :loading="loading"
             @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange" @onSwitchChange="onSwitchChange">
             <template #search>
-                <div><el-button type="primary" @click="onAdd">添加</el-button></div>
+                <div><el-button type="info" @click="onAdd">添加</el-button></div>
                 <div><el-button @click="onRefresh" icon="RefreshRight" circle></el-button></div>
             </template>
             <template #column="scope">
@@ -15,17 +15,18 @@
         </el-card>
         <el-dialog title="首页标签管理" v-model="addVisible" width="40%" :show-close="false">
             <el-form :model="addForm" :rules="rules" ref="addFormRef" label-position="right" label-width="100px">
-                <el-form-item prop="name" label="标签名称" :rules="[{required: true, message: '请输入标签名称', trigger: 'blur'}]">
+                <el-form-item prop="name" label="名称" :rules="[{required: true, message: '请输入标签名称', trigger: 'blur'}]">
                     <el-input v-model="addForm.name" placeholder="请输入标签名称" style="width:100%"></el-input>
                 </el-form-item>
-                <el-form-item prop="url" label="链接地址" :rules="[{required: true, message: '请输入链接地址', trigger: 'blur'}]">
+                <el-form-item prop="url" label="链接" :rules="[{required: true, message: '请输入链接地址', trigger: 'blur'}]">
                     <el-input v-model="addForm.url" placeholder="请输入链接地址" style="width:100%"></el-input>
                 </el-form-item>
                 <el-form-item prop="icon" label="图标" :rules="[{required: true, message: '请输入图标', trigger: 'blur'}]">
-                    <el-input v-model="addForm.icon" placeholder="请输入图标" style="width:100%"></el-input>
+                    <el-input v-model="addForm.icon" @click="onFormIcon" readonly suffix-icon="Platform" style="width:100%"></el-input>
+                    <Icon :iconVisible="iconVisible" @onIcon="onIcon"/>
                 </el-form-item>
-                <el-form-item prop="color" label="色值" :rules="[{required: true, message: '请输入色值', trigger: 'blur'}]">
-                    <el-input v-model="addForm.color" placeholder="请输入色值" style="width:100%"></el-input>
+                <el-form-item prop="color" label="颜色" :rules="[{required: true, message: '请选择颜色', trigger: 'blur'}]">
+                    <el-color-picker v-model="addForm.color" style="width:100%"/>
                 </el-form-item>
                 <el-form-item prop="status" label="状态" :rules="[{required: true, message: '请选择状态', trigger: 'change'}]">
                     <el-radio-group v-model="addForm.status">
@@ -48,6 +49,7 @@
     import {onMounted, reactive, ref, unref, toRefs} from 'vue'
     import {ElMessage, ElMessageBox} from "element-plus"
     import Table from '@/components/common/Table.vue'
+    import Icon from '@/components/common/Icon.vue'
     import {indexConfigPage,saveIndexConfig,updateIndexConfig,delIndexConfig} from "@/api/admin/indexConfig"
 
     const addFormRef = ref(null)
@@ -62,8 +64,8 @@
             {prop:'',label:'',fixed:'left'},
             {prop:'name',label:'标签名称'},
             {prop:'url',label:'链接地址'},
-            {prop:'icon',label:'图标'},
-            {prop:'color',label:'色值'},
+            {prop:'icon',label:'图标',type:'icon'},
+            {prop:'color',label:'色值',type:'color'},
             {prop:'status',alias:'statusName',label:'状态',type:'switch',
                 option:{
                     activeValue:1,activeColor:'#13ce66',activeText:'正常',
@@ -78,6 +80,7 @@
         tableData:[],
         operate: 0,
         addVisible: false,
+        iconVisible: false,
         addForm:{
             id:'',
             name:'',
@@ -90,7 +93,7 @@
     })
 
     const {
-        searchForm,loading,page,tableTitle,tableData,operate,addVisible,addForm
+        searchForm,loading,page,tableTitle,tableData,operate,addVisible,iconVisible,addForm
     } = toRefs(state)
 
     onMounted(() => {
@@ -206,6 +209,14 @@
                 }
             });
         }
+    }
+
+    const onFormIcon = () =>{
+        state.iconVisible = true;
+    }
+    const onIcon = (val) =>{
+        state.addForm.icon = val.name;
+        state.iconVisible = false;
     }
 </script>
 <style lang="scss" scoped>

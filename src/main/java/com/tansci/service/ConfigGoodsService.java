@@ -17,4 +17,6 @@ public interface ConfigGoodsService extends IService<ConfigGoods> {
 
     IPage<ConfigGoods> page(Page page, ConfigGoods goods);
 
+    IPage<ConfigGoods> getConfigGoodsPage(Page page, ConfigGoods goods);
+
 }

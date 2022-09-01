@@ -4,7 +4,7 @@
         <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: 160,}" :page="page" :loading="loading"
             @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange" @onSwitchChange="onSwitchChange">
             <template #search>
-                <div><el-button type="primary" @click="onAdd">添加</el-button></div>
+                <div><el-button type="info" @click="onAdd">添加</el-button></div>
                 <div><el-button @click="onRefresh" icon="RefreshRight" circle></el-button></div>
             </template>
             <template #column="scope">

@@ -51,7 +51,12 @@
             {prop:'goodsOrderId',label:'商品订单号'},
             {prop:'orderId',label:'订单号'},
             {prop:'goodsNum',label:'商品数量'},
-            {prop:'status',alias:'statusName',label:'订单状态',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
+            {prop:'status',alias:'statusName',label:'订单状态',type:'tag',option:{size:'small',effect:'plain',typeList:[
+                    {value:0,label:'primary'},
+                    {value:1,label:'success'},
+                    {value:2,label:'danger'},
+                    {value:3,label:'warning'},
+                ]}},
             {prop:'payTime',label:'支付时间'},
             {prop:'price',label:'订单金额',type:'price'},
             {prop:'userName',label:'商户名称'},

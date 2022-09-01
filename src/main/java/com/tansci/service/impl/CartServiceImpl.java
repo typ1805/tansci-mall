@@ -7,13 +7,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tansci.domain.Cart;
 import com.tansci.domain.Goods;
 import com.tansci.domain.Shop;
-import com.tansci.domain.SysUser;
 import com.tansci.exception.BusinessException;
 import com.tansci.mapper.CartMapper;
 import com.tansci.service.CartService;
 import com.tansci.service.GoodsService;
 import com.tansci.service.ShopService;
-import com.tansci.service.SysUserService;
+import com.tansci.utils.SecurityUserUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,16 +37,19 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     private ShopService shopService;
     @Autowired
     private GoodsService goodsService;
-    @Autowired
-    private SysUserService sysUserService;
 
     @Override
     public IPage<Cart> page(Page page, Cart cart) {
+        if (Objects.isNull(cart.getUserId()) && !Objects.equals(1, SecurityUserUtils.getUser().getType())) {
+            cart.setUserId(SecurityUserUtils.getUser().getId());
+        }
+
         IPage<Cart> iPage = this.baseMapper.selectPage(page,
                 Wrappers.<Cart>lambdaQuery()
                         .eq(Objects.nonNull(cart.getStatus()), Cart::getStatus, cart.getStatus())
                         .eq(Objects.nonNull(cart.getGoodsId()), Cart::getGoodsId, cart.getGoodsId())
                         .eq(Objects.nonNull(cart.getShopId()), Cart::getShopId, cart.getShopId())
+                        .eq(Objects.nonNull(cart.getUserId()), Cart::getUserId, cart.getUserId())
                         .orderByDesc(Cart::getUpdateTime)
         );
 
@@ -71,16 +73,14 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
 
     @Override
     public List<Cart> list(Cart cart) {
-        // 获取用户信息
-        SysUser user = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, cart.getUsername()));
-        if (Objects.isNull(user)) {
-            throw new BusinessException("登录已失效，请重新登录！");
+        if (Objects.isNull(cart.getUserId()) && !Objects.equals(1, SecurityUserUtils.getUser().getType())) {
+            cart.setUserId(SecurityUserUtils.getUser().getId());
         }
 
         List<Cart> carts = this.baseMapper.selectList(
                 Wrappers.<Cart>lambdaQuery()
                         .eq(Cart::getStatus, 0)
-                        .eq(Cart::getUserId, user.getId())
+                        .eq(Objects.nonNull(cart.getUserId()), Cart::getUserId, cart.getUserId())
         );
 
         if (Objects.nonNull(carts) && carts.size() > 0) {

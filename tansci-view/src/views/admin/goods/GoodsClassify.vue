@@ -50,7 +50,10 @@
             {prop:'name',label:'名称'},
             // {prop:'coverImg',label:'主图'},
             {prop:'intro',label:'简介'},
-            {prop:'status',alias:'statusName',label:'状态',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
+            {prop:'status',alias:'statusName',label:'状态',type:'tag',option:{size:'small',effect:'plain',typeList:[
+                    {value:0,label:'warning'},
+                    {value:1,label:'info'},
+                ]}},
             {prop:'classify',alias:'classifyName',label:'分类'},
             {prop:'price',label:'价格',type:'price'},
             {prop:'stock',label:'库存'},

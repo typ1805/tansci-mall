@@ -4,7 +4,7 @@
         <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: 160,}" :page="page" :loading="loading"
             @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
             <template #search>
-                <div><el-button type="primary" @click="onAdd">添加</el-button></div>
+                <div><el-button type="info" @click="onAdd">添加</el-button></div>
                 <div><el-input v-model="searchForm.name" placeholder="请输入名称"></el-input></div>
                 <div><el-button @click="onRefresh" icon="RefreshRight" circle></el-button></div>
                 <div><el-button @click="onSearch" type="primary" icon="Search">查询</el-button></div>
@@ -63,7 +63,10 @@
         tableTitle: [
             {prop:'',label:'',fixed:'left'},
             {prop:'name',label:'配置描述'},
-            {prop:'type',alias:'typeName',label:'类型',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
+            {prop:'type',alias:'typeName',label:'类型',type:'tag',option:{size:'small',effect:'plain',typeList:[
+                    {value:2,label:'warning'},
+                    {value:1,label:'info'},
+                ]}},
             {prop:'goodsId',label:'商品编码'},
             {prop:'updateTime',label:'更新时间'},
             {prop:'createTime',label:'创建时间'},

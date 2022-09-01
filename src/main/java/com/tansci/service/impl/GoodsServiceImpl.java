@@ -50,6 +50,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 
     @Override
     public IPage<Goods> page(Page page, Goods goods) {
+        if (Objects.isNull(goods.getUserId()) && !Objects.equals(1, SecurityUserUtils.getUser().getType())) {
+            goods.setUserId(SecurityUserUtils.getUser().getId());
+        }
         IPage<Goods> iPage = this.baseMapper.selectPage(page,
                 Wrappers.<Goods>lambdaQuery()
                         .eq(!Objects.equals(1, SecurityUserUtils.getUser().getType()), Goods::getUserId, SecurityUserUtils.getUser().getId())
@@ -57,6 +60,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
                         .eq(Objects.nonNull(goods.getShopId()), Goods::getShopId, goods.getShopId())
                         .eq(Objects.nonNull(goods.getStatus()), Goods::getStatus, goods.getStatus())
                         .eq(Objects.nonNull(goods.getClassify()), Goods::getClassify, goods.getClassify())
+                        .eq(Objects.nonNull(goods.getUserId()), Goods::getUserId, goods.getUserId())
                         .orderByDesc(Goods::getUpdateTime)
         );
 
@@ -99,6 +103,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         IPage<Goods> iPage = this.baseMapper.selectPage(page,
                 Wrappers.<Goods>lambdaQuery()
                         .eq(Goods::getStatus, Enums.GOODS_STATUS_1.getKey())
+                        .eq(Objects.nonNull(goods.getShopId()), Goods::getShopId, goods.getShopId())
                         .like(Objects.nonNull(goods.getName()), Goods::getName, goods.getName())
                         .orderByDesc(Goods::getSales)
         );

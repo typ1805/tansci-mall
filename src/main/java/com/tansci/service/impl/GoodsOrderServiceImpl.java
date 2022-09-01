@@ -38,11 +38,15 @@ public class GoodsOrderServiceImpl extends ServiceImpl<GoodsOrderMapper, GoodsOr
 
     @Override
     public IPage<GoodsOrder> page(Page page, GoodsOrderDto dto) {
+        if (Objects.isNull(dto.getUserId()) && !Objects.equals(1, SecurityUserUtils.getUser().getType())) {
+            dto.setUserId(SecurityUserUtils.getUser().getId());
+        }
         Page<GoodsOrder> iPage = this.baseMapper.selectPage(page,
                 Wrappers.<GoodsOrder>lambdaQuery()
                         .eq(!Objects.equals(1, SecurityUserUtils.getUser().getType()), GoodsOrder::getUserId, SecurityUserUtils.getUser().getId())
                         .eq(Objects.nonNull(dto.getStatus()), GoodsOrder::getStatus, dto.getStatus())
                         .eq(Objects.nonNull(dto.getOrderId()), GoodsOrder::getOrderId, dto.getOrderId())
+                        .eq(Objects.nonNull(dto.getUserId()), GoodsOrder::getUserId, dto.getUserId())
                         .orderByDesc(GoodsOrder::getUpdateTime)
         );
         if (Objects.nonNull(iPage.getRecords()) && iPage.getRecords().size() > 0) {

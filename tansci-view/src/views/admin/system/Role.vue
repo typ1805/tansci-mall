@@ -82,7 +82,7 @@
                     inlinePrompt: false,size:'large'
                 }
             },
-            {prop:'creator',alias:'creatorName',label:'创建人',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
+            {prop:'creator',alias:'creatorName',label:'创建人',type:'tag',option:{size:'small',effect:'plain'}},
             {prop:'updateTime',label:'更新时间'},
             {prop:'createTime',label:'创建时间'},
             {prop:'remarks',label:'描述'}

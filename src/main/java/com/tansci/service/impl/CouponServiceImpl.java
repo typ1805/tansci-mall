@@ -12,6 +12,7 @@ import com.tansci.mapper.CouponMapper;
 import com.tansci.service.CouponService;
 import com.tansci.service.ShopService;
 import com.tansci.service.SysUserService;
+import com.tansci.utils.SecurityUserUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,9 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
 
     @Override
     public IPage<Coupon> page(Page page, Coupon coupon) {
+        if (Objects.isNull(coupon.getUserId()) && !Objects.equals(1, SecurityUserUtils.getUser().getType())) {
+            coupon.setUserId(SecurityUserUtils.getUser().getId());
+        }
         IPage<Coupon> iPage = this.baseMapper.selectPage(page,
                 Wrappers.<Coupon>lambdaQuery()
                         .eq(Objects.nonNull(coupon.getShopId()), Coupon::getShopId, coupon.getShopId())
@@ -72,9 +76,8 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
 
     @Override
     public List<Coupon> list(Coupon coupon) {
-        if (Objects.nonNull(coupon.getUsername())) {
-            SysUser user = sysUserService.getOne(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getUsername, coupon.getUsername()));
-            coupon.setUserId(user.getId());
+        if (Objects.isNull(coupon.getUserId()) && !Objects.equals(1, SecurityUserUtils.getUser().getType())) {
+            coupon.setUserId(SecurityUserUtils.getUser().getId());
         }
         List<Coupon> list = this.baseMapper.selectList(
                 Wrappers.<Coupon>lambdaQuery()

@@ -115,6 +115,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (Objects.nonNull(shop)) {
             user.setShopId(shop.getShopId());
             userVo.setShop(shop);
+        } else {
+            if(Objects.equals(1, dto.getType())) throw new BusinessException("您不是商户，请先注册！");
         }
 
         UserDetails userDetails = new SecurityUtils(user);

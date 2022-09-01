@@ -6,7 +6,9 @@
     <select id="getOrderStatusCount" parameterType="com.tansci.domain.OrderInfo" resultType="com.tansci.domain.vo.OrderStatusCountVo">
         select count(*) orderNum, order_status as label
         from order_info
-        where user_id = #{order.userId}
+        <where>
+            and user_id = #{order.userId}
+        </where>
         GROUP BY order_status
     </select>
 

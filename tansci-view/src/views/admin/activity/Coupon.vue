@@ -4,7 +4,7 @@
         <Table :data="tableData" :column="tableTitle" :operation="{show:true, width: 160,}" :page="page" :loading="loading"
             @onSizeChange="onSizeChange" @onCurrentChange="onCurrentChange">
             <template #search>
-                <div><el-button type="primary" @click="onAdd">添加</el-button></div>
+                <div><el-button type="info" @click="onAdd">添加</el-button></div>
                 <div><el-input v-model="searchForm.name" placeholder="请输入名称"></el-input></div>
                 <div><el-button @click="onRefresh" icon="RefreshRight" circle></el-button></div>
                 <div><el-button @click="onSearch" type="primary" icon="Search">查询</el-button></div>
@@ -75,8 +75,22 @@
             {prop:'name',align:'left',label:'名称'},
             {prop:'price',label:'优惠金额',type:'price'},
             {prop:'norm',label:'限额',type:'price'},
-            {prop:'status',alias:'statusName',label:'状态',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
-            {prop:'type',alias:'typeName',label:'类型',type:'tag',option:{type:'info',size:'small',effect:'plain'}},
+            {prop:'status',alias:'statusName',label:'状态',type:'tag',option:{
+                size:'small',effect:'plain',
+                typeList:[
+                    {value:0,label:'success'},
+                    {value:1,label:'info'},
+                    {value:2,label:'warning'},
+                    {value:3,label:'danger'},
+                ]}
+            },
+            {prop:'type',alias:'typeName',label:'类型',type:'tag',option:{
+                size:'small',effect:'plain',
+                typeList:[
+                    {value:0,label:'warning'},
+                    {value:1,label:'info'},
+                ]}
+            },
             {prop:'startTime',label:'开始时间'},
             {prop:'endTime',label:'结束时间'},
             {prop:'shopId',alias:'shopName',label:'店铺'},
