@@ -42,9 +42,9 @@ mybatis-plus:
 
 # ftp
 ftp:
-  host: tansci.top
+  host: 127.0.0.1
   post: 22
   username: tansci
-  password: tansci@
+  password: tansci
   base-path: /app/upload/mall/images
-  image-base-url: http://tansci.top:18003/images
+  image-base-url: http://127.0.0.1:18003/images

@@ -1,22 +1,30 @@
 <template>
 	<div class="login" :style="loginStyle">
-		<el-card shadow="always">
-			<div class="login-main">
-				<div class="login-logo">
+		<div class="login-header">
+			<div>
+				<el-image :src="logo"  style="width: 100%; height: 100%;"></el-image>
+			</div>
+			<div>
+				<span class="title">Tansci 商城</span>
+			</div>
+		</div>
+		<div class="login-main">
+			<div class="main-title">帐号登录</div>
+			<div class="main-container">
+				<div class="logo">
 					<el-image :src="loginLogo"  style="width: 100%; height: 100%;"></el-image>
 				</div>
-				<div class="login-form">
-					<el-form :model="loginForm" :rules="rules" ref="loginRuleForm">
-						<div class="login-form-title">欢迎登录</div>
+				<div class="form">
+					<el-form :model="loginForm" :rules="rules" size="large" ref="loginRuleForm">
 						<el-form-item prop="username" :rules="[
 								{required: true,message: '请输入用户名',trigger: 'blur'},
 								{pattern: /^[a-zA-Z]\w{4,17}$/,message: '用户名式有误，请重新输入',trigger: 'blur'}]">
-							<el-input v-model="state.loginForm.username" prefix-icon="Avatar" placeholder="请输入用户名称" style="width:100%"></el-input>
+							<el-input v-model="state.loginForm.username" prefix-icon="Avatar" placeholder="账号" style="width:100%"></el-input>
 						</el-form-item>
 						<el-form-item prop="password" :rules="[
 								{required: true,message: '请输入密码',trigger: 'blur'},
 								{pattern: /^[a-zA-Z]\w{5,17}$/,message: '密码格式有误，请重新输入',trigger: 'blur'}]">
-							<el-input type="password" v-model="loginForm.password" prefix-icon="Lock" show-password placeholder="请输入密码" style="width:100%"></el-input>
+							<el-input type="password" v-model="loginForm.password" prefix-icon="Lock" show-password placeholder="密码" style="width:100%"></el-input>
 						</el-form-item>
 						<el-form-item prop="verifyStatus" :rules="[{required: true,message: '请拖动滑块验证',trigger: 'blur'}]">
 							<SlidingVerify ref="slidingVerify" :status="loginForm.verifyStatus" :successFun="onVerifySuccess" :errorFun="onVerifyError"></SlidingVerify>
@@ -25,12 +33,24 @@
 							<el-checkbox v-model="loginForm.keepPassword" label="记住密码"></el-checkbox>
 						</el-form-item>
 						<el-form-item>
-							<el-button type="primary" round @click="submit" :loading="loading" style="width:100%">登录</el-button>
+							<el-button type="primary" @click="submit" :loading="loading" style="width:100%">登录</el-button>
 						</el-form-item>
 					</el-form>
 				</div>
 			</div>
-		</el-card>
+		</div>
+		<div class="login-footer">
+			<div>
+				<el-link target="_blank">Tansci 帐号用户协议</el-link>
+				<el-divider direction="vertical" />
+				<el-link target="_blank">关于 Tansci 帐号与隐私的声明</el-link>
+				<el-divider direction="vertical" />
+				<el-link target="_blank">常见问题</el-link>
+			</div>
+			<div class="copy">
+				Tansci Mall 版权所有 &copy; 2022- {{copyYear()}}
+			</div>
+		</div>
 	</div>
 </template>
 <script setup>
@@ -45,7 +65,8 @@
 	const router = useRouter()
 	let loginRuleForm = ref(null) 
 	let slidingVerify = ref()
-	const loginLogo = new URL('../../assets/image/login-left.png', import.meta.url).href
+	const logo = new URL('../../assets/image/logo.png', import.meta.url).href
+	const loginLogo = new URL('../../assets/image/login-logo.svg', import.meta.url).href
 
 	const state = reactive({
 		loginStyle: {
@@ -101,40 +122,58 @@
 			state.loading = false;
 		})
 	}
+
+	function copyYear(){
+		let date = new Date();
+		return date.getFullYear();
+	}
 </script>
 <style lang="scss" scoped="scoped">
 	.login {
-		background-image: url('../../assets/image/login-bg.svg');
-		background-size: 100% 100%;
-		height: 100%;
-		width: 100%;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-items: center;
-		.el-card__body{
-			padding: 0;
+		.login-header{
+			display: flex;
+			height: 4rem;
+			padding: 0 20%;
+			line-height: 4rem;
+			background: #f1f1f1;
+			.title{
+				padding: 0 1rem;
+				color: var(--t9);
+				font-size: 18px;
+				font-weight: 700;
+			}
 		}
 		.login-main{
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			.login-logo{
-				background: var(--theme);
-				width: 20rem;
-				padding: 8rem 5rem;
-				border-top-right-radius: 38px;
-				border-bottom-right-radius: 38px;
+			height: 80%;
+			.main-title{
+				font-size: 32px;
+				text-align: center;
+				padding: 7rem 0;
 			}
-			.login-form{
-				width: 20rem;
-				padding: 8rem 5rem;
-				.login-form-title{
-					font-size: 18px;
-					font-weight: 700;
-					text-align: center;
-					padding-bottom: 2rem;
+			.main-container{
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+				.logo{
+					width: 20rem;
+					padding-right: 4rem;
 				}
+				.form{
+					width: 20rem;
+					padding-left: 4rem;
+					border-left: 1px solid #dcdfe6;
+				}
+			}
+		}
+		.login-footer{
+			height: 100%;
+			background: #f1f1f1;
+			text-align: center;
+			padding: 2rem 0;
+			color: #606266;
+			.copy{
+				padding-top: 1rem;
 			}
 		}
 	}
