@@ -136,6 +136,7 @@
 			padding: 0 20%;
 			line-height: 4rem;
 			background: #f1f1f1;
+			box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 			.title{
 				padding: 0 1rem;
 				color: var(--t9);
@@ -145,6 +146,7 @@
 		}
 		.login-main{
 			height: 80%;
+			background-image: linear-gradient(240deg, #c7f6da 0%, #FAFDFE 50%, #f3f3f3 100%);
 			.main-title{
 				font-size: 32px;
 				text-align: center;
@@ -167,6 +169,7 @@
 			}
 		}
 		.login-footer{
+			box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 			height: 100%;
 			background: #f1f1f1;
 			text-align: center;
